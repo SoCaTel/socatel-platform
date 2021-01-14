@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagination Test</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>BODY</th>
+        <th>TIMESTAMP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:alt-title="${iStat.even}? 'even' : 'odd'"
+        th:each="notification, iStat : ${notificationsPage.content}"
+        th:style="${iStat.odd}? 'font-weight: bold;'">
+        <td th:text="${notification.id}"/>
+        <td th:text="${notification.text}"/>
+        <td th:text="${notification.timestamp}"/>
+    </tr>
+    </tbody>
+</table>
+<div class="pagination" th:if="${notificationsPage.hasNext()}">
+    <a th:href="@{/dashboard(history_size=${historyPage.size}, notification_size=${notificationsPage.size + 5})}"
+    >See more</a>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>BODY</th>
+        <th>TIMESTAMP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:alt-title="${iStat.even}? 'even' : 'odd'"
+        th:each="history, iStat : ${historyPage.content}"
+        th:style="${iStat.odd}? 'font-weight: bold;'">
+        <td th:text="${history.id}"/>
+        <td th:text="${history.text}"/>
+        <td th:text="${history.timestamp}"/>
+    </tr>
+    </tbody>
+</table>
+<div class="pagination" th:if="${historyPage.hasNext()}">
+    <a th:href="@{/dashboard(notification_size=${notificationsPage.size}, history_size=${historyPage.size + 5})}"
+    >See more</a>
+</div>
+</body>
+</html>

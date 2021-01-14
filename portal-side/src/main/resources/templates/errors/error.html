@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="header-fragment :: head(title=#{error_page})">
+</th:block>
+<body>
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<div class="container p-sm-5 card" style="margin: auto">
+    <div class="row mb-4">
+        <h1 style="margin:auto" th:text="${error}">Error</h1>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary" href="/" style="margin:auto"><h2 th:text="#{error.msg}">Error message</h2></a>
+    </div>
+    <div class="row alert alert-info my-4" sec:authorize="!isAuthenticated()">
+        <div style="margin:auto">
+            <a class="btn btn-primary" href="login" th:href="@{/login}" th:text="#{main.signin}">sign in</a> <span
+                th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-white-pink ml-1"
+                                                                  href="registration.html" th:href="@{/registration}"
+                                                                  th:text="#{register}">register</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:replace="header-fragment :: head(title=#{create_topic})">
+</th:block>
+
+<body class="bg-white">
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='create')"></th:block>
+<main>
+<div class="container" id="content" tabindex="-1">
+
+    <th:block th:replace="switch-style-fragment :: menu"></th:block>
+
+    <div class="row title-row topic-create">
+        <div class="col-12 col-sm-10 offset-sm-1 rounded p-xl-4 p-2">
+
+            <h1 class="text-left" th:text="#{create_topic.header}">Suggest a topic in 4 steps</h1>
+            <!--
+            <div class="card">
+            <div class="card-header header-elements-inline">
+                <h1 class="card-title font-weight-semibold" th:text="#{create_topic.header}">Suggest a topic in 4 steps</h1>
+            </div>
+            <div class="card-body">
+            -->
+
+            <p th:text="#{create_topic.p1}">When proposing a new discussion topic, make sure to search first if the
+                topic has not been discussed yet. It is also important that the discussion topic does not address a
+                specific matter, for example "The lack of choice with food delivery services", but instead relates to a
+                larger issue that can be addressed in various ways, for example "The quality and variety of food
+                delivered at home".
+            </p>
+            <br/>
+            <div class="col-form-label col-12 font-weight-bold text-left">
+                <span class="text-danger" aria-hidden="true">*</span> <span class="text-danger" th:text="#{login.required}">Required fields</span>
+            </div>
+            <form enctype="multipart/form-data" method="post" th:action="@{/topic-create}" th:object="${group}">
+
+
+                <div class="card bg-white">
+
+                    <div class="card-header header-elements-inline">
+                        <span class="font-size-md text-uppercase font-weight-semibold" th:text="#{create_topic.s1}">1 - Choose at least one theme</span>
+                        <!--a class="float-right" data-target="#help-step" data-toggle="modal"></a-->
+                    </div>
+                    <div class="card-body">
+                        <p class="alert alert-danger my-2 d-block" th:if="${notAllSelected}">
+                            <strong th:text="${notAllSelected}"></strong>
+                        </p>
+                        <ul class="no-gutters">
+                            <li class="list-unstyled my-2" th:each="theme: ${allThemes}">
+                                <input class="form-check-input mt-1" th:field="*{themes}"
+                                       th:value="${theme.id}"
+                                       type="checkbox"/>
+                                <label class="form-check-label mx-1"
+                                       th:for="${#ids.prev('themes')}"
+                                       th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="card bg-white">
+                    <div class="card-header">
+                        <label for="name" class="d-block font-size-md text-uppercase font-weight-semibold">
+                            <span th:text="#{create_topic.s2}">2 - Give your topic a title</span>
+                            <small th:text="'(' + #{create_topic.s2.placeholder} + ')'">()</small>
+                            <span class="alert alert-danger my-2 d-block" th:errors="*{name}"
+                            th:if="${#fields.hasErrors('name')}"></span>
+                        </label>
+                        <!--a class="float-right" data-target="#help-step" data-toggle="modal"></a-->
+                    </div>
+                    <!-- <div class="card-body"> -->
+                    <div class="form-group m-3">
+                        <textarea id="name" class="form-control " cols="5" maxlength="80"
+                                  rows="2"
+                                  th:field="*{name}"></textarea>
+
+                    </div>
+                </div>
+
+                <div class="card bg-white">
+                    <div class="card-header d-block">
+                        <label for="description"  class="d-block font-size-md text-uppercase font-weight-semibold">
+                            <span th:text="#{create_topic.s3}">- Add a description to set the context</span>
+                            <small th:text="'(' + #{create_topic.s4.placeholder} + ')'">()</small>
+                            <span class="alert alert-danger my-2 d-block" th:errors="*{description}"
+                            th:if="${#fields.hasErrors('description')}"></span>
+                        </label>
+                        <!--a class="float-right" data-target="#help-step" data-toggle="modal"></a-->
+                    </div>
+                    <!-- <div class="card-body"> -->
+                    <!-- <div class="form-group">
+                        <textarea rows="4" cols="5" class="form-control" th:placeholder="#{create_topic.s3.placeholder}" placeholder="120 char max" th:field="*{introduction}"></textarea>
+                        <p th:if="${#fields.hasErrors('introduction')}" th:errors="*{introduction}" class="validation-invalid-label"></p>
+                    </div> -->
+
+                    <div class="form-group m-3">
+                        <textarea id="description" class="form-control " cols="8" maxlength="1000"
+                                  rows="8"
+                                  th:field="*{description}"></textarea>
+
+                    </div>
+                </div>
+
+                <hr class="separator my-3">
+
+                <div class="form-group my-3">
+                    <label for="language">
+                        <span th:text="#{create_topic.language}">Choose the langage of the topic</span>:
+                        <span class="text-danger"><span aria-hidden="true"> *</span><span class="sr-only">Required</span></span>
+                        <span class="alert alert-danger my-2 d-block" th:if="${onlyEnglish}" th:text="${onlyEnglish}">Paneuropean can
+                            only be in English</span>
+                    </label>
+                    
+                    <select id="language" class="form-control" required th:field="*{language}">
+                        <option style="display:none" th:text="#{create_topic.language.placeholder}" th:value="null">
+                            Primary language preference
+                        </option>
+                        <option th:text="#{${user.firstLang.name.replaceAll(' ', '_').toLowerCase()}}"
+                                th:value="${user.firstLang.id}">First Lang
+                        </option>
+                        <option th:if="${user.secondLang != null}"
+                                th:text="#{${user.secondLang.name.replaceAll(' ', '_').toLowerCase()}}"
+                                th:value="${user.secondLang.id}">Second Lang
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div class="form-group my-3">
+                    <label for="locality">
+                        <span th:text="#{create_topic.locality}">Choose the visibility settings of the topic: </span>
+                        <span class="text-danger"><span aria-hidden="true"> *</span><span class="sr-only">Required</span></span>
+                        <span class="alert alert-danger my-2 d-block" th:if="${onlyEnglish}" th:text="${onlyEnglish}">Paneuropean can
+                            only be in English</span>
+                    </label>
+
+                    <select id="locality" class="form-control" required th:field="*{locality}">
+                        <option style="display:none" th:text="#{create_topic.locality.placeholder}" th:value="null">
+                            Primary language preference
+                        </option>
+                        <option th:text="#{${user.locality.name.replaceAll(' ', '_').toLowerCase()}}"
+                                th:value="${user.locality.id}">People in your area
+                        </option>
+                        <option th:text="#{${user.parentLocality.name.replaceAll(' ', '_').toLowerCase()}}"
+                                th:value="${user.parentLocality.id}">People in your country
+                        </option>
+                        <option th:text="#{${panEuropean.name.replaceAll(' ', '_').toLowerCase()}}"
+                                th:value="${panEuropean.id}">People in Europe (text must be in
+                            English)
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="form-group my-3">
+                    <label for="file" id="attach-a-file3" th:text="#{create_topic.file}">Attach files :</label>
+
+                    <div class="custom-file">
+                        <input aria-labelledby="attach-a-file3" class="custom-file-input pointer" id="file" multiple name="file" type="file"/>
+                        <label class="custom-file-label" for="file" th:text="#{create_topic.choose_file}">Choose
+                            File</label>
+                    </div>
+
+                    <!-- <div class="uniform-uploader">
+                        <input type="file" name="file" class="form-control-uniform" data-fouc="" multiple/>
+                        <span class="filename" th:text="#{create_topic.file.placeholder}">Filename.png</span>
+                        <span class="action btn bg-secondary text-center" th:text="#{create_topic.choose_file}">Choose File</span>
+                    </div> -->
+
+                </div>
+
+                <!-- </div> -->
+                <!--
+                <div class="card-header bg-primary text-white text-center">
+                    <span class="font-size-md text-uppercase font-weight-semibold" th:text="#{create_topic.s4}">4 - Provide a long description to set the context</span>
+                    <a class="float-right" data-toggle="modal" data-target="#help-step"></a>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <textarea rows="8" cols="8" class="form-control" th:placeholder="#{create_topic.s4.placeholder}" placeholder="1000 char max" th:field="*{description}"></textarea>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="validation-invalid-label"></p>
+                    </div>
+
+
+                    <h6 class="mb-0" th:text="#{create_topic.file}">Attach files : </h6>
+
+                    <div class="uniform-uploader"><input type="file" class="form-control-uniform" data-fouc=""><span class="filename" th:text="#{create_topic.file.placeholder}">Capture d’ecran 2019-01-24 à 22.27.48.png</span><span class="action btn bg-orange-400 text-center" th:text="#{create_topic.choose_file}">Choose File</span></div>
+                </div> -->
+                <!-- </div> CARD-->
+
+                <div class="form-group">
+                    <div class="col-form-label col-sm-12 col-md-9 p-2 font-weight-bold">
+
+                        <input id="privacy-checkbox" name="policy" required type="checkbox" value="" class="mt-1 mr-1">
+                                   <label for="privacy-checkbox">
+
+                                    <span th:text="#{create_topic.agreement}">Agree to</span>
+                                    <span th:text="#{registration.agreement2}">terms and conditions</span>
+                                    <span th:text="#{registration.agreement3}">and</span>
+                                    <span th:text="#{registration.agreement4}">privacy policy</span>.
+                        </label>
+                        <ul>
+                            <li>
+                                <a class="text-primary"
+                                style="text-decoration: underline;"
+                                target="_blank"
+                                th:href="@{/terms-conditions}"
+                                th:text="#{registration.agreement2}">terms and conditions</a>
+                            </li>
+                            <li>
+                                <a class="text-primary"
+                                style="text-decoration: underline;"
+                                target="_blank"
+                                th:href="@{/privacy-policy}"
+                                th:text="#{registration.agreement4}">privacy policy</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="form-group my-4 text-right">
+                    <!-- call the mmodal <button type="submit" data-toggle="modal" data-target="#thanks-you" class="btn bg-teal-400" th:text="#{create_topic.validate}">Validated the creation</button> -->
+                    <button class="btn btn-primary" th:text="#{create_topic.validate}" type="submit">VALIDATED THE
+                        CREATION
+                    </button>
+                </div>
+
+            </form>
+            <!-- </div> card body -->
+        </div>
+    </div>
+
+</div>
+</main>
+
+<!-- modal pop up help start-->
+<!--div class="modal fade" id="help-step">
+    <div class="modal-dialog modal-lg" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+
+            <div class="col-xl-12 col-sm-12 p-0 m-0">
+                <div class="card border-2 p-0 m-0">
+                    <div class="card-body w-100">
+                        <div class="card-header text-center bg-success-400">
+                            <div class="modal-header">
+                                <h3 class="col-12 text-uppercase">Help to created a topic</h3>
+                            </div>
+                        </div>
+                        <div class="modal-body row">
+
+                            <h5 class="bg-blue-400 col-5 text-center mb-3 m-auto p-1 border-radius-10">STEP 1</h5>
+                            <p>
+                                - Porta magna, ornare vel tristique at, suscipit et sem. Nam eu dolor elementum, euismod
+                                neque id, pulvinar eros. Etiam placerat lorem lacus, blandit aliquet purus blandit ac.
+                                Nunc finibus metus sed tortor porttitor commodo. Suspendisse est libero, fringilla id
+                                massa vitae, mollis accumsan elit. Maecenas in odio mauris. Sed ex tellus, efficitur at
+                                aliquam eget, fringilla nec felis. Sed faucibus sem a enim cursus, nec tincidunt mauris
+                            </p>
+
+                            <h5 class="bg-green-400 col-5 text-center mb-3 m-auto p-1 border-radius-10">STEP 2</h5>
+                            <p>
+                                - Placerat lorem lacus, blandit aliquet purus blandit ac. Nunc finibus metus sed tortor
+                                porttitor commodo. Suspendisse est libero, fringilla id massa vitae, mollis accumsan
+                                elit. Maecenas in odio mauris. Sed ex tellus, efficitur at aliquam eget, fringilla nec
+                                felis. Sed faucibus sem a enim cursus, nec tincidunt mauris
+                            </p>
+
+                            <h5 class="bg-pink-400 col-5 text-center mb-3 m-auto p-1 border-radius-10">STEP 3</h5>
+                            <p>
+                                - Porttitor commodo. Suspendisse est libero, fringilla id massa vitae, mollis accumsan
+                                elit. Maecenas in odio mauris. Sed ex tellus, efficitur at aliquam eget, fringilla nec
+                                felis. Sed faucibus sem a enim cursus, nec tincidunt mauris
+                            </p>
+
+                            <h5 class="bg-orange-400 col-5 text-center mb-3 m-auto p-1 border-radius-10">STEP 4</h5>
+                            <p>
+                                - Dolor elementum, euismod neque id, pulvinar eros. Etiam placerat lorem lacus, blandit
+                                aliquet purus blandit ac. Nunc finibus metus sed tortor porttitor commodo. Suspendisse
+                                est libero, fringilla id massa vitae, mollis.
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-primary col-12" data-dismiss="modal" type="button">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div--><!-- modal pop up help end-->
+
+
+<!-- The Modal -->
+<!-- <a class="btn btn-primary" data-toggle="modal" href='#thanks-you'>Trigger modal</a> -->
+<div class="modal fade" id="thanks-you" th:classappend="${success}?'autoload':''">
+    <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+                <h3 class="modal-title" th:text="#{create_topic.thanks}">Thanks you ! </h3>
+                <h4 th:text="#{create_topic.matters}">Your Contribution Matters</h4>
+                <i class="fa fa-check fa-2x bg-green my-2 text-white border-radius-10" aria-hidden="true"></i>
+
+                <p th:text="#{create_topic.submitted}">Your message has been successfully to your Support Team.</p>
+                <p th:text="#{create_topic.contact}">We will contact you as soon as we review your message</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--
+                <button type="button"class="btn btn-primary col-6"><a href="topic-create.html" class="text-white" th:text="#{create_topic.suggest}">Suggest an other topic</a></button>
+                <button type="button"class="btn btn-primary col-6"><a href="topic-find.html" class="text-white" th:text="#{create_topic.find}">Find a topic</a></button>
+                -->
+
+                <div class="text-center">
+                    <span th:text="#{create_topic.my_topics}">You can manage topics you created, you suscribed or you contributed on "My Topcis" page</span>
+                    <br><a class="text-white btn btn-primary first-focusable-element" href="/topics-posted.html" th:text="#{topics}">My
+                    topics</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

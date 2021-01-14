@@ -1,0 +1,222 @@
+<th:block th:fragment="breadcrumb" xmlns:th="http://www.thymeleaf.org">
+    <div class="breadcrumb mt-2">
+
+        <h2 class="h6 mt-0 breadcrumb-item">
+            <a class="1-breadcrumb-item" href="/dashboard" th:if="${current_page}!=''">
+                <i class="fas fa-home mr-2" aria-hidden="true"></i>
+                <span><u th:text="#{dashboard}">Dashboard</u></span>
+            </a>
+            <a class="2-breadcrumb-item active" th:if="${current_page}==''">
+                <i class="fas fa-home mr-2" aria-hidden="true"></i>
+                <span th:text="#{dashboard}">Dashboard</span>
+            </a>
+        </h2>
+        <h2 class="h6 mt-0 breadcrumb-item"  th:if="${current_page}!=''">
+            <a class="breadcrumb-item active font-weight-normal" th:text="${current_page}">Current Page</a>
+        </h2>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="authenticated-nav" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header>
+    <nav aria-label="main navigation" class="navbar navbar-expand-lg navbar-light fixed-top" id="main-nav">
+
+        <a href="#content" class="sr-only sr-only-focusable" th:text="#{skip_main_content}">Skip to main content</a>
+
+        <a class="navbar-brand" href="/">
+            <span class="sr-only" th:text="#{goto_index}"></span>
+            <img th:alt="#{socatel_logo}" id="logo" src="../static/images/socatel-logo.png" th:src="@{/images/socatel-logo.png}">
+        </a>
+
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" class="navbar-toggler"
+                data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+                <span class="sr-only">Navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+
+
+                <li class="nav-item">
+                    <a class="nav-link purple" href="/explore-services" th:classappend="${category=='explore_services'}?'active':''">
+                        <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+                        <span th:text="#{explore_services}">Explore services</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link danger" href="/topic-find" th:classappend="${category=='explore'}?'active':''">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <span th:text="#{explore}">Explore topics</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link primary px-2" href="/topic-create"
+                       th:classappend="${category=='create'}?'active':''">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                        <span th:text="#{create}">Create</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link success px-2" href="/dashboard"
+                       th:classappend="${category=='dashboard'}?'active':''">
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                        <span th:text="#{dashboard}">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()"
+                    th:classappend="${newNotifNumber>0}?'notifications'">
+                    <a class="nav-link default" href="/notifications.html">
+                        <i class="fas fa-bell" aria-hidden="true"></i>
+                        <span class="badge badge-pill" th:if="${newNotifNumber!=0}" th:text="${newNotifNumber}">2</span> <span class="sr-only" th:text="#{new_notifications}">new notifications</span>
+                    </a>
+                </li>
+
+                <li class="nav-item no-border d-none d-lg-block">
+                    <a class="nav-link px-2" aria-hidden="true">|</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link default px-2" href="/faq" th:classappend="${category=='faq'}?'active':''">
+                        <i class="fas fa-question" aria-hidden="true"></i>
+                        <span th:text="#{help}">Help</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link default" href="/login.html">
+                        <i class="fa fa-sign-in mr-1" aria-hidden="true"></i>
+                        <span th:text="#{main.signin}">Log in</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link default" href="/registration.html" th:href="@{/registration}">
+                        <i class="fa fa-sign-in-alt mr-1" aria-hidden="true"></i>
+                        <span th:text="#{login.register}">Register</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link default px-2" href="/logout">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                        <span th:text="#{logout}">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div> <!-- collapse -->
+    </nav>
+</header>
+</th:block>
+
+
+<th:block th:fragment="index-nav" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header>
+    <nav aria-label="main navigation" class="navbar navbar-expand-lg navbar-light fixed-top" id="main-nav">
+
+        <a class="navbar-brand" href="/">
+            <img th:alt="#{socatel_logo}" id="logo" src="../static/images/socatel-logo.png" th:src="@{/images/socatel-logo.png}">
+        </a>
+
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item mx-2">
+                    <a class="nav-link" style="color: #C7B5F4;" href="/explore-services" th:classappend="${category=='explore_services'}?'active':''">
+                        <i class="fas fa-concierge-bell" aria-hidden="true"></i>
+                        <span th:text="#{explore_services}">Explore services</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2">
+                    <a class="nav-link danger" href="/topic-find" th:classappend="${category=='explore'}?'active':''">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <span th:text="#{explore}">Explore</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="isAuthenticated()">
+                    <a class="nav-link primary px-2" href="/topic-create"
+                       th:classappend="${category=='create'}?'active':''">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                        <span th:text="#{create}">Create</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="isAuthenticated()">
+                    <a class="nav-link success" href="/dashboard.html" >
+                        <i class="fa fa-home mr-1" aria-hidden="true"></i>
+                        <span th:text="#{dashboard}">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" th:classappend="${newNotifNumber>0}?'notifications'" sec:authorize="isAuthenticated()">
+                    <a class="nav-link default" href="/notifications.html">
+                        <i class="fas fa-bell" aria-hidden="true"></i>
+                        <span class="badge badge-pill" th:if="${newNotifNumber!=0}"
+                              th:text="${newNotifNumber}">2</span> <span class="sr-only" th:text="#{new_notifications}">new notifications</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item no-border d-none d-lg-block">
+                    <a class="nav-link px-2">|</a>
+                </li>
+
+                <li class="nav-item mx-2">
+                    <a class="nav-link default" href="/faq.html">
+                        <i class="fa fa-question-circle mr-1" aria-hidden="true"></i>
+                        <span th:text="#{help}">Help</span></a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link default" href="/login.html">
+                        <i class="fa fa-sign-in mr-1" aria-hidden="true"></i>
+                        <span th:text="#{main.signin}">Log in</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link default" href="/registration.html" th:href="@{/registration}">
+                        <i aria-hidden="true" class="fa fa-sign-in-alt mr-1"></i>
+                        <span th:text="#{login.register}">Register</span>
+                    </a>
+                </li>
+
+                <li class="nav-item mx-2" sec:authorize="isAuthenticated()">
+                    <a class="nav-link default px-2" href="/logout">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                        <span th:text="#{logout}">Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div> <!-- collapse -->
+    </nav>
+</header>
+</th:block>
+
+
+<th:block th:fragment="login-nav" xmlns:th="http://www.thymeleaf.org">
+
+    <header class="p-3">
+        <a href="/">
+            <img alt="socatel_logo" id="logo" src="../static/images/socatel-logo-blanc.png"
+                 th:src="@{/images/socatel-logo-blanc.png}">
+        </a>
+    </header>
+
+</th:block>
+
+

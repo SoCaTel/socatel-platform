@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{moderator})">
+    <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <title>SOCATEL</title>
+
+        <!-- /Favicon -->
+        <link href="../static/images/socatel_favicon.png" rel="shortcut icon" th:href="@{favicon.ico}"
+              type="image/x-icon">
+        <link href="../static/images/socatel_favicon.png" rel="apple-touch-icon"
+        / th:href="@{favicon.ico}">
+        <!-- /Favicon -->
+
+        <!-- Global stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+              type="text/css">
+        <link href="../static/global_assets/css/icons/icomoon/styles.css"
+              rel="stylesheet" th:href="@{/global_assets/css/icons/icomoon/styles.css}" type="text/css">
+        <link href="../static/assets/css/bootstrap.min.css" rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"
+              type="text/css">
+        <!-- <link href="../static/assets/css/bootstrap_limitless.min.css" th:href="@{/assets/css/bootstrap_limitless.min.css}" rel="stylesheet" type="text/css"> -->
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+        <!-- <link href="../static/assets/css/colors.min.css" th:href="@{/assets/css/colors.min.css}" rel="stylesheet" type="text/css"> -->
+
+        <!-- /global stylesheets -->
+
+        <!-- Core JS files -->
+        <script src="../static/global_assets/js/main/jquery.min.js"
+                th:src="@{/global_assets/js/main/jquery.min.js}"></script>
+        <script src="../static/global_assets/js/main/bootstrap.bundle.min.js"
+                th:src="@{/global_assets/js/main/bootstrap.bundle.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+        <!-- /core JS files -->
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/sticky.min.js"
+                th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js"
+                th:src="@{/global_assets/js/demo_pages/extra_fab.js}"></script>
+        <!-- <script src=" global_assets/js/plugins/extensions/jquery_ui/interactions.min.js"></script> -->
+        <!-- <script src=" global_assets/js/plugins/forms/selects/select2.min.js"></script>	 -->
+        <script src="../static/global_assets/js/demo_pages/form_select2.js"
+                th:src="@{/global_assets/js/demo_pages/form_select2.js}"></script>
+
+        <!-- /theme JS files -->
+
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+
+    </head>
+</th:block>
+
+
+<body>
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+<!-- Page content -->
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='moderator')"></th:block>
+
+
+    <!-- Main content -->
+    <main class="w-100">
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{moderator} )"></th:block>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.content}">Content moderation</h3>
+
+                            <!--h4 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.content.reported}">Reported content</h4-->
+
+                            <!--ul class="list-group paginate-reports">
+                                <li class="list-group-item m-1 paginate-item" th:each="user_report: ${user_reports}">
+                                    <a data-toggle="modal" href="#"
+                                       data-target="#view-profile">
+                                        <img th:alt="${user_report.reported.username} + ' ' + #{avatar}"
+                                            class="rounded-circle mr-2"
+                                            height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${user_report.reported.picture.id})}" width="36">
+                                        <span th:text="${user_report.reported.username}"></span>
+                                    </a>
+                                    <ul class="list-group">
+                                        <li class="list-group-item m-1" th:each="report : ${user_report.reports}">
+                                            <th:block th:replace="notifications-fragments :: content-list-group-item(report=${report})"></th:block>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul-->
+
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.reported}">Reported</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.contribution}">Contribution</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.accuser}">Accuser</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.reason}">Reason</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.action}">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="report,iStat : ${reports}">
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;">
+                                            <a data-toggle="modal" href="#"
+                                               data-target="#view-profile">
+                                                <img th:alt="${report.reported.username} + ' ' + #{avatar}"
+                                                     class="rounded-circle mr-2"
+                                                     height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${report.reported.picture.id})}" width="36">
+                                                <span th:text="${report.reported.username}"></span>
+                                            </a>
+                                        </td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="${report.getContributionText()}">Otto</td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;">
+                                            <a data-toggle="modal" href="#"
+                                               data-target="#view-profile">
+                                                <img th:alt="${report.accuser.username} + ' ' + #{avatar}"
+                                                     class="rounded-circle mr-2"
+                                                     height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${report.accuser.picture.id})}" width="36">
+                                                <span th:text="${report.accuser.username}"></span>
+                                            </a>
+                                        </td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{${report.reason.toString().replaceAll(' ', '_').toLowerCase()}}">Sexual explicit</td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;">
+                                            <button th:id="'content-moderation-button-' + ${report.id}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#content-moderation-modal"
+                                            th:data-id="${report.id}" th:data-username="${report.reported.username}" th:text="#{moderator.actions}">
+                                                Actions
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="modal fade" id="content-moderation-modal" tabindex="-1" role="dialog" aria-labelledby="content-moderation-modal-label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" th:text="#{moderator.content_actions}">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" th:aria-label="#{close}">
+                                                <span class="sr-only" th:text="#{close}"></span>
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="m-auto mr-2">
+                                                <button id="ban_user_button" class="btn btn-danger first-focusable-element" onclick="perform_post_call('/moderator/ban-user/' + this.getAttribute('data-username'));"
+                                                        th:text="#{moderator.ban_user}">Ban User
+                                                </button>
+                                            </div>
+                                            <div class="m-auto mr-2">
+                                                <button id="mask_content_button" class="btn btn-warning"
+                                                        onclick="perform_post_call('/moderator/mask/' + this.getAttribute('data-id'));"
+                                                        th:text="#{moderator.mask_content}">Mask content
+                                                </button>
+                                            </div>
+                                            <div class="m-auto">
+                                                <button id="ignore_button" class="btn btn-success"
+                                                        onclick="perform_post_call('/moderator/remove-report/' + this.getAttribute('data-id'));"
+                                                        th:text="#{moderator.remove_report}">Mask content
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{close}">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--button class="float-right btn btn-danger mr-1" onclick="perform_post_call('/moderator/ban-user/' + this.getAttribute('data-username'));"
+                                    th:data-username="${report.reported.username}"
+                                    th:text="#{moderator.ban_user}">Ban User
+                            </button>
+                            <button class="float-right btn btn-warning mr-1"
+                                    th:onclick="'javascript:perform_post_call(\'/moderator/mask/' + ${report.id} + '\')'"
+                                    th:text="#{moderator.mask_content}">Mask content
+                            </button-->
+
+                            <!-- <h3 class="text-left mt-3" >Masked content</h3>
+
+                            <ul class="list-group bg-light">
+                                <th:block th:replace="notifications-fragments :: content-list-group-item( action='Unmask Content', notification='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam natus, aliquid cumque sed velit deserunt optio.')"></th:block>
+                                <th:block th:replace="notifications-fragments :: content-list-group-item( action='Unmask Content', notification='Ad praesentium culpa quibusdam, voluptate fuga illo aperiam, alias consequuntur quisquam. Reprehenderit, repellat, quidem.')"></th:block>
+                                <th:block th:replace="notifications-fragments :: content-list-group-item( action='Unmask Content', notification='Alias consequuntur quisquam. Reprehenderit, repellat, quidem. Ad praesentium culpa quibusdam, voluptate fuga illo aperiam. ')"></th:block>
+
+                            </ul> -->
+
+
+                        </div>
+                    </div>
+                </div> <!-- Col End -->
+            </div> <!-- Row End -->
+
+
+                <!-- ROW --->
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.users}">User moderation</h3>
+                                <div class="alert alert-danger">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span class="text-white" aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.users.explanation1}">List of banned users</strong> <span
+                                        th:text="#{moderator.users.explanation2}">you can unban them</span>
+                                </div>
+
+                                <ul class="list-inline paginate-bans">
+                                    <li class="list-inline-item my-2 border border-danger p-2 paginate-item"
+                                        th:each="banned_user : ${banned_users}">
+                                        <a class="text-danger" data-toggle="modal"
+                                        th:href="'#user_modal' + ${banned_user.id}">
+                                            <span th:text="${banned_user.username}">Jon23</span>
+                                            <i class="icon-user-block ml-1" aria-hidden="true"></i></a>
+                                        <th:block
+                                                th:replace="notifications-fragments :: user_actions(user_info=${banned_user})"></th:block>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ROW --->
+                <!--div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.topic}">Topic moderation</h3>
+                                <div class="alert alert-info">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.topic.explanation1}">List of the new topics
+                                        submitted</strong> <span th:text="#{moderator.topic.explanation2}">you can Accept or Reject them.</span>
+                                </div>
+
+                                <ul class="list-group paginate-suggesteds">
+                                    <li class="list-group-item m-1 align-text-top paginate-item"
+                                        th:each="group : ${suggested_groups}">
+                                        <th:block th:replace="notifications-fragments :: topic-list-group-item"></th:block>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+
+
+                <!-- ROW --->
+                <!--div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.process}">Process moderation</h3>
+                                <div class="alert alert-info">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.process.explanation1}">List the status of all topics being
+                                        discussed </strong> <span th:text="#{moderator.process.explanation2}">you can update the status</span>
+                                </div>
+
+                                <ul class="list-group paginate-process">
+                                    <li class="list-group-item m-1 align-text-top paginate-item" th:each="group : ${groups}">
+                                        <th:block th:replace="notifications-fragments :: topic-list-process"></th:block>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+
+                <!-- ROW --->
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.proposals}">Proposals moderation</h3>
+                                <div class="alert alert-info">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.proposals.explanation1}">List of service providers proposals
+                                        ,</strong> <span th:text="#{moderator.service.explanation2}">you can accept or reject them</span>
+                                </div>
+
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.user}">User</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.organisation}">Organisation</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.proposal}">Proposal</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.topic}">Group</th>
+                                        <th scope="col" style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="#{moderator.table.action}">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="post,iStat : ${org_proposals}">
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;">
+                                            <a data-toggle="modal" href="#"
+                                               data-target="#view-profile">
+                                                <img th:alt="${post.author.isAnonymized()} ? #{anonymous} + ' ' + #{avatar} : ${post.author.username} + ' ' + #{avatar}"
+                                                     class="rounded-circle mr-2"
+                                                     height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${post.author.picture.id})}" width="36">
+                                                <span th:text="${post.author.isAnonymized()} ? #{anonymous} : ${post.author.username}"></span>
+                                            </a>
+                                        </td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;"><a th:text="${post.author.organisation.name}" th:href="${post.author.organisation.website}">Organisation</a></td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;" th:text="${post.text}" th:attrappend="lang=${post.group.language.code != lang_code}?${post.group.language.code}">Proposal</td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;">
+                                            <a th:href="@{/topic/{id}(id=${post.group.id})}" target="_blank" th:text="${post.group.name}">
+                                            </a>
+                                        </td>
+                                        <td style="vertical-align: middle; border-top: 1px solid #dee2e6;">
+                                            <button th:id="'proposals-moderation-button-' + ${post.id}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#proposals-moderation-modal"
+                                                    th:data-id="${post.id}" th:data-group-id="${post.group.id}" th:text="#{moderator.actions}">
+                                                Actions
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="modal fade" id="proposals-moderation-modal" tabindex="-1" role="dialog" aria-labelledby="proposals-moderation-modal-label" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" th:text="#{moderator.content_actions}">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" th:aria-label="#{close}">
+                                                    <span class="sr-only" th:text="#{close}"></span>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body row">
+                                                <div class="m-auto mr-2">
+                                                    <button id="accept_proposal_button" class="btn btn-success first-focusable-element"
+                                                            onclick="perform_post_call('/moderator/proposals/' + this.getAttribute('data-id') + '/accept');"
+                                                            th:text="#{moderator.accept_proposal}">accept
+                                                    </button>
+                                                </div>
+                                                <div class="m-auto mr-2">
+                                                    <button id="reject_proposal_button" class="btn btn-danger"
+                                                            onclick="perform_post_call('/moderator/proposals/' + this.getAttribute('data-id') + '/reject');"
+                                                            th:text="#{moderator.reject_proposal}">reject
+                                                    </button>
+                                                </div>
+                                                <div class="m-auto">
+                                                    <a id="view_group_button" class="btn btn-primary" target="_blank"
+                                                            th:text="#{moderator.view_group}">view
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{close}">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ROW --->
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.service}">Service moderation</h3>
+                                <div class="alert alert-info">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.service.explanation1}">List of services being
+                                        processed,</strong> <span th:text="#{moderator.service.explanation2}">you can accept or reject them</span>
+                                </div>
+
+                                <ul class="list-group paginate-services">
+                                    <li class="list-group-item m-1 paginate-item" th:each="service : ${services}">
+                                        <th:block
+                                                th:replace="notifications-fragments :: content-list-service-item"></th:block>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW --->
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.insights}">Insights</h3>
+                                <div class="row">
+                                    <th:block
+                                            th:replace="notifications-fragments :: topic-list-col(title=#{moderator.views_joins_groups}, list=${views_joins_groups}, paginate='paginate-views_joins_groups')"></th:block>
+                                    <th:block
+                                            th:replace="notifications-fragments :: topic-list-col(title=#{moderator.posts_groups}, list=${posts_groups}, paginate='paginate-posts_groups')"></th:block>
+                                </div>
+                                <div class="row">
+                                    <th:block
+                                            th:replace="notifications-fragments :: topic-list-col(title=#{moderator.trending_groups}, list=${trending_groups}, paginate='paginate-trending_groups')"></th:block>
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <span class="text-uppercase font-weight-bold" th:text="#{moderator.popular_themes}">Insight title</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group paginate-themes" th:if="${popular_themes != null}">
+                                                    <li class="list-group-item m-1 paginate-item" th:each="theme : ${popular_themes}">
+                                                        <h4>
+                                                            # <span th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">Lorem ipsum dolor sit amet</span>
+                                                        </h4>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <th:block
+                                            th:replace="notifications-fragments :: topic-list-col(title=#{moderator.popular_groups_language}, list=${popular_groups_language}, paginate='paginate-popular_groups_language')"></th:block>
+                                    <th:block
+                                            th:replace="notifications-fragments :: topic-list-col(title=#{moderator.popular_groups_locality}, list=${popular_groups_locality}, paginate='paginate-popular_groups_locality')"></th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /main content -->
+        </div>
+    <!-- /main content -->
+    </main>
+</div>
+<!-- /page content -->
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

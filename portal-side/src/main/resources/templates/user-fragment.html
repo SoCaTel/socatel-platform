@@ -1,0 +1,150 @@
+<th:block th:fragment="modal" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="modal fade modal-detail-user" data-user-id="14"
+         th:data-user-id="${user_info.id}" th:id="'view-profile' + ${user_info.id}">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5> -->
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}"></span>
+                    </button>
+                </div>
+                <div class="modal-body text-center p-3">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-12 mb-2">
+                                <img th:alt="${user_info.username} + ' ' + #{avatar}" class="rounded-circle"
+                                     height="170" src="../static/images/demo/face8.jpg" th:src="@{/show-image/{id}(id=${user_info.picture.id})}"
+                                     width="170">
+                                <h5 class="font-weight-bold mb-2" th:text="${user_info.username}">Julia365</h5>
+                            </div>
+
+                            <div class="col-6 p-2 text-left" style="margin: auto" >
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><span class="d-block">
+                                        <th:block th:replace="user-fragment :: switch-user-modal-icon(profile=${user_info.profile})"></th:block>
+                                        <span th:text="#{${user_info.profile.toString().replaceAll(' ', '_').toLowerCase()}}">Senior</span></span>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <span class="d-block">
+                                            <i class="fa fa-home mr-md-2" aria-hidden="true"></i>
+                                            <span th:text="#{${user_info.locality.name.replaceAll(' ', '_').toLowerCase()}}">Budapest</span>
+                                        </span>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <span class="d-block">
+                                            <i class="fa fa-flag-o mr-md-2" aria-hidden="true"></i>
+                                            <span th:text="#{${user_info.firstLang.name.replaceAll(' ', '_').toLowerCase()}}">English</span>
+                                        </span>
+                                    </li>
+                                    <li class="list-inline-item"><span class="d-block">
+                                            <span th:text="#{user_modal.member_since}">Member since</span>
+                                            <span th:text="${user_info.fancyTimestamp()}">September 04th 2019</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6 p-2 text-right" style="margin: auto" >
+                                <ul class="no-dot">
+                                    <li class="list-item"><span th:text="#{user_modal.topics_created}">Topics she has created</span>
+                                        : <span th:text="${user_info.countTopicsCreated()}">5</span></li>
+                                    <li class="list-item"><span th:text="#{user_modal.topics_contributed}">Topics she is subscribed to</span>
+                                        : <span th:text="${user_info.countTopicsContributed()}">7</span></li>
+                                    <li class="list-item"><span th:text="#{user_modal.topics_subscribed}">Topics she is subscribed to</span>
+                                        : <span th:text="${user_info.countTopicsSubscribed()}">7</span></li>
+                                </ul>
+                            </div>
+                            <div class="col-12" sec:authorize="isAuthenticated()" th:if="${!user.equals(user_info)}">
+
+                                <div class="alert alert-info d-none" id="alert-14" th:id="'alert-' + ${user_info.id}">
+                                    <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
+                                    <strong th:text="#{user_modal.message_sent}">Message sent ! </strong>
+                                </div>
+
+                                <div class="form-group text-left mt-1" id="form-group-14"
+                                     th:id="'form-group-' + ${user_info.id}">
+                                    <label th:for="'message-' + ${user_info.id}"><span th:text="#{user_modal.send_message_to}">Send a message to</span> <span th:text="${user_info.username}"></span></label>
+                                    <textarea class="form-control first-focusable-element" id="message-14"
+                                              required="required" rows="3" th:id="'message-' + ${user_info.id}"></textarea>
+                                    <button class="btn btn-primary border-1 my-2 p-1 w-100 send-message"
+                                            th:data-receiver-id="${user_info.id}"
+                                            th:data-sender-id="${user.id}"><i class="far fa-envelope mx-1" aria-hidden="true"></i><span
+                                            th:text="#{user_modal.send_message}">Send a message</span></button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:each="user_info : ${users_list}" th:fragment="create-users-modals" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:replace="user-fragment :: modal(user_info=${user_info})"></th:block>
+</th:block>
+
+<th:block th:fragment="list-users-modal" xmlns:th="http://www.thymeleaf.org">
+    <div th:id="${id}" class="modal fade">
+        <div class="modal-dialog" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="${title}">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <th:block th:replace="user-fragment :: list-users(users_list=${users_list})"></th:block>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="list-users" xmlns:th="http://www.thymeleaf.org">
+    <div class="alert alert-danger text-center" th:if="${users_list.isEmpty()}">
+        <strong th:text="#{list_users_modal.empty}"></strong>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item p-2" th:each="u : ${users_list}">
+            <!--a data-toggle="modal" href="#"
+               th:data-target="${!u.isAnonymized()}?'#view-profile' + ${u.id} : ''"><img
+                    alt="" class="float-right rounded-circle"
+                    height="36" src="../static/images/demo/face8.jpg"
+                    th:src="@{/show-image/{id}(id=${u.id})}" width="36"></a-->
+            <div class="container">
+                <a data-toggle="modal" data-dismiss="modal" href="#"
+                   th:data-target="${!u.isAnonymized()}?'#view-profile' + ${u.id} : ''">
+                    <img th:alt="${u.username} + ' ' + #{avatar}" class="rounded-circle mr-2" height="40"
+                         th:src="@{/show-image/{id}(id=${u.picture.id})}" width="40">
+                </a>
+                <a class="mr-2" data-dismiss="modal" data-toggle="modal" href="#" th:data-target="${!u.isAnonymized()} ? '#view-profile' + ${u.id} : ''" th:text="${u.isAnonymized()} ? #{anonymous} : ${u.username}"></a>
+                <th:block th:replace="user-fragment :: switch-user-modal-icon(profile=${u.profile})"></th:block>
+                <!--th:block th:replace="user-fragment :: modal(user_info=${u})"></th:block-->
+            </div>
+        </li>
+    </ul>
+</th:block>
+
+<th:block th:fragment="switch-user-modal-icon" th:switch="${profile}" xmlns:th="http://www.thymeleaf.org">
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).OLDER_PERSON}" class="fas fa-user mr-md-2" aria-hidden="true"></i>
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).FAMILY_FRIEND}" class="fas fa-heart mr-md-2" aria-hidden="true"></i>
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).CARE_ASSISTANT}" class="fas fa-hands-helping mr-md-2" aria-hidden="true"></i>
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).HEALTHCARE_SPECIALIST}" class="fas fa-user-md mr-md-2" aria-hidden="true"></i>
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).SERVICE_PROVIDER}" class="fas fa-clinic-medical mr-md-2" aria-hidden="true"></i>
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).POLICY_MAKER}" class="fas fa-university mr-md-2" aria-hidden="true"></i>
+    <i th:case="${T(com.socatel.utils.enums.ProfileEnum).OTHER}" class="fas fa-question mr-md-2" aria-hidden="true"></i>
+</th:block>

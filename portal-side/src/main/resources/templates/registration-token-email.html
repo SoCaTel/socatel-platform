@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{badUser.resendRegistrationToken})">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <title>SoCaTel</title>
+
+        <!-- CSRF -->
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <!-- /CSRF -->
+
+        <!-- Special chars -->
+        <!-- <meta http-equiv="content-type" content="text/html;charset=utf-8" /> -->
+        <!-- /Special chars -->
+
+        <!-- Global stylesheets -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"> -->
+        <!-- <link th:href="@{https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700}" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i"
+              rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i}"
+              type="text/css">
+
+
+        <script src="https://kit.fontawesome.com/16b12da617.js"
+                th:src="@{https://kit.fontawesome.com/16b12da617.js}"></script>
+
+        <!-- <link href="../static/global_assets/css/icons/icomoon/styles.css" th:href="@{/global_assets/css/icons/icomoon/styles.css}" rel="stylesheet" type="text/css">
+        <link href="../static/global_assets/css/icons/fontawesome/styles.min.css" th:href="@{/global_assets/css/icons/fontawesome/styles.min.css}" rel="stylesheet" type="text/css">
+         -->
+
+        <!-- <link href="../static/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"> -->
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              rel="stylesheet"
+              th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+        <!-- <link href="../static/assets/css/bootstrap_limitless.min.css" th:href="@{/assets/css/bootstrap_limitless.min.css}" rel="stylesheet" type="text/css"> -->
+
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+        <!-- <link href="../static/assets/css/colors.min.css" th:href="@{/assets/css/colors.min.css}" rel="stylesheet" type="text/css"> -->
+
+        <!-- <link href="../static/assets/css/bootstrap-tagsinput.css" th:href="@{/assets/css/bootstrap-tagsinput.css}" rel="stylesheet" type="text/css"> -->
+
+        <!-- <link href="../static/front/css/style.css" rel="stylesheet" th:href="@{/front/css/style.css}"> -->
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+        <!-- /global stylesheets -->
+
+
+        <!-- Core JS files -->
+        <!-- <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+        <script crossorigin="anonymous"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>
+
+
+        <script crossorigin="anonymous"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
+        <!--
+        <script src="../static/global_assets/js/main/jquery.min.js" th:src="@{/global_assets/js/main/jquery.min.js}" ></script>
+        <script src="../static/global_assets/js/main/bootstrap.bundle.min.js" th:src="@{/global_assets/js/main/bootstrap.bundle.min.js}" ></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js" th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}" ></script>
+        -->
+        <!-- /core JS files -->
+
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/sticky.min.js"
+                th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js"
+                th:src="@{/global_assets/js/demo_pages/extra_fab.js}"></script>
+        <!-- /theme JS files -->
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/custom.js}"></script>
+
+
+    </head>
+</th:block>
+
+<body id="login">
+<main>
+<div class="container" id="content" tabindex="-1">
+<div class="row pt-2">
+        <div class="col-8 h-75 offset-2 p-5 card centered text-center">
+        <h1 th:text="#{rte.description}">Description</h1>
+        <a href="/login">
+                <p class="alert alert-danger my-2 d-block" th:if="${(param.error != null) && (param.error[0] == '1')}"
+                th:text="#{rte.unexisting_email}">error: email doesn't exist, go register</p>
+        </a>
+        <form method="post" th:action="@{/registration-token-email}" th:object="${email}">
+                <label for="email">
+                        <span th:text="#{rte.email}">email</span>
+                        <span class="alert alert-danger my-2 d-block" th:if="${(param.error != null) && (param.error[0] == '0')}"
+                        th:text="#{user_email.format}">error: wrong email format</span>
+                </label>
+                <input autocomplete="email" id="email" name="email" placeholder="example@test.com" th:field="*{value}" type="email"
+                value=""/>
+                <button th:text="#{send}" type="submit">send</button>
+        </form>
+        </div>
+</div>
+</div>
+</main>
+</body>
+</html>
+
+

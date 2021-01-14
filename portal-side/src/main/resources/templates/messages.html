@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=#{messages})">
+</th:block>
+
+<body>
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+
+<!-- Page content -->
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='messages')"></th:block>
+
+
+    <!-- Main content -->
+    <main class="w-100">
+        <div class="content-wrapper">
+            <div id="content" tabindex="-1" class="container-fluid chat-manager">
+
+                <div class="row">
+                    <div class="col-8">
+                        <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{messages} )"></th:block>
+                    </div>
+
+                    <div class="col-4 text-right">
+                        <a class="btn btn-warning no-margin" data-toggle="modal" href='#modal-search-user'>
+                            <i class="fas fa-pen-square mr-1" aria-hidden="true"></i>
+                            <span th:text="#{messages.new_discussion}">New Discussion</span>
+                        </a>
+
+                        <div class="modal fade" id="modal-search-user">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="dialog" tabindex="-1" aria-modal="true">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" th:text="#{messages.new_discussion}">New Discussion</h4>
+                                        <button class="close" data-dismiss="modal" type="button">
+                                            <span aria-hidden="true">&times;</span>
+                                            <span class="sr-only" th:text="#{close}">Close</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <strong th:text="#{messages.indicate_username}" class="float-left">Please indicate the name of the user
+                                            you want to discuss with : </strong>
+
+                                        <div class="alert alert-danger d-none" id="searchNotification">
+                                            <button class="close" data-dismiss="alert" type="button">
+                                                <span class="text-white" aria-hidden="true">&times;</span>
+                                                <span class="sr-only" th:text="#{close}">Close</span>
+                                            </button>
+                                            <strong th:text="#{messages.indicate_username2}">Your search must be superior
+                                                than 2 characters</strong>
+                                        </div>
+
+                                        <div class="input-group my-2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user" aria-hidden="true"></i></span>
+                                            </div>
+                                            <input aria-describedby="basic-addon1"  class="form-control first-focusable-element"
+                                                id="userSearch" th:placeholder="#{login.username}"
+                                                type="text">
+
+
+                                        </div>
+
+                                        <ul id="results"></ul>
+
+                                    </div> <!-- modal-body -->
+                                    <!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div> -->
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+
+                    </div>
+                </div><!-- /.row -->
+
+
+                <div class="row mt-2">
+                    <div class="col-12 col-sm-3 recipients p-3">
+
+                        <div class="_card-header pointer">
+                            <h3 class="h6 m-0">
+                                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseChats">
+                                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    <span th:text="#{messages.opened_conversations}">Opened conversations</span>
+                                </button>
+                            </h3>
+                        </div>
+
+                        <div class="collapse show" id="collapseChats">
+                            <ul class="list-group">
+                                <li class="recipient list-group-item py-2 "
+                                    th:classappend="${receiver != null && receiver.equals(c.getOtherUser(user))}?'active':'unactive'"
+                                    th:each="c : ${chatsPage.content}">
+                                    <th:block
+                                            th:replace="messages-fragment :: recipient(chat_person = ${c.getOtherUser(user)}, bio = 'Lorem ipsum dolor sit amet')"></th:block>
+                                </li>
+                            </ul>
+                        </div> <!-- collapse -->
+
+                    </div> <!-- col-3 (left) -->
+
+                    <!-- Right : Discussion -->
+                    <div class="col-12 col-sm-9 messages bg-white p-3">
+
+                        <div class="alert alert-info d-none" data-chat-id="1" id="newMessageNotification"
+                            th:data-chat-id="${chat.id}" th:if="${receiver != null}">
+
+                            <button class="btn btn-info float-right" onClick="window.location.reload();" type="button">
+                                <i class="fas fa-sync fa-spin m-1 pointer" aria-hidden="true"></i>
+                                <span th:text="#{refresh}">Refresh </span>
+                            </button>
+                            <strong th:text="#{messages.new_message}">New messages have been posted on this discussion
+                                !</strong><br><span th:text="#{topic.step1.new_comments2}">You should refresh the page to see them.</span>
+                        </div>
+
+
+                        <div th:if="${receiver != null}">
+                            <!-- Conversation -->
+                            <div class="card-header header-elements-inline">
+                                <span class="card-title"><span th:text="#{message.conversation}">Conversation with</span>&nbsp;<span
+                                        class="card-title" th:text="${receiver.username}">James SMITH</span></span>
+                            </div>
+                            <!-- Conversation -->
+
+                            <div>
+
+                                <!-- MESSAGES LOOP-->
+                                <div class="media-list media-chat media-chat-scrollable mb-3 pt-3"
+                                    th:each="message, iStat : ${messages}">
+                                    <!--li class="media content-divider justify-content-center text-muted mx-0">Monday, Feb 10</li-->
+
+                                    <!-- NON REVERSE MODAL IS SET IN LEFT COLUMN / DISCUSSIONS LIST -->
+                                    <div class="media mb-2"
+                                        th:if="${#authentication.getPrincipal().getUsername()} != ${message.message.user.username}">
+                                        <div class="mr-3">
+                                            <a data-toggle="modal" href="#"
+                                            th:data-target="'#view-profile' + ${message.message.user.id}">
+                                                <img th:alt="${message.message.user.username} + ' ' + #{avatar}"
+                                                    class="rounded-circle"
+                                                    height="40" src="../static/images/demo/face11.jpg" th:src="@{/show-image/{id}(id=${message.message.user.picture.id})}" width="40">
+                                            </a>
+
+                                        </div>
+
+                                        <div>
+                                            <div class="media-chat-item" style="white-space: pre-wrap;" th:text="${message.message.text}">Below mounted
+                                                advantageous spread yikes bat stubbornly crud a and a excepting
+                                            </div>
+                                            <div class="small text-muted mt-2">
+                                                <i class="fas fa-clock mr-1 text-muted" aria-hidden="true"></i><span
+                                                    th:text="${message.message.fancyTimestamp()}">Mon, 9:54 am</span>
+                                                <br>
+                                                <th:block th:replace="messages-fragment :: documents(documents=${message.documents})"></th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--  REVERSE th:if="${#authentication.getPrincipal().getUsername()} == ${message.user.username}" -->
+                                    <div class="media mb-2 media-chat-item-reverse text-right"
+                                        th:if="${#authentication.getPrincipal().getUsername()} == ${message.message.user.username}">
+
+                                        <div class="w-100">
+                                            <div class="media-chat-item" style="white-space: pre-wrap;" th:text="${message.message.text}">Far squid and
+                                                that hello .
+                                            </div>
+                                            <div class="small text-muted mt-2">
+                                                <span th:text="${message.message.fancyTimestamp()}">Mon, 10:24 am</span>
+                                                <i aria-hidden="true" class="fas fa-clock ml-1 text-muted"></i>
+                                                <br>
+                                                <th:block th:replace="messages-fragment :: documents(documents=${message.documents})"></th:block>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="ml-3">
+                                            <a data-toggle="modal" href="#"
+                                            th:data-target="'#view-profile' + ${message.message.user.id}">
+                                                <img th:alt="#{messages.your_avatar}"
+                                                    class="rounded-circle float-right"
+                                                    height="40" src="../static/images/demo/face1.jpg" th:src="@{/show-image/{id}(id=${message.message.user.picture.id})}" width="40">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- MESSAGES -->
+                            </div> <!-- flow -->
+
+
+                            <!-- FRAGMENT MODAL TO DISPLAY THE ATTACHED FILES -->
+                            <th:block th:replace="topic-sidebar-fragment :: modal-view-file"></th:block>
+
+
+                            <!-- MESSAGE FORM -->
+                            <!-- <th:block th:replace="messages-fragment :: form">                            -->
+                            <form enctype="multipart/form-data" method="post"
+                                th:action="@{/messages/{username}(username=${receiver.username})}" th:object="${message}">
+
+                                <textarea class="form-control mb-3" cols="1" name="enter-message" placeholder="Enter your message..."
+                                        rows="3" th:field="*{text}"
+                                        th:placeholder="#{message.placeholder}"></textarea>
+
+                                <div class="my-2">
+                                    <strong th:text="#{create_topic.file}">Attach files :</strong>
+
+                                    <div class="custom-file">
+                                        <input class="custom-file-input" id="file" multiple name="file" type="file"/>
+                                        <label class="custom-file-label" for="file" th:text="#{create_topic.choose_file}">Choose
+                                            File</label>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary float-right" th:text="#{send}" type="submit">Send</button>
+
+
+                            </form>
+                            <!-- </th:block> -->
+                            <!-- MESSAGE FORM -->
+                            <th:block th:replace="user-fragment :: modal(user_info=${user})"></th:block>
+                            <th:block th:replace="user-fragment :: modal(user_info=${receiver})"></th:block>
+                        </div>
+
+
+                        <div class="alert alert-info" th:unless="${receiver != null}">
+                            <button class="close" data-dismiss="alert" type="button">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only" th:text="#{close}">Close</span></button>
+                            <strong th:text="#{messages.not_selected_conversation}">Title!</strong>
+                        </div>
+                    </div>    <!-- col-8 ( right ) -->
+                </div>    <!-- row with cols -->
+
+            </div>
+        </div>
+        <!-- Main content -->
+    </main>
+
+</div> <!-- page  content -->
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+
+</body>
+</html>

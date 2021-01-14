@@ -1,0 +1,117 @@
+<th:block th:fragment="head" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <title th:text="${title == 'SoCaTel' ? title : title + ' - SoCaTel'}">SoCaTel</title>
+
+        <!-- CSRF -->
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <!-- /CSRF -->
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,700i"
+              rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,700i}"
+              type="text/css">
+
+
+        <!-- <script src="https://kit.fontawesome.com/16b12da617.js" th:src="@{https://kit.fontawesome.com/16b12da617.js}"></script> -->
+        <script crossorigin="anonymous" src="https://kit.fontawesome.com/6b6644414b.js" th:src="@{https://kit.fontawesome.com/6b6644414b.js}"></script>
+
+
+        <!-- <link href="../static/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"> -->
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              rel="stylesheet"
+              th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+        <!-- <link href="../static/assets/css/bootstrap_limitless.min.css" th:href="@{/assets/css/bootstrap_limitless.min.css}" rel="stylesheet" type="text/css"> -->
+
+
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/socatel-responsive.min.css" rel="stylesheet"
+              th:href="@{/assets/css/socatel-responsive.min.css}" type="text/css">
+
+        <!--link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}"-->
+
+        <!--link href="../static/assets/css/emojionearea.min.css" rel="stylesheet"
+              th:href="@{/assets/css/emojionearea.min.css}" type="text/css"-->
+        <!-- /global stylesheets -->
+
+
+        <!-- Core JS files -->
+        <script crossorigin="anonymous"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                src="https://code.jquery.com/jquery-3.4.1.min.js" th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>
+
+
+        <script crossorigin="anonymous"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+
+
+        <th:block th:if="${#httpServletRequest.requestURI} =='/'">
+            <script src="../static/front/lib/wow/wow.min.js" th:src="@{/front/lib/wow/wow.min.js}"></script>
+            <script src="../static/front/contactform/contactform.js"
+                    th:src="@{/front/contactform/contactform.js}"></script>
+            <script src="../static/front/lib/counterup/counterup.min.js"
+                    th:src="@{/front/lib/counterup/counterup.min.js}"></script>
+        </th:block>
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+
+        <!-- <script src="../static/global_assets/js/plugins/ui/sticky.min.js" th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js" th:src="@{/global_assets/js/demo_pages/extra_fab.js}" ></script> -->
+        <!-- /theme JS files -->
+
+        <th:block th:if="${#httpServletRequest.requestURI} =='/dashboard'">
+            <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                    th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        </th:block>
+
+
+        <script src="../static/assets/js/paginate.js" th:src="@{/assets/js/paginate.js}"></script>
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/custom.js}"></script>
+        <script src="../static/assets/js/vote.js" th:src="@{/assets/js/vote.js}"></script>
+        <script src="../static/assets/js/modals.js" th:src="@{/assets/js/modals.js}"></script>
+        <!-- <script src="../static/assets/js/hotjar.js" th:src="@{/assets/js/hotjar.js}" ></script> -->
+
+        <!--script src="../static/assets/js/emojionearea.min.js" th:src="@{/assets/js/emojionearea.min.js}"></script-->
+
+
+    </head>
+</th:block>
+
+
+

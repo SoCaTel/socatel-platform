@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=#{dashboard})">
+</th:block>
+
+
+<body>
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+<!-- Page content -->
+
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='dashboard')"></th:block>
+
+    <!-- Main content -->
+    <main class="w-100">
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = '' )"></th:block>
+
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="card mb-3">
+
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseTopics">
+                                        <span th:text="#{topics}"></span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+
+                            <!-- <div class="card-header header-elements-inline">
+                                    <span class="text-uppercase font-weight-bold" th:text="#{topics}">Topics</span>
+                                    <i class="fas fa-bars pointer" data-toggle="collapse" href="#collapseTopics"></i>
+                                    <hr>
+                                <h3><button  data-toggle="collapse" href="#collapseTopics">
+                                <span class="text-uppercase font-weight-bold" th:text="#{topics}">Topics</span>
+                                <i class="fas fa-bars pointer"></i>
+                            </button>
+                            </h3>
+                            </div> -->
+
+                            <div class="collapse show" id="collapseTopics">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item"
+                                        th:each="groupUserRelation, iStat : ${groupUserRelationsPage.content}">
+
+                                        <i class="fas fa-tag" aria-hidden="true"></i> <a
+                                            th:href="@{/topic.html/{id}(id=${groupUserRelation.group.id})}"
+                                            th:text="${groupUserRelation.group.name}">The quality of food delivery
+                                        services</a>
+                                        - <span class="text-muted small"
+                                                th:text="#{${groupUserRelation.relation.toString().replaceAll(' ', '_').toLowerCase()}}">[Topics I contribute to]</span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="card-footer bg-white text-right">
+
+                                <a class="btn btn-outline-primary" href="topics-posted.html"><strong th:text="#{see_all}">See
+                                    all</strong> <span class="sr-only" th:text="#{topics}"></span></a>
+
+                                <!-- <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="topics-posted.html"><strong th:text="#{see_all}">See all</strong></a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                        <!-- /latest posts -->
+                        <div class="card">
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseHistory">
+                                        <span th:text="#{history}"></span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <div class="collapse show" id="collapseHistory" th:if="${!historyPage.isEmpty()}">
+                                <!--p th:if="${historyPage.number eq 0}" th:text="#{dashboard.no_history}">You have no history</p-->
+                                <ul class="list-group">
+                                    <li class="list-group-item" th:each="history, iStat : ${historyPage.content}">
+
+                                        <i class="far fa-comment font-weight-bold text-primary" aria-hidden="true"
+                                        th:if="${history.type} == ${T(com.socatel.utils.enums.HistoryTypeEnum).POSTED_GROUP}"></i>
+                                        <i class="far fa-eye font-weight-bold text-warning" aria-hidden="true"
+                                        th:if="${history.type} == ${T(com.socatel.utils.enums.HistoryTypeEnum).VIEWED_GROUP}"></i>
+                                        <i class="fas fa-heart font-weight-bold text-danger" aria-hidden="true"
+                                        th:if="${history.type} == ${T(com.socatel.utils.enums.HistoryTypeEnum).SUBSCRIBED_GROUP}"></i>
+
+                                        <i class="far fa-circle font-weight-bold text-success" aria-hidden="true"
+                                        th:if="${history.type != T(com.socatel.utils.enums.HistoryTypeEnum).POSTED_GROUP && history.type != T(com.socatel.utils.enums.HistoryTypeEnum).VIEWED_GROUP && history.type != T(com.socatel.utils.enums.HistoryTypeEnum).SUBSCRIBED_GROUP}"></i>
+
+                                        <span th:text="#{${history.text}} + ' ' + ${history.getCorrespondingName()}">You posted a new comment in topic 1234</span>
+                                        - <span class="text-muted small" th:text="${history.fancyTimestamp()}">12:47</span>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="card-footer bg-white text-right">
+
+                                <a class="btn btn-outline-primary" href="history.html"><strong th:text="#{see_all}">See
+                                    all</strong> <span class="sr-only" th:text="#{history}"></span></a>
+
+                                <!-- <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="history.html"><strong th:text="#{see_all}">See all</strong></a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="card">
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseMessages">
+                                        <span th:text="#{last_messages}"></span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <!-- <div class="flex-fill overflow-auto"> -->
+
+
+                            <!-- Table -->
+                            <div class="collapse show" id="collapseMessages">
+                                <!--p th:if="${chatsPage.number == 0}" th:text="#{dashboard.no_messages}">You have no messages</p-->
+                                <ul class="list-group">
+                                    <li class="list-group-item" th:classappend="${chat.hasNewMessages(user)}?'unread'"
+                                        th:each="chat, iStat : ${chatsPage.content}">
+
+                                        <img alt=""
+                                            class="rounded-circle mr-1"
+                                            data-toggle="modal" height="24"
+                                            src="../static/images/demo/face3.jpg" th:data-target="'#view-profile' + ${chat.getOtherUser(user).id}"
+                                            th:src="@{/show-image/{id}(id=${chat.getOtherUser(user).picture.id})}" width="24">
+
+                                        <a th:href="@{/messages/{username}(username=${chat.getOtherUser(user).username})}">
+                                            <span th:text="${chat.getOtherUser(user).username}">James Alex</span>
+                                        </a>
+
+                                        <span class="badge border-1 border-danger text-danger mr-2"
+                                            th:if="${chat.hasNewMessages(user)}" th:text="#{new}">New</span>
+
+                                        - <span class="text-muted small" th:text="${chat.fancyTimestamp()}">11:09 pm</span>
+
+                                        <th:block
+                                                th:replace="user-fragment :: modal(user_info=${chat.getOtherUser(user)})"></th:block>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /table -->
+
+
+                            <!-- /single line -->
+
+                            <!-- </div> -->
+                            <div class="card-footer bg-white text-right">
+                                <a class="btn btn-outline-primary" href="messages.html"><strong th:text="#{see_all}">See
+                                    all</strong> <span class="sr-only" th:text="#{messages}"></span></a>
+                                <!-- <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="messages.html"><strong th:text="#{see_all}">See all</strong></a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                        <div class="card">
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseNotifications">
+                                        <span th:text="#{my_notifications}"></span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <div class="collapse show" id="collapseNotifications">
+                                <ul class="list-group" th:if="${!notificationsPage.isEmpty()}">
+                                    <li class="list-group-item"
+                                        th:each="notification, iStat : ${notificationsPage.content}">
+
+                                        <span class="badge border-1 border-danger text-danger mr-2" th:if="${notification.isNewNotification()}"
+                                            th:text="#{new}">NEW</span><a
+                                            class="feed-timestamp font-size-m" th:classappend="${notification.isNewNotification()?'font-weight-bold':''}"
+                                            th:href="@{/notifications/click/{notification_id}(notification_id=${notification.id})}"><span
+                                            th:text="#{${notification.text}}">Your solution to topic 1254 is now the most voted</span>
+                                        <span th:text="${notification.reference}"></span></a>
+                                        - <span class="text-muted small" th:text="${notification.fancyTimestamp()}">4 minutes ago</span>
+
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="card-footer bg-white text-right">
+
+                                <a class="btn btn-outline-primary" href="notifications.html"><strong th:text="#{see_all}">See
+                                    all</strong> <span class="sr-only" th:text="#{my_notifications}"></span></a>
+
+                                <!-- <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="notifications.html"><strong th:text="#{see_all}">See all</strong></a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <th:block th:if="${groups_skills != null}"
+                            th:replace="notifications-fragments :: topic-list-col(title=#{profile.skills_groups}, list=${groups_skills}, paginate='paginate-skills')"></th:block>
+                    <th:block th:if="${groups_themes != null}"
+                            th:replace="notifications-fragments :: topic-list-col(title=#{profile.themes_groups}, list=${groups_themes}, paginate='paginate-themes')"></th:block>
+                </div>
+                <div class="row">
+                    <th:block th:if="${services_user != null}"
+                            th:replace="notifications-fragments :: service-list-col(title=#{profile.user_services}, list=${services_user})"></th:block>
+                    <th:block th:if="${groups_user != null}"
+                            th:replace="notifications-fragments :: topic-list-col(title=#{profile.user_groups}, list=${groups_user}, paginate='paginate-topic-list')"></th:block>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+</div>
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+
+</body>
+</html>

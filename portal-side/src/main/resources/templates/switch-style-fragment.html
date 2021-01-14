@@ -1,0 +1,25 @@
+<th:block th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
+    <div id="switcher-tabs">
+
+        <div  class="switcher usermenu d-block d-md-none" th:if="${showusermenu != null && showusermenu == 'true' }">
+            <a id="in-page-menu-button" aria-controls="in-page-menu" aria-haspopup="menu" class="btn btn-primary no-rounded sidebar-mobile-main-toggle" href="#">
+                <i class="fas fa-user" aria-hidden="true"></i>
+                <span class="sr-only" th:text="#{usermenu}">usermenu</span>
+            </a>
+        </div>
+
+        <!--div class="switcher">
+            <a class="btn btn-secondary no-rounded" href="javascript:void(0)" onclick="dark_toggle();return false;"
+               title="Toggle night mode">
+                <i class="fas fa-adjust"></i>
+            </a>
+        </div>
+
+        <div class="switcher">
+            <a class="btn btn-secondary no-rounded" href="javascript:void(0)" onclick="font_size();return false;"
+               title="Toggle font size">
+                <i class="fas fa-font"></i>
+            </a>
+        </div-->
+    </div>
+</th:block>

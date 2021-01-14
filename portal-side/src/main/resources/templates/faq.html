@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=#{main.contact.text2})">
+</th:block>
+
+<body class="bg-white">
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='faq')"></th:block>
+
+
+<!-- Page content -->
+<div class="_page-content">
+
+    <th:block th:replace="switch-style-fragment :: menu"></th:block>
+
+    <main>
+        <div class="container" id="content" tabindex="-1">
+
+            <a id="top"></a>
+
+            <div class="row justify-content-center title-row mb-4">
+                <div class="col-11 col-md-10 px-0 p-md-2">
+                    <h1 class="mb-1">Help page</h1>
+                    <h2 class="mb-5 text-pink">Need help ? You are in the right place.</h2>
+
+                    <form action="#">
+
+                        <div class="input-group input-group-lg" role="search">
+
+                            <label class="input-group-prepend mb-0" for="query">
+                                <span class="input-group-text"><i class="fas fa-search text-muted" aria-hidden="true"></i></span>
+                                <span class="sr-only" th:text="#{find_topic.search}"></span>
+                            </label>
+
+                            <input id="query" class="form-control" name="query"
+                                placeholder="Need help ?" type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-lg no-margin" th:text="#{find_topic.search}" type="submit">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="row py-3 text-center">
+
+
+                <a class="d-inline-block help explorer p-2 col-6 col-md-3" href="#explorer">
+                    <i class="fas fa-star fa-2x border-3 rounded-round p-3 mb-3 mt-1" aria-hidden="true"></i>
+                    <h2>EXPLORER</h2>
+                    <span>Browse articles</span>
+                </a>
+
+                <a class="d-inline-block help create p-2 col-6 col-md-3" href="#create">
+                    <i class="fas fa-pen-square fa-2x border-3 rounded-round p-3 mb-3 mt-1" aria-hidden="true"></i>
+                    <h2>CREATE</h2>
+                    <span>Browse articles</span>
+                </a>
+
+                <a class="d-inline-block help dashboard p-2 col-6 col-md-3" href="#dashboard">
+                    <i class="fas fa-home fa-2x border-3 rounded-round p-3 mb-3 mt-1" aria-hidden="true"></i>
+                    <h2>DASHBOARD</h2>
+                    <span>Open a ticket</span>
+                </a>
+
+                <a class="d-inline-block help cocreation p-2 col-6 col-md-3" href="#cocreation">
+                    <i class="fas fa-star fa-2x border-3 rounded-round p-3 mb-3 mt-1" aria-hidden="true"></i>
+                    <h2>CO-CREATION</h2>
+                    <span>Browse articles</span>
+                </a>
+
+
+            </div>
+
+            <!-- EXPLORER / CREATE / DASHBOARD / CO-CREATION -->
+
+            <a id="explorer"></a>
+            <div class="row justify-content-center my-4 my-md-5">
+                <div class="col-11 col-md-10 card">
+
+                    <a class="d-md-none" href="#top"><i class="fas fa-chevron-up float-right m-2" aria-hidden="true"></i></a>
+
+                    <h3 class="text-danger my-3">EXPLORER</h3>
+                    <div class="card-group-control card-group-control-right">
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question6">
+                                        Their could can widen ten she any?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question6">
+                                <p class="card-body">
+                                    As so we smart those money in. Am wrote up whole so tears sense oh. Absolute required of
+                                    reserved in offering no. How sense found our those gay again taken the. Had mrs outweigh
+                                    desirous sex overcame. Improved property reserved disposal do offering me. Allow miles
+                                    wound place the leave had. To sitting subject no improve studied limited indulgence
+                                    connection.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: May 2, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question7">
+                                        Her raising and himself pasture believe?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question7">
+                                <p class="card-body">
+                                    He unaffected sympathize discovered at no am conviction principles. Girl ham very how
+                                    yet hill four show. Meet lain on he only size. Branched learning so subjects mistress do
+                                    appetite jennings be in. Esteems up lasting no village morning do offices. Settled
+                                    wishing ability musical may another set age. Diminution my apartments he attachment is
+                                    entreaties.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: May 1, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question8">
+                                        And total least her two whose great?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question8">
+                                <p class="card-body">
+                                    Do in laughter securing smallest sensible no mr hastened. As perhaps proceed in in
+                                    brandon of limited unknown greatly. Distrusts fulfilled happiness unwilling as explained
+                                    of difficult. No landlord of peculiar ladyship attended if contempt ecstatic. Loud wish
+                                    made on is am as hard. Court so avoid in plate hence. Of received mr breeding concerns
+                                    peculiar.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 24, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header_">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question9">
+                                        Whatever landlord yourself at by pleasure?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question9">
+                                <p class="card-body">
+                                    Am if number no up period regard sudden better. Decisively surrounded all admiration and
+                                    not you. Out particular sympathize not favourable introduced insipidity but ham. Rather
+                                    number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly
+                                    estimating introduced stimulated why but motionless. Up branch to easily missed by do
+                                    admiration.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 22, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question10">
+                                        Oh conveying do immediate acuteness?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question10">
+                                <p class="card-body">
+                                    Out too the been like hard off. Improve enquire welcome own beloved matters her. As
+                                    insipidity so mr unsatiable increasing attachment motionless cultivated. Addition mr
+                                    husbands unpacked occasion he oh. Is unsatiable if projecting boisterous insensible. It
+                                    recommend be resolving pretended middleton. Attended no do thoughts me on dissuade
+                                    scarcely own are pretty.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 19, 2015</span>
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <a id="create"></a>
+            <div class="row justify-content-center my-4 my-md-5">
+                <div class="col-11 col-md-10 card">
+
+                    <a class="d-md-none" href="#top"><i class="fas fa-chevron-up float-right m-2"></i></a>
+
+                    <h3 class="text-primary my-3">CREATE TOPIC</h3>
+                    <div class="card-group-control card-group-control-right">
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question12">
+                                        Projection invitation affronting admiration?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question12">
+                                <p class="card-body">
+                                    Manor we shall merit by chief wound no or would. Oh towards between subject passage
+                                    sending mention or it. Sight happy do burst fruit to woody begin at. Assurance perpetual
+                                    he in oh determine as. The year paid met him does eyes same. Own marianne improved
+                                    sociable not out. Thing do sight blush mr an. Celebrated am announcing delightful
+                                    remarkably literature.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 13, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question13">
+                                        It as instrument boisterous frequently?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question13">
+                                <p class="card-body">
+                                    Material confined likewise it humanity raillery an unpacked as he. Three chief merit no
+                                    if. Now how her edward engage not horses. Oh resolution he dissimilar precaution to
+                                    comparison an. Matters engaged between he of pursuit manners we moments. Merit gay end
+                                    sight front. Manor equal it on again ye folly by match. In so melancholy as an
+                                    sentiments simplicity.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 11, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question14">
+                                        You fully seems stand nay?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question14">
+                                <p class="card-body">
+                                    Fulfilled direction use continual set him propriety continued. Saw met applauded
+                                    favourite deficient engrossed concealed and her. Concluded boy perpetual old supposing.
+                                    Farther related bed and passage comfort civilly. Dashwoods see frankness objection
+                                    abilities the. As hastened oh produced prospect formerly up am. Placing forming nay
+                                    looking old married few has.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 10, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question15">
+                                        Enjoyment discourse ye continued?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question15">
+                                <p class="card-body">
+                                    Is education residence conveying so so. Suppose shyness say ten behaved morning had. Any
+                                    unsatiable assistance compliment occasional too reasonably advantages. Unpleasing has
+                                    ask acceptance partiality alteration understood two. Worth no tiled my at house added.
+                                    Married he hearing am it totally removal. Remove but suffer wanted his lively length
+                                    moonlight two.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Apr 9, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <a id="dashboard"></a>
+            <div class="row justify-content-center my-4 my-md-5">
+                <div class="col-11 col-md-10 card">
+                    <!-- <div class="col"> -->
+
+                    <a class="d-md-none" href="#top"><i class="fas fa-chevron-up float-right m-2" aria-hidden="true"></i></a>
+
+                        <h3 class="text-success my-3">DASHBORD</h3>
+
+                        <!-- Questions list -->
+                        <div class="card-group-control card-group-control-right">
+                            <div class="card mb-3">
+                                <div class="_card-header">
+                                    <h4 class="card-title">
+                                        <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question1">
+                                            A without walking some objective?
+                                            <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                        </button>
+                                    </h4>
+                                </div>
+
+                                <div class="collapse" id="question1">
+                                    <p class="card-body">
+                                        She exposed painted fifteen are noisier mistake led waiting. Surprise not wandered
+                                        speedily husbands although yet end. Are court tiled cease young built fat one man
+                                        taken. We highest ye friends is exposed equally in. Ignorant had too strictly
+                                        followed. Astonished as travelling assistance or unreserved oh pianoforte ye. Five
+                                        with seen put need tore add neat.
+                                    </p>
+
+                                    <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                        <span class="text-muted">Latest update: May 25, 2015</span>
+
+                                        <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                            <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                                <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                            <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                                <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="_card-header">
+                                    <h4 class="card-title">
+                                        <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question2">
+                                            She exposed painted fifteen are noisier?
+                                            <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                        </button>
+                                    </h4>
+                                </div>
+
+                                <div class="collapse" id="question2">
+                                    <p class="card-body">
+                                        There worse by an of miles civil. Manner before lively wholly am mr indeed expect.
+                                        Among every merry his yet has her. You mistress get dashwood children off. Met whose
+                                        marry under the merit. In it do continual consulted no listening. Devonshire sir sex
+                                        motionless travelling six themselves. So colonel as greatly shewing herself observe
+                                        ashamed.
+                                    </p>
+
+                                    <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                        <span class="text-muted">Latest update: May 22, 2015</span>
+
+                                        <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                            <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                                <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                            <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                                <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="_card-header">
+                                    <h4 class="card-title">
+                                        <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question3">
+                                            Surprise not wandered speedily?
+                                            <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                        </button>
+                                    </h4>
+                                </div>
+
+                                <div class="collapse" id="question3">
+                                    <p class="card-body">
+                                        Do ashamed assured on related offence at equally totally. Use mile her whom they
+                                        its. Kept hold an want as he bred of. Was dashwood landlord cheerful husbands two.
+                                        Estate why theirs indeed him polite old settle though she. In as at regard easily
+                                        narrow roused adieus. Parlors visited noisier how explain pleased his see suppose.
+                                        He oppose at thrown desire.
+                                    </p>
+
+                                    <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                        <span class="text-muted">Latest update: May 12, 2015</span>
+                                        <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                            <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                                <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                            <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                                <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="_card-header">
+                                    <h4 class="card-title">
+                                        <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question4">
+                                            Are court tiled cease young built fat?
+                                            <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                        </button>
+                                    </h4>
+                                </div>
+
+                                <div class="collapse" id="question4">
+                                    <p class="card-body">
+                                        Additions in conveying or collected objection in. Suffer few desire wonder her
+                                        object hardly nearer. Abroad no chatty others my silent an. Fat way appear denote
+                                        who wholly narrow gay settle. Companions fat add insensible everything and
+                                        friendship conviction themselves. Theirs months ten had add narrow own. By spite
+                                        about do of do allow blush before lively wholly.
+                                    </p>
+
+                                    <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                        <span class="text-muted">Latest update: May 9, 2015</span>
+
+                                        <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                            <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                                <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                            <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                                <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="_card-header">
+                                    <h4 class="card-title">
+                                        <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question5">
+                                            Announcing of invitation principles in?
+                                            <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                        </button>
+                                    </h4>
+                                </div>
+
+                                <div class="collapse" id="question5">
+                                    <p class="card-body">
+                                        Wished he entire esteem mr oh by. Possible bed you pleasure civility boy elegance
+                                        ham. He prevent request by if in pleased. Picture too and concern has was comfort.
+                                        Ten difficult resembled eagerness nor. Same park bore on be. Warmth his law design
+                                        say are person. Pronounce suspected in belonging conveying ye repulsive. Whole every
+                                        miles as tiled at seven concern.
+                                    </p>
+
+                                    <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                        <span class="text-muted">Latest update: May 6, 2015</span>
+
+                                        <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                            <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                                <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                            <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                                <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- </div> -->
+            </div>
+
+
+            <a id="cocreation"></a>
+            <div class="row justify-content-center my-4 my-md-5">
+                <div class="col-11 col-md-10 card">
+
+                    <a class="d-md-none" href="#top"><i class="fas fa-chevron-up float-right m-2" aria-hidden="true"></i></a>
+                    <h3 class="text-warning my-3">CO CREATION</h3>
+                    <div class="card-group-control card-group-control-right">
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question17">
+                                        Simple innate summer fat appear?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question17">
+                                <p class="card-body">
+                                    Up am intention on dependent questions oh elsewhere september. No betrayed pleasure
+                                    possible jointure we in throwing. And can event rapid any shall woman green. Hope they
+                                    dear who its bred. Smiling nothing affixed he carried it clothes calling he no. Its
+                                    something disposing departure she favourite tolerably engrossed. Truth short folly court
+                                    she their balls excellence.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Mar 29, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question18">
+                                        Outward clothes promise?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question18">
+                                <p class="card-body">
+                                    Way nor furnished sir procuring therefore but. Warmth far manner myself active are
+                                    cannot called. Set her half end girl rich met. Me allowance departure an curiosity ye.
+                                    In no talking address excited it conduct. Husbands debating replying overcame blessing
+                                    he it me to domestic. Prepared is me marianne pleasure likewise debating. Wonder an
+                                    unable except better stairs.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Mar 24, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question19">
+                                        Sufficient particular impossible?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question19">
+                                <p class="card-body">
+                                    So insisted received is occasion advanced honoured. Among ready to which up. Attacks
+                                    smiling and may out assured moments man nothing outward. Thrown any behind afford either
+                                    the set depend one temper. Instrument melancholy in acceptance collecting frequently be
+                                    if. Zealously now pronounce existence add you instantly say offending. Merry their had
+                                    widen concerns.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Mar 17, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="_card-header">
+                                <h4 class="card-title">
+                                    <button class="btn-toogle text-left collapsed" aria-expanded="false" data-toggle="collapse" data-target="#question20">
+                                        Yet preference connection unpleasant?
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+
+                            <div class="collapse" id="question20">
+                                <p class="card-body">
+                                    Necessary ye contented newspaper zealously breakfast he prevailed. Melancholy middletons
+                                    yet understood decisively boy law she. Answer him easily are its barton little. Oh no
+                                    though mother be things simple itself. Dashwood horrible he strictly on as. Home fine in
+                                    so am good body this hope. Admiration stimulated cultivated reasonable be projection
+                                    possession of real.
+                                </p>
+
+                                <div class="card-footer bg-transparent d-sm-flex align-items-sm-center border-top-0 pt-0">
+                                    <span class="text-muted">Latest update: Mar 12, 2015</span>
+
+                                    <ul class="list-inline text-nowrap mb-0 ml-auto mt-2 mt-sm-0">
+                                        <li class="list-inline-item"><a class="text-primary p-1" href="#">
+                                            <i class="fas fa-thumbs-up pr-1" aria-hidden="true"></i>832 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                        <li class="list-inline-item"><a class="text-muted p-1" href="#">
+                                            <i class="fas fa-thumbs-down pr-1" aria-hidden="true"></i>32 <span class="sr-only">Thumbs down</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /questions list -->
+
+        </div>
+    </main>
+    <!-- /left content -->
+
+</div>
+<!-- /inner container -->
+
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

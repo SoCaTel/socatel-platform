@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=#{explore_services})">
+</th:block>
+
+<body class="bg-white">
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='explore_services')"></th:block>
+
+
+
+<!-- <div class="page-content">
+
+    <div class="content-wrapper">
+
+        <div class="content"> -->
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+    <div class="container" id="content" tabindex="-1">
+        <!-- <div class="card mt-4">
+            <div class="card-body"> -->
+
+
+        <a id="top-paginate"></a>
+        <div class="row justify-content-center title-row mb-4">
+            <div class="col-11 col-md-10 px-0 p-md-2">
+
+                <h1 class="mb-1" th:text="#{explore_services.title}">Explore what others are discussing !</h1>
+                <!--h2 class="mb-5 text-pink" th:text="#{explore_services.subtitle}">Find topics relevant to you
+                    and contribute your ideas with profesionals !</h2-->
+
+                <form class="my-4" method="get" th:action="@{/explore-services}">
+
+                    <div class="input-group input-group-lg" role="search">
+
+                        <label class="input-group-prepend mb-0" for="query">
+                            <span class="input-group-text"><i class="fas fa-search text-muted" aria-hidden="true"></i></span>
+                            <span class="sr-only" th:text="#{find_topic.search}"></span>
+                        </label>
+
+                        <input id="query" class="form-control" name="query"
+                            placeholder="Example: Quality food delivery" th:placeholder="#{find_topic.example}"
+                            th:value="${param?.query != null ? param.query : ''}" type="text">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-lg no-margin" th:text="#{find_topic.search}" type="submit">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="alert alert-info my-4" th:if="${services.size() == 0}">
+                    <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
+
+                    <strong th:text="#{explore_services.no_comments}">There are currently no ongoing discussions within your
+                        locality.</strong>
+
+                </div>
+
+
+                <!------- FILTER RESULTS TO DISPLAY ONLY IF NB RESULTS > 0  ----------->
+                <div class="text-right">
+
+                    <div class="d-inline-block position-relative">
+                        <a aria-controls="collapsePOI" aria-expanded="false" class="btn btn-primary text-white"
+                        data-toggle="collapse" href="#collapsePOI" style="min-width:200px">
+                            <i class="fas fa-filter mr-2" aria-hidden="true"></i>
+                            <span th:text="#{find_topic.filter}">Choose your points of interest</span>
+                        </a>
+
+                        <div class="collapse position-absolute border-1 border-primary bg-white p-1 w-100" style="z-index: 999" id="collapsePOI">
+
+                            <ul class="text-left filter-by-themes">
+
+                                <li class="list-unstyled" th:each="theme: ${themes}">
+                                    <input th:id="'theme-'+${theme.id}" class="form-check-input"
+                                        th:value="${theme.id}"
+                                        type="checkbox"/>
+                                    <label class="form-check-label"
+                                        th:for="'theme-'+${theme.id}"
+                                        th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">
+                                    </label>
+                                </li>
+
+                            </ul>
+
+                            <button id="filter-button" data-filter="services" th:text="#{find_topic.filter.button}" class="btn btn-primary w-100">Filter</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="paginate-find">
+                    <div class="row paginate-item" th:each="service, iStat : ${services}">
+                        <div class="col-12">
+                            <div class="topic">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-4 text-left order-sm-1 mb-2 mb-sm-0">
+                                        <a th:href="@{/explore-services(query=${theme.name.replaceAll(' ', '_').toLowerCase()})}" th:each="theme : ${service.themes}"><span class="text-primary" > #<span
+                                                th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">Wellness</span></span></a>
+                                        <br>
+                                        <hr class="my-1 w-25 float-left">
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col topic-subject" data-toggle="collapse" th:data-target="'#collapseTopic' + ${group.id}" th:text="${group.name}"> -->
+                                    <div class="col topic-subject">
+                                        <a th:href="@{${service.website}}" th:attrappend="lang=${service.language.code != lang_code}?${service.language.code}" target="_blank" th:text="${service.name}">Fighting
+                                            loneliness at home</a>
+                                    </div>
+                                </div>
+
+                                <div class="my-1 description replace-links" th:attrappend="lang=${service.language.code != lang_code}?${service.language.code}" th:text="${service.getDescription(lang_code)}">
+                                    Loneliness is a complex and usually unpleasant emotional response to isolation. Older
+                                    persons who are not in regular contact with the outside world and the community need
+                                    company to keep in touch with the outside world. Many services exist to help older
+                                    persons to socialise, but it is not always easy to access them. This topic requires a
+                                    thorough discussion on the challenges and solutions to enable social contact for older
+                                    persons and to identify who can help them fight isolation. [...]
+                                </div>
+
+                                <div class="row details my-2">
+                                    <div class="col" th:text="#{${service.locality.name.replaceAll(' ', '_').toLowerCase()}}">Dublin, Ireland</div>
+                                    <div class="col"><span th:text="#{explore_services.created_by}">Proposed by</span> <span
+                                            th:text="${service.organisation.name}">James542</span>
+                                    </div>
+                                    <div class="col" th:if="${service.group != null}" >
+                                        <span th:text="#{explore_services.created_in}">Created in</span>:
+                                        <a th:href="@{/topic/{id}(id=${service.group.id})}" th:text="${service.group.name}"></a>
+                                    </div>
+                                    <div class="col" th:if="${service.group == null}" >
+                                        <span th:text="#{explore_services.open_data}"></span>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <a class="mt-1 btn btn-primary" th:href="@{${service.website}}" target="_blank">
+                                    <span th:text="#{view}">View</span>
+                                    <span th:text="${service.name}" class="sr-only"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div> <!-- container -->
+</main>
+<!-- /main content -->
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

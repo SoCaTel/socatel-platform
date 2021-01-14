@@ -1,0 +1,98 @@
+// CHARTE COULEURS CELIA 09/09/19
+// BLEU : #03b8cb
+// ROSE : #FF3366
+// VERT : #9dbe44
+// ORANGE : #FF9966
+
+
+
+
+
+// #F4F6FD
+
+// 09/09/19 @tabs-color-disabled:#dddfd4;
+// 09/09/19 @tabs-color-selected:#173e43;
+// 09/09/19 @tabs-color:lighten(@tabs-color-selected, 20%);
+// Actif ( = sélectionné ) #03b8cb / Inactif ( = cliquable mais pas celui sélectionné ) #66cccc / Disabled ##EEEEEE = à voir ce que ça donne tu pourra faire une capture d’écran ?
+
+@tabs-color-disabled:#EEEEEE;
+@tabs-color-selected:#027B88;//#03b8cb;
+@tabs-color:#ccFFFF;
+//@tabs-color:#99ffff;
+
+
+
+
+
+
+// @red : #E12B38;
+// @red-dark : darken( @red, 15% );
+
+@red : @pink;
+@red-dark : @pink-dark;
+
+// @jaune : #f8b133;
+@orange : #D14600;//#FF9966;
+@orange-dark : darken( @orange, 10%);
+
+
+/* @gris : #999;
+@gris-light : lighten( @gris, 20% );
+@gris-lighter : lighten( @gris, 35% );
+@gris-dark : darken( @gris, 35% ); */
+
+
+// foncé = #666666 
+// moyen = #999999 
+// clair = #EEEEEE
+@white : #fff;
+@black-text-color:  #212529;
+@gris :             #949494;
+@gris-dark :        #666666;
+@gris-light :       #EEEEEE;
+@unknown-light :    #ddd;
+
+@vert-pomme : #677D2B;//#9DBE44;
+@vert-pomme-light : lighten( @vert-pomme, 10% );
+@vert-pomme-dark : darken( @vert-pomme, 10% );
+
+
+@bleu-canard : #027B88; //#03B8CB;
+@bleu-canard-light : lighten( @bleu-canard, 10% );
+@bleu-canard-dark : darken( @bleu-canard, 10% );
+
+@bleu-home   : @bleu-canard;
+@bleu-primary : @bleu-canard;
+
+
+// @pink 		:  #FF4069;
+@pink        :  #EB003B; //#FF3366;
+@pink-light  : lighten( @pink, 15% );
+@pink-lighter: lighten( @pink,30% );
+@pink-lightest: lighten( @pink,45% );
+@pink-dark   : darken( @pink, 15% );
+
+.pink { color : @pink; } //!important; 
+
+// @purple 		:  #C7B5F4;
+@purple        : #C7B5F4;
+@purple-light  : lighten( @purple, 15% );
+@purple-lighter: lighten( @purple,30% );
+@purple-dark   : darken( @purple, 15% );
+
+.purple { color : @purple; } //!important; 
+
+
+
+
+.bg-gradient{ 
+  	background: @bleu-canard; /* Old browsers */
+    background: -moz-linear-gradient(left,  @bleu-canard 0%, @vert-pomme 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  @bleu-canard 0%,@vert-pomme 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  @bleu-canard 0%,@vert-pomme 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@bleu-canard', endColorstr='@vert-pomme',GradientType=1 ); /* IE6-9 */
+ }
+
+// FUNKA
+@color-white : @white;
+@tabbed-color: @bleu-canard ;

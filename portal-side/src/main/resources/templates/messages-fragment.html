@@ -1,0 +1,47 @@
+<th:block th:fragment="recipient" xmlns:th="http://www.thymeleaf.org">
+
+    <a class="d-block" th:href="@{/messages/{username}(username=${chat_person.username})}">
+        <img th:alt="${chat_person.username} + ' ' + #{avatar}" class="rounded-circle mr-2 pointer" style="width: 30px;"
+             src="../static/images/demo/face5.jpg"
+             th:src="@{/show-image/{id}(id=${chat_person.picture.id})}">
+
+        <i class="fas mt-1 fa-chevron-right pink float-right" th:aria-label="#{aria_label.open_conversation}"></i>
+        <span class="user" th:text="${chat_person.username}">John Malkovich</span>
+        <span class="badge border-1 border-danger text-danger mr-2"
+              th:if="${c.hasNewMessages(user)}" th:text="#{new}">New</span>
+    </a>
+
+    <!--
+        data-toggle="modal" th:data-target="'#view-profile' + ${chat_person.id}">
+        <th:block th:replace="user-fragment :: modal(user_info=${chat_person})"></th:block> -->
+
+</th:block>
+
+
+<th:block th:fragment="documents" xmlns:th="http://www.thymeleaf.org">
+    <span th:if="${documents != null && !documents.isEmpty()}">
+        <th:block th:each="doc, iStat : ${documents}">
+
+            <a class="view-file-trigger"
+               data-toggle="modal"
+               href=".modal-view-file"
+               tabindex="0"
+               th:data-file-id="${doc.id}"
+               th:data-file-path="@{/downloadFile/{id}(id=${doc.id})}"
+               th:data-file-type="${doc.type}" th:data-toggle="modal"
+               th:if="${doc.type == 'image/jpeg' || doc.type == 'image/png' || doc.type == 'image/gif'}">
+                <span th:text="${doc.name}">See attached file</span>
+                <i class="fas fa-paperclip ml-1 text-muted" aria-hidden="true"></i>
+            </a>
+
+            <a th:href="@{/downloadFile/{id}(id=${doc.id})}"
+               th:if="${doc.type != 'image/jpeg' && doc.type != 'image/png' && doc.type != 'image/gif'}"
+               title="download">
+                <span th:text="${doc.name}">Download attached file</span>
+                <i class="fas fa-download ml-1 text-muted" aria-hidden="true"></i>
+            </a>
+
+            <br>
+        </th:block>
+    </span>
+</th:block>

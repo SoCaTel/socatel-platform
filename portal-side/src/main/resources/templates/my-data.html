@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{my_data})"></th:block>
+
+<body>
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+
+<!-- Page content -->
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='data')"></th:block>
+
+
+    <!-- Main content -->
+    <main>
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{my_data} )"></th:block>
+
+
+                <div class="row my-data">
+                    <div class="col-md-12 col-xl-12">
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h3 class="text-uppercase h6 my-1" th:text="#{data.my_account}">My account</h3>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="mb-3">
+                                    <p>
+                                        <a class="btn bg-secondary col-8" href="/my-data/view" target="_blank">
+                                            <span class="d-block p-2">
+                                                <span th:text="#{data.view_data}">View my data</span>
+                                                <i aria-hidden="true" class="far fa-eye ml-1"></i>
+                                            </span>
+                                        </a>
+                                    </p>
+                                    <!-- <p>
+                                        <a href="#" class="btn bg-secondary col-2" th:text="#{data.managa_data}">Manage my data</a>
+                                    </p> -->
+                                    <p>
+                                        <a class="btn btn-primary col-8" href="/my-data/download">
+                                            <span class="d-block p-2">
+                                                <span th:text="#{data.download_data}">Download my data</span>
+                                                <i aria-hidden="true" class="fa fa-download ml-1"></i>
+                                            </span>
+                                        </a>
+                                    </p>
+
+                                    <p>
+                                        <a class="btn bg-warning col-8" href="/my-data/deactivate">
+                                            <span class="d-block p-2">
+                                                <span th:text="#{data.deactivate_account}">Deactivate my account</span>
+                                            </span>
+                                        </a>
+                                        <br>
+                                        <span th:text="#{data.deactivate_description}">Your account and contributions will become anonymised until you sign up again.</span>
+                                    </p>
+
+                                    <button class="btn btn-danger my-2 col-8" data-target="#modal-delete" data-toggle="modal" type="button">
+                                        <span class="d-block p-2">
+                                            <span th:text="#{data.delete_account}">Delete my account</span>
+                                            <i aria-hidden="true" class="fa fa-exclamation-circle ml-1"></i>
+                                        </span>
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="modal-delete">
+                                        <div class="modal-dialog" role="dialog" tabindex="-1" aria-modal="true">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">
+                                                        <span th:text="#{data.delete_account}">Delete my account</span>
+                                                        <i class="fas fa-exclamation-circle ml-1" aria-hidden="true"></i>
+                                                    </h4>
+                                                    <button class="close" data-dismiss="modal" type="button">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                                    </button>
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <div class="alert alert-danger">
+                                                        <strong><span th:text="#{data.delete_description}">Your account and your data will be permanently deleted from the platform.</span></strong>
+                                                    </div>
+                                                    <a class="btn btn-danger w-100" href="/my-data/delete"
+                                                    th:text="#{data.delete_account}">Delete my account</a><br>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <p><a style="text-decoration: underline;" class="text-info" href="/terms-conditions" th:text="#{data.terms_conditions}">Terms
+                                        and conditions</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /content area -->
+            <!-- /content area -->
+            <!-- /content area -->
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+    </main>
+</div>
+<!-- /page content -->
+
+</body>
+</html>

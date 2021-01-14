@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="header-fragment :: head(title=${group.name} + ' | ' + #{topic.step} + '2')">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <title>SoCaTel</title>
+
+        <!-- CSRF -->
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <!-- /CSRF -->
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,700i"
+              rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,700i}"
+              type="text/css">
+
+        <script src="https://kit.fontawesome.com/16b12da617.js"
+                th:src="@{https://kit.fontawesome.com/16b12da617.js}"></script>
+
+
+        <!-- <link href="../static/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"> -->
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              rel="stylesheet"
+              th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+        <!-- <link href="../static/assets/css/bootstrap_limitless.min.css" th:href="@{/assets/css/bootstrap_limitless.min.css}" rel="stylesheet" type="text/css"> -->
+
+
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+        <!-- /global stylesheets -->
+
+
+        <!-- Core JS files -->
+        <script crossorigin="anonymous"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                src="https://code.jquery.com/jquery-3.4.1.min.js" th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>
+
+
+        <script crossorigin="anonymous"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+
+
+        <th:block th:if="${#httpServletRequest.requestURI} =='/'">
+            <script src="../static/front/lib/wow/wow.min.js" th:src="@{/front/lib/wow/wow.min.js}"></script>
+            <script src="../static/front/contactform/contactform.js"
+                    th:src="@{/front/contactform/contactform.js}"></script>
+            <script src="../static/front/lib/counterup/counterup.min.js"
+                    th:src="@{/front/lib/counterup/counterup.min.js}"></script>
+        </th:block>
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+
+        <!-- <script src="../static/global_assets/js/plugins/ui/sticky.min.js" th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js" th:src="@{/global_assets/js/demo_pages/extra_fab.js}" ></script> -->
+        <!-- /theme JS files -->
+
+        <th:block th:if="${#httpServletRequest.requestURI} =='/dashboard'">
+            <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                    th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        </th:block>
+
+
+        <script src="../static/assets/js/paginate.js" th:src="@{/assets/js/paginate.js}"></script>
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/custom.js}"></script>
+        <script src="../static/assets/js/vote.js" th:src="@{/assets/js/vote.js}"></script>
+
+
+    </head>
+</th:block>
+
+<body class="chatboard" style="overflow-x: hidden;">
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+<th:block th:replace="topic-fragment :: resume"></th:block>
+
+
+<div class="container-fluid px-0">
+
+    <div class="row p-2">
+
+        <div class="col-sm-3 d-none d-lg-block">
+            <th:block th:replace="topic-sidebar-fragment :: left(step=2, summary=${group.step1summary})"></th:block>
+        </div>
+
+        <div class="col-12 col-lg-9">
+
+
+            <div class="stepcontainer">
+
+                <th:block th:replace="topic-fragment :: tabs(var=2)"></th:block>
+
+
+                <!-- <div class="tab-content rounded-shadowed bg-white" id="myTabContent"> -->
+                <div class="tab-content bg-white p-3" id="myTabContent">
+
+                    <div aria-labelledby="step2" class="tab-pane bg-white fade show active mt-0 p-2" id="step2"
+                         role="tabpanel">
+
+
+                        <div class="alert alert-danger" th:if="${group.status.ordinal() > 2}">
+                            <strong th:text="#{topic.step2.end}">Step2 ends</strong><br>
+                        </div>
+
+                        <div class="alert alert-info" th:if="${group.status.ordinal() == 2}">
+                            <strong th:text="#{topic.step2.explanation}">Step 2 Co-define: Discuss the benefits and barriers to the solutions
+                                proposed in Step 1.</strong>
+                            <strong><a href="#" th:text="#{topic.step2.introduction1}">Click to view video.</a></strong>
+                            <strong th:text="#{topic.step2.introduction2}">Please choose a ‘hat’ and make contributions from the
+                                viewpoint of that ‘hat’. Please also vote for the ideas of
+                                other members by clicking the thumbs up or down button.</strong><br><br>
+                            <strong th:text="#{topic.step2.hats}">What hat will you wear to make your
+                                contribution?</strong>
+                            <ul>
+                                <li><i class="fab fa-redhat text-success fa-2x" aria-hidden="true" ></i> <span th:text="#{topic.hat.end_user}"></span></li>
+                                <li><i class="fab fa-redhat text-primary fa-2x" aria-hidden="true" ></i> <span th:text="#{topic.hat.relative}"></span></li>
+                                <li><i class="fab fa-redhat text-warning fa-2x" aria-hidden="true" ></i> <span th:text="#{topic.hat.professional}"></span></li>
+                                <li><i class="fab fa-redhat text-danger fa-2x" aria-hidden="true" ></i> <span th:text="#{topic.hat.service_provider}"></span></li>
+                                <li><i class="fab fa-redhat text-black fa-2x" aria-hidden="true" ></i> <span th:text="#{topic.hat.policy_maker}"></span></li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-info" sec:authorize="!isAuthenticated()">
+                            <span th:text="#{find_topic.no_comments4}">Please</span> <a class="btn btn-primary"
+                                                                                        href="login" th:href="@{/login}"
+                                                                                        th:text="#{main.signin}">sign in</a>
+                            <span th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-white-pink ml-1"
+                                                                                    href="registration.html"
+                                                                                    th:href="@{/registration}"
+                                                                                    th:text="#{register}">register</a> <span
+                                th:text="#{find_topic.no_comments6}">and you will be able to create and propose topics relevant to you , others will then join you to share their personal experience.</span>
+                        </div>
+
+
+                        <div class="row mx-0">
+
+                            <th:block
+                                    th:replace="topic-fragment ::step2block(border_color='border-success', text_color='text-success', icon='fa-hand-holding', title=#{topic.benefits.title}, description=#{topic.benefits.description}, type='1', propositions=${benefits}) "></th:block>
+                            <!--th:block
+                                    th:replace="topic-fragment ::step2block(border_color='border-success', text_color='text-success', icon='fa-check', title=#{topic.pros.title}, description=#{topic.pros.description}, type='2', propositions=${pros}) "></th:block-->
+                            <th:block
+                                    th:replace="topic-fragment ::step2block(border_color='border-danger', text_color='text-danger', icon='fa-hand-paper', title=#{topic.contras.title}, description=#{topic.contras.description}, type='3', propositions=${contras}) "></th:block>
+                            <th:block
+                                    th:replace="topic-fragment ::step2block(border_color='border-black', text_color='text-black', icon='fa-plus', title=#{topic.others.title}, description=#{topic.others.description}, type='4', propositions=${others}) "></th:block>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div> <!-- container-fluid -->
+</main>
+
+<!-- modal pop up delete-file start-->
+<div class="modal fade" id="delete-file">
+    <div class="modal-dialog modal-sm" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+            <div class="col-xl-12 col-sm-12 p-0 m-0">
+                <div class="card border-2 p-0 m-0">
+                    <div class="card-body text-center w-100">
+                        <div class="modal-body text-center">
+                            <h5 class="col-12" th:text="#{topic_menu_modal.delete_file}">Are you sure you want delete this
+                                notification ?</h5>
+                        </div>
+                        <div class="modal-footer column">
+                            <button tabindex="1" class="btn btn-primary col-6 first-focusable-element" data-dismiss="modal" id="delete-doc" type="submit" th:text="#{yes}">
+                            </button>
+                            <button class="btn btn-danger col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- modal pop up delete-file end -->
+
+<!-- modal pop up delete-message start-->
+<div class="modal fade" data-message-id="" id="delete-message">
+    <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+
+            <div class="col-xl-12 col-sm-12 p-0 m-0 initial">
+                <div class="card p-0 m-0">
+                    <div class="card-body text-center w-100">
+                        <div class="modal-body text-center">
+                            <h5 class="col-12" th:text="#{topic_menu_modal.delete_contribution.title}">Are you sure you
+                                want delete this message ?</h5>
+                        </div>
+                        <div class="modal-footer column">
+                            <!-- <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#delete-messageSuccess" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{yes}">Yes</a></button> -->
+                            <a class="btn btn-primary col-6 text-white send-action-message first-focusable-element" data-action="delete-message" data-contribution="proposition"
+                               href="/proposition/proposition_id/delete" th:text="#{yes}">Yes</a>
+                            <button class="btn btn-danger col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-12 col-sm-12 p-0 m-0 d-none success">
+                <div class="card p-0 m-0">
+                    <div class="card-body text-center w-100">
+                        <div class="card-header text-center">
+                            <div class="modal-header row justify-content-center">
+                                <i class="fa fa-check fa-2x bg-green-400 mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                            </div>
+                            <div class="modal-body">
+                                <span class="font-weight-bold"
+                                      th:text="#{topic_menu_modal.delete_my_contribution.success.title}">The message is no more visible for the participants.</span>
+                                <span th:text="#{topic_menu_modal.delete_contribution.explanation}">Pleas explain why you delete this message to the participant</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button class="btn btn-secondary col-12" data-dismiss="modal" type="button" th:text="#{close}">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div><!-- modal pop up delete-message end -->
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

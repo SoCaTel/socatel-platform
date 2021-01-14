@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="header-fragment :: head(title=${group.name} + ' | ' + #{topic.step} + '4')">
+</th:block>
+
+<body class="chatboard" style="overflow-x: hidden;">
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+<th:block th:replace="topic-fragment :: resume"></th:block>
+
+
+<div class="container-fluid px-0">
+
+    <div class="row p-2">
+
+        <div class="col-sm-3 d-none d-lg-block">
+            <th:block th:replace="topic-sidebar-fragment :: left(step=4, summary=${group.step3summary})"></th:block>
+        </div>
+
+        <div class="col-12 col-lg-9">
+
+
+            <div class="stepcontainer">
+
+                <th:block th:replace="topic-fragment :: tabs(var=4)"></th:block>
+
+                <div class="tab-content bg-white p-3" id="myTabContent">
+
+
+                    <!-- NO ORG: Regular users -->
+                    <div aria-labelledby="step4"
+                         class="tab-pane bg-white fade mt-0 p-2 show active" id="step4"
+                         role="tabpanel" th:if="${organisation == null && (user == null || user.organisation == null || !can_apply)}">
+
+                        <div class="alert py-3 bg-purple">
+                            <h2 th:text="#{topic.step4.no_org.header2}" class="text-left">You will be notified when a service provider agrees to develop the
+                                idea into a solution.</h2>
+                            <p th:text="#{topic.step4.no_org.text2}">You will have the possibility to help co-design and test the service being
+                                developed, so what is produced really matches your needs.</p>
+                            <div class="p-3">
+                                <p><strong th:text="#{topic.step4.no_org.org_proposal}">Organisations' proposals:</strong></p>
+                                <div th:each="post : ${posts}" class="p-3 bg-white border-primary border-1" style="border-radius: 25px">
+                                    <div class="media-title">
+                                        <a data-target="#user-modal-dev" data-toggle="modal" href="#"
+                                           th:data-target="${!post.author.isAnonymized()}?'#view-profile' + ${post.author.id} : ''"><img
+                                                th:alt="${post.author.isAnonymized()} ? #{anonymous} + ' ' + #{avatar} : ${post.author.username} + ' ' + #{avatar}"
+                                                class="rounded-circle mr-2"
+                                                height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${post.author.picture.id})}" width="36"></a>
+                                        <a data-toggle="modal" href="#"
+                                           th:data-target="${!post.author.isAnonymized()}?'#view-profile' + ${post.author.id} : ''" class="font-weight-semibold mr-1"
+                                           th:text="${post.author.isAnonymized()} ? #{anonymous} : ${post.author.username}">William555</a>
+                                        <span class="badge border-1 border-primary text-primary"
+                                              th:if="${!post.author.isAnonymized() && post.author.organisation != null}"
+                                              th:text="${post.author.organisation.name}">Organisation</span>
+                                        <span class="font-size-sm text-muted mx-1" th:text="${post.fancyTimestamp()}">Just now</span>
+                                        <th:block th:if="${post.documents != null && !post.documents.isEmpty()}">
+                                            <a data-toggle="modal"
+                                               th:href="'#documents-modal'+${post.id}">
+                                                <i class="fas fa-paperclip ml-1 text-muted" aria-hidden="true"></i>
+                                                <span class="sr-only" th:text="#{messages.see_files}"></span>
+                                            </a>
+                                            <th:block th:replace="topic-fragment :: list-documents(id='documents-modal'+${post.id}, documents=${post.documents}, owner=${post.author})"></th:block>
+                                        </th:block>
+
+                                    </div>
+
+                                    <div class="media-description my-2 replace-links" style="white-space: pre-wrap;" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}" th:text="${post.text}">
+                                        There are many companies providing food delivery services, that are listed on the
+                                        right.
+                                    </div>
+
+                                    <!-- LIKE / DISLIKE ROW + COMMENT FORM  -->
+                                    <div class="media-description my-2">
+                                        <th:block sec:authorize="isAuthenticated()" th:if="${user != null && can_apply == null}">
+                                            <a class="vote pointer mr-1" data-action="upvote" th:data-id="${post.id}"
+                                               th:data-path="post" th:id="'up' + ${post.id}">
+                                                <i class="text-success" aria-hidden="true"
+                                                   th:classappend="${user != null && post.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                                                <span class="votes" th:text="${post.upvotes}">114</span>
+                                            </a>
+
+                                            <a class="vote pointer mr-1" data-action="downvote" th:data-id="${post.id}"
+                                               th:data-path="post" th:id="'down' + ${post.id}">
+                                                <i class="text-danger" aria-hidden="true"
+                                                   th:classappend="${user != null && post.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                                                <span class="votes" th:text="${post.downvotes}">22</span>
+                                            </a>
+                                        </th:block>
+                                        <th:block th:if="${user == null || can_apply != null}">
+                                            <span class="mr-1" th:id="'up' + ${post.id}">
+                                                <i class="grey" aria-hidden="true"
+                                                   th:classappend="${user != null && post.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                                                <span class="votes" th:text="${post.upvotes}">114</span>
+                                            </span>
+
+                                            <span class="mr-1" th:id="'down' + ${post.id}">
+                                                <i class="grey" aria-hidden="true"
+                                                   th:classappend="${user != null && post.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                                                <span class="votes" th:text="${post.downvotes}">22</span>
+                                            </span>
+                                        </th:block>
+                                        <th:block th:replace="user-fragment :: list-users-modal(id=${'list-upvotes'+post.id}, title=#{topic.users.upvote}, users_list=${post.getUsersUpvote()})"></th:block>
+                                        <th:block th:replace="user-fragment :: list-users-modal(id=${'list-downvotes'+post.id}, title=#{topic.users.downvote}, users_list=${post.getUsersDownvote()})"></th:block>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div> <!-- /NO ORG: Regular users -->
+
+                    <!-- NO ORG: Service Providers -->
+                    <div aria-labelledby="step4" class="tab-pane bg-white fade mt-0 p-2 show active"
+                         id="step4" role="tabpanel"
+                         sec:authorize="isAuthenticated()" th:if="${organisation == null && user != null && user.organisation != null && can_apply}">
+
+                        <div class="alert alert-info py-3">
+                            <h2 th:text="#{topic.step4.no_org.header}" class="text-left">This idea put forward is ready for implementation !</h2>
+                            <p th:text="#{topic.step4.no_org.text}" class="text-left">Register your interest, our moderators will get back to you shortly to engage the
+                                process</p>
+                            <form th:object="${newPost}" th:action="@{/topic/{group_id}/apply(group_id=${group.id})}"
+                                  enctype="multipart/form-data" method="post">
+                                <label for="proposal" th:text="#{topic.step4.apply_text}">Leave a new comment </label>:
+                                <textarea class="form-control mb-2"  name="comment" id="proposal"
+                                          rows="3" maxlength="280" minlength="2"
+                                          th:field="*{text}" required></textarea>
+                                <th:block th:replace="topic-message-fragment :: choosefile(id='1')"></th:block>
+                                <button class="btn btn-danger my-2" th:text="#{apply_now}">Apply now</button>
+                            </form>
+
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                    </div> <!-- /NO ORG: Service Providers -->
+
+
+                    <!-- YES ORG -->
+                    <div aria-labelledby="step4" class="tab-pane bg-white fade mt-0 p-2 show active" id="step4"
+                         role="tabpanel" th:if="${organisation != null}">
+
+                        <th:block th:replace="topic-fragment :: step4block"></th:block>
+                        <div class="clearfix"></div>
+
+                        <th:block th:replace="topic-fragment ::step4modal(modal_title=#{topic.step3.request_information}, type='request') "></th:block>
+                        <th:block th:replace="topic-fragment ::step4modal(modal_title=#{topic.step3.set_vote}, type='vote') "></th:block>
+                    </div> <!-- /YES ORG -->
+
+
+                </div> <!-- /tab Content -->
+
+            </div>
+
+        </div>
+
+        <th:block th:replace="topic-message-fragment :: topic-modals"></th:block>
+
+        <!-- FRAGMENT MODAL TO DISPLAY THE ATTACHED FILES -->
+        <th:block th:replace="topic-sidebar-fragment :: modal-view-file"></th:block>
+
+    </div>
+
+</div> <!-- container-fluid -->
+</main>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>
+
+

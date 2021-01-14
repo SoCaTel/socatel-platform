@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=${group.name} + ' | ' + #{topic_kb})"></th:block>
+<body class="chatboard" style="overflow-x: hidden;">
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<th:block th:replace="topic-fragment :: resume"></th:block>
+
+<div class="container-fluid px-0">
+    <div class="row p-2">
+        <div class="col-3 d-none d-lg-block">
+            <th:block th:replace="topic-sidebar-fragment :: left(step=-1)"></th:block>
+        </div>
+        <div class="col-12 col-lg-9">
+
+            <div class="row">
+                <th:block th:replace="notifications-fragments :: topic-list-col(title=#{topic.similar_groups}, list=${similarGroups}, paginate='paginate-topic-list')"></th:block>
+                <th:block th:replace="notifications-fragments :: service-list-col(title=#{topic.existing_services}, list=${similarServices2Group})"></th:block>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-12">
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h3 class="text-uppercase h6 my-1" th:text="#{topic.active_users}">External content</h3>
+                        </div>
+                        <div class="card-body">
+                            <th:block th:replace="user-fragment :: list-users(users_list=${activeUsers})"></th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-12">
+                    <div class="card">
+                        <div class="card-header header-elements-inline">
+                            <h3 class="text-uppercase h6 my-1" th:text="#{topic.external_content}">External content</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <ul class="list-group paginate-tweets">
+                                <li class="list-group-item p-2 my-1 border-bottom-1 paginate-item" th:each="tw : ${tweets}">
+                                    <img th:alt="${tw.creator.username} + ' ' + #{twitter.avatar}" class="rounded-circle float-left mr-2 mb-2" height="50" th:src="@{${tw.owner.imageLink}}"
+                                         width="50">
+                                    <div class="font-weight-semibold mr-1"><span th:text="${tw.creator.name}">Name</span> @<span
+                                            th:text="${tw.creator.username}">UserName</span></div>
+                                    <span th:text="${tw.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae autem velit hic aspernatur esse nobis quo sunt a veritatis saepe. Officia quis ullam natus cumque quo, placeat reiciendis inventore dignissimos.</span>
+                                    <br>
+                                    <i class="fas fa-reply mx-1" th:aria-label="#{aria_label.replies}"></i><span th:text="${tw.numReplies}">6</span>
+                                    <i class="fas fa-heart mx-1 text-danger" th:aria-label="#{aria_label.likes}"></i><span th:text="${tw.numLikes}">10</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" th:if="${service != null}">
+                <th:block th:replace="notifications-fragments :: service-list-col(title=#{topic.similar_services}, list=${similarServices2Service})"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+
+</body>
+
+</html>

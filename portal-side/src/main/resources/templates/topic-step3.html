@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="header-fragment :: head(title=${group.name} + ' | ' + #{topic.step} + '3')">
+</th:block>
+
+<body class="chatboard" style="overflow-x: hidden;">
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+<th:block th:replace="topic-fragment :: resume"></th:block>
+
+
+<div class="container-fluid px-0">
+
+    <div class="row p-2">
+
+        <div class="col-sm-3 d-none d-lg-block">
+            <th:block th:replace="topic-sidebar-fragment :: left(step=3, summary=${group.step2summary})"></th:block>
+        </div>
+
+        <div class="col-12 col-lg-9">
+
+
+            <div class="stepcontainer">
+
+                <th:block th:replace="topic-fragment :: tabs(var=3)"></th:block>
+
+
+                <!-- <div class="tab-content rounded-shadowed bg-white" id="myTabContent"> -->
+                <div class="tab-content bg-white p-3" id="myTabContent">
+
+                    <div aria-labelledby="step3" class="tab-pane bg-white fade show active mt-0 p-2" id="step3"
+                         role="tabpanel">
+
+
+                        <div class="alert alert-danger" th:if="${group.status.ordinal() > 3}">
+                            <strong th:text="#{topic.step3.end}">Step2 ends</strong><br>
+                        </div>
+
+                        <div class="alert alert-info" th:if="${group.status.ordinal() == 3}">
+                            <strong th:text="#{topic.step3.explanation}">Explanation of STEP1 - Co-ideation</strong>
+                            <strong><a href="#" th:text="#{topic.step3.introduction1}">We need your input to ensure that the
+                                shortlisted ideas can work in the real world.</a></strong><br><br>
+                            <strong th:text="#{topic.step3.introduction2}"></strong>
+                        </div>
+
+                        <div class="alert alert-info" sec:authorize="!isAuthenticated()">
+                            <span th:text="#{find_topic.no_comments4}">Please</span> <a class="btn btn-primary"
+                                                                                        href="login" th:href="@{/login}"
+                                                                                        th:text="#{main.signin}">sign in</a>
+                            <span th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-white-pink ml-1"
+                                                                                    href="registration.html"
+                                                                                    th:href="@{/registration}"
+                                                                                    th:text="#{register}">register</a> <span
+                                th:text="#{find_topic.no_comments6}">and you will be able to create and propose topics relevant to you , others will then join you to share their personal experience.</span>
+                        </div>
+
+
+                        <div class="row mx-0">
+                            <div class="col-12 p-0" >
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc1}, title=#{topic.step3.bloc1_title}, bloc_num=1, show=true)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc2}, title=#{topic.step3.bloc2_title}, bloc_num=2, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc3}, title=#{topic.step3.bloc3_title}, bloc_num=3, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc4}, title=#{topic.step3.bloc4_title}, bloc_num=4, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc5}, title=#{topic.step3.bloc5_title}, bloc_num=5, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc6}, title=#{topic.step3.bloc6_title}, bloc_num=6, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc7}, title=#{topic.step3.bloc7_title}, bloc_num=7, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc8}, title=#{topic.step3.bloc8_title}, bloc_num=8, show=false)"></th:block>
+                                <th:block th:replace="topic-fragment :: step3block(bloc=${bloc9}, title=#{topic.step3.bloc9_title}, bloc_num=9, show=false)"></th:block>
+
+                                <div class="card bg-white border-0">
+
+                                    <div class="_card-header text-center pointer">
+                                        <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseBloc10">
+                                            <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                            <span th:class="${text_color}" th:text="#{topic.step3.bloc10_title}"></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="card-body mb-2 collapse show" id="collapseBloc10">
+                                        <div class="alert alert-info" th:if="${posts == null || posts.isEmpty()}">
+                                            <button class="close" data-dismiss="alert" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                                <span class="sr-only" th:text="#{close}"></span>
+                                            </button>
+                                            <strong th:text="#{topic.no_comments}">No comment the moment !</strong> <br> <span
+                                                th:text="#{topic.no_comments2}">Use the form below and be the first to comment this topic !</span>
+                                        </div>
+                                        <th:block th:replace="topic-fragment :: step4posts(num=0, posts=${posts}, group_ordinal=3)"></th:block>
+                                        <th:block th:replace="topic-fragment :: post-form(group_ordinal=3, tag=false)"></th:block>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div> <!-- container-fluid -->
+</main>
+
+<th:block th:replace="topic-message-fragment :: topic-modals"></th:block>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

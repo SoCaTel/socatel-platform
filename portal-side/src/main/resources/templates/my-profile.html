@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{profile})">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <title>SoCaTel</title>
+
+        <!-- CSRF -->
+        <meta name="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+        <!-- /CSRF -->
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,700i" rel="stylesheet"
+              th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,700,700i}"
+              type="text/css">
+
+
+        <script src="https://kit.fontawesome.com/16b12da617.js"
+                th:src="@{https://kit.fontawesome.com/16b12da617.js}"></script>
+
+
+        <!-- <link href="../static/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"> -->
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet"
+              th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+        <!-- <link href="../static/assets/css/bootstrap_limitless.min.css" th:href="@{/assets/css/bootstrap_limitless.min.css}" rel="stylesheet" type="text/css"> -->
+
+
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+        <!-- /global stylesheets -->
+
+
+        <!-- Core JS files -->
+        <script crossorigin="anonymous" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script crossorigin="anonymous" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+                th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>
+
+
+        <script crossorigin="anonymous"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+
+
+        <th:block th:if="${#httpServletRequest.requestURI} =='/'">
+            <script src="../static/front/lib/wow/wow.min.js" th:src="@{/front/lib/wow/wow.min.js}"></script>
+            <script src="../static/front/contactform/contactform.js"
+                    th:src="@{/front/contactform/contactform.js}"></script>
+            <script src="../static/front/lib/counterup/counterup.min.js"
+                    th:src="@{/front/lib/counterup/counterup.min.js}"></script>
+        </th:block>
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+
+        <!-- <script src="../static/global_assets/js/plugins/ui/sticky.min.js" th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js" th:src="@{/global_assets/js/demo_pages/extra_fab.js}" ></script> -->
+        <!-- /theme JS files -->
+
+        <th:block th:if="${#httpServletRequest.requestURI} =='/dashboard'">
+            <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                    th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        </th:block>
+
+
+        <script src="../static/assets/js/paginate.js" th:src="@{/assets/js/paginate.js}"></script>
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/custom.js}"></script>
+        <script src="../static/assets/js/vote.js" th:src="@{/assets/js/vote.js}"></script>
+
+
+    </head>
+</th:block>
+<body>
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+<!-- Page content -->
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='profile')"></th:block>
+
+
+    <!-- Main content -->
+    <main class="w-100">
+        <div class="content-wrapper">
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{profile} )"></th:block>
+
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form method="post" th:action="@{/my-profile-private}" th:object="${newUser}">
+                                            <fieldset class="mb-3">
+
+                                                <legend>
+                                                    <h3 class="text-uppercase h6 text-left m-0" th:text="#{profile.private}">My account ( private information not shared with anyone )</h3>
+                                                </legend>
+
+
+                                                <div class="alert" id="alert-account"
+                                                     th:classappend="${saved_private}?'alert-success':'alert-danger'" th:if="${saved_private != null}">
+                                                    <button class="close" data-dismiss="alert" type="button">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                                    </button>
+                                                    <strong th:if="${saved_private == false}" th:text="${email_exists}">Information
+                                                        were not saved!</strong>
+                                                    <strong th:if="${saved_private == true}" th:text="#{profile.information_saved}">Information
+                                                        were saved!</strong>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label for="email_input" th:text="#{login.email}">Email</label>
+
+                                                    <input autocomplete="email" id="email_input" class="form-control" th:field="*{email}" th:value="${user.email}"
+                                                           type="text" value="my.email@gmail.com">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="age_range_select" class="col-form-label" th:text="#{login.age_range}">Age
+                                                        range</label>
+                                                    <div>
+                                                        <select id="age_range_select" class="form-control" th:field="*{ageRange}">
+                                                            <option th:each="ageRange : ${T(com.socatel.utils.enums.AgeEnum).values()}"
+                                                                    th:selected="${ageRange.compareTo(user.ageRange) == 0}"
+                                                                    th:text="#{${ageRange.toString().replaceAll(' ', '_').toLowerCase()}}"
+                                                                    th:value="${ageRange}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="gender_select" class="col-form-label" th:text="#{profile.gender}">Sex</label>
+                                                    <div>
+                                                        <select id="gender_select" class="form-control" th:field="*{gender}">
+                                                            <option style="display:none" th:text="#{profile.gender.placeholder}"
+                                                                    th:value="null">Primary language
+                                                                preference
+                                                            </option>
+                                                            <option th:each="gender : ${T(com.socatel.utils.enums.GenderEnum).values()}"
+                                                                    th:selected="${user.gender != null && (gender.compareTo(user.gender) == 0)}"
+                                                                    th:text="#{${gender.toString().replaceAll(' ', '_').toLowerCase()}}"
+                                                                    th:value="${gender}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </fieldset>
+
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <strong th:text="#{profile.interests}">Points of interest</strong><br>
+                                                    <small th:text="'(' + #{profile.interests.description}  + ')'"></small>
+                                                    <div>
+
+                                                        <div class="border border-primary p-2">
+
+                                                            <a aria-controls="collapsePOI" aria-expanded="false" class="text-primary"
+                                                               data-toggle="collapse" href="#collapsePOI">
+                                                                <span th:text="#{profile.interests.collapse}">Choose your points of interest</span>
+                                                                <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                                            </a>
+
+                                                            <div class="collapse mt-3" id="collapsePOI">
+
+
+                                                                <ul class="no-gutters">
+
+                                                                    <li class="list-unstyled my-1" th:each="theme: ${themes}">
+                                                                        <input class="form-check-input mt-1" th:field="*{themes}"
+                                                                               th:value="${theme.id}"
+                                                                               type="checkbox"/>
+                                                                        <label class="form-check-label mx-1"
+                                                                               th:for="${#ids.prev('themes')}"
+                                                                               th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">
+                                                                        </label>
+                                                                    </li>
+
+                                                                </ul>
+
+                                                            </div>
+
+                                                        </div> <!-- row border -->
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <strong th:text="#{profile.skills}">Skills</strong>
+                                                    <div>
+
+
+                                                        <div class="border border-primary p-2">
+
+                                                            <a aria-controls="collapseSkills" aria-expanded="false" class="text-primary"
+                                                               data-toggle="collapse" href="#collapseSkills">
+                                                                <span th:text="#{profile.skills.collapse}">Choose your skills</span>
+                                                                <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                                            </a>
+
+                                                            <div class="collapse mt-3" id="collapseSkills">
+
+                                                                <ul class="no-gutters">
+
+                                                                    <li class="list-unstyled my-1" th:each="skill: ${skills}">
+                                                                        <input class="form-check-input mt-1" th:field="*{skills}"
+                                                                               th:value="${skill.id}"
+                                                                               type="checkbox"/>
+                                                                        <label class="form-check-label mx-1"
+                                                                               th:for="${#ids.prev('skills')}"
+                                                                               th:text="#{${skill.name.replaceAll(' ', '_').toLowerCase()}}">
+                                                                        </label>
+                                                                    </li>
+
+                                                                </ul>
+
+                                                            </div>
+                                                        </div> <!-- Row border -->
+
+
+                                                        <!-- <input type="text" data-role="tagsinput" class="form-control" placeholder="Tape your interests">
+                                                        <span class="select2 select2-container select2-container--default select2-container--below w-100" dir="ltr"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                                                            <ul class="select2-selection__rendered">
+                                                                <li class="select2-selection__choice" title="Arizona">
+                                                                <span class="select2-selection__choice__remove" role="presentation">×</span>Health</li>
+                                                                <li class="select2-selection__choice" title="Iowa"><span class="select2-selection__choice__remove" role="presentation">×</span>Food</li>
+                                                                <li class="select2-selection__choice" title="Kansas"><span class="select2-selection__choice__remove" role="presentation">×</span>Sport</li>
+                                                                <li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder=""></li>
+                                                            </ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> -->
+
+                                                    </div>
+                                                </div>
+
+
+                                            </fieldset>
+
+
+                                            <div class="text-right">
+                                                <button class="btn btn-primary" th:text="#{save}" type="submit">Save</button>
+                                            </div>
+                                        </form>
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <div class="alert alert-success" th:if="${password_updated}">
+                                                    <button class="close" data-dismiss="alert" type="button">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                                    </button>
+                                                    <strong th:text="#{profile.success_password}">Password successfully updated!</strong>
+                                                </div>
+
+                                                <div class="alert alert-danger" th:if="${password_msg}">
+                                                    <button class="close" data-dismiss="alert" type="button">
+                                                        <span class="text-white" aria-hidden="true">&times;</span>
+                                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                                    </button>
+                                                    <strong th:text="${password_msg}">Password successfully
+                                                        updated!</strong>
+                                                </div>
+
+                                                <button aria-controls="resetFormModal" class="btn btn-primary w-100" data-toggle="modal" data-target="#resetFormModal" th:text="#{profile.change_password}">
+                                                    Reset Password
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div></div>
+                            </div>
+                        </div>
+                    </div> <!-- 1st Col End -->
+
+                    <div class="col-xl-6 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form method="post" th:action="@{/my-profile-public}" th:object="${newUser}">
+                                            <fieldset class="mb-3">
+                                                <legend>
+                                                    <h3 class="text-uppercase h6 text-left m-0" th:text="#{profile.public}">My online Identity ( information visible by others )</h3>
+                                                </legend>
+
+                                                <div class="alert" id="alert-identity"
+                                                     th:classappend="${saved_public}?'alert-success':'alert-danger'" th:if="${saved_public != null}">
+                                                    <button class="close" data-dismiss="alert" type="button">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                                    </button>
+                                                    <strong th:if="${saved_public == false}" th:text="${username_exists}">Information
+                                                        were not saved!</strong>
+                                                    <strong th:if="${saved_public == true}" th:text="#{profile.information_saved}">Information
+                                                        were saved!</strong>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="username_input" class="col-form-label"
+                                                           th:text="#{login.username}">Username</label>
+                                                    <div>
+                                                        <input autocomplete="username" id="username_input" class="form-control" th:field="*{username}" th:value="${user.username}"
+                                                               type="text">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="profile_select" class="col-form-label" th:text="#{login.profile}">User
+                                                        role</label>
+                                                    <div>
+                                                        <select id="profile_select" class="form-control" th:field="*{profile}">
+                                                            <option th:each="profile : ${T(com.socatel.utils.enums.ProfileEnum).values()}"
+                                                                    th:selected="${profile.compareTo(user.profile) == 0}"
+                                                                    th:text="#{${profile.toString().replaceAll(' ', '_').toLowerCase()}}"
+                                                                    th:value="${profile}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description" class="col-form-label" th:text="#{profile.description}">Describe
+                                                        yourself in a few words</label>
+                                                    <div>
+                                                <textarea id="description" class="form-control" cols="3" placeholder="" rows="4"
+                                                          th:field="*{description}"
+                                                          th:text="${user.description}"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="location" class="col-form-label"
+                                                           th:text="#{login.location}">Location</label>
+                                                    <div>
+                                                        <select id="location" class="form-control" required th:field="*{locality}">
+                                                            <option style="display:none" th:text="#{login.location.placeholder}"
+                                                                    th:value="null">Location
+                                                            </option>
+                                                            <option th:each="locality : ${localities}"
+                                                                    th:selected="${locality.id == user.locality.id}"
+                                                                    th:text="#{${locality.name.replaceAll(' ', '_').toLowerCase()}}"
+                                                                    th:value="${locality.id}"></option>
+                                                        </select>
+                                                        <!-- <p th:if="${#fields.hasErrors('profession')}" th:errors="*{profession}" class="validation-invalid-label"></p> -->
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="first_language" class="col-form-label">
+                                                        <span th:text="#{profile.first_language}">Language</span>
+                                                        <span class="alert alert-danger my-2 d-block" th:errors="*{firstLang}"
+                                                              th:if="${#fields.hasErrors('firstLang')}"></span>
+                                                    </label>
+                                                    <div>
+                                                        <select id="first_language" class="form-control" th:field="*{firstLang}">
+                                                            <option th:each="language : ${languages}"
+                                                                    th:selected="${language.id == user.firstLang.id}"
+                                                                    th:text="#{${language.name.replaceAll(' ', '_').toLowerCase()}}"
+                                                                    th:value="${language.id}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="second_language" class="col-form-label">
+                                                        <span th:text="#{profile.second_language}">Second language</span>
+                                                        <span class="alert alert-danger my-2 d-block"
+                                                              th:errors="*{secondeLang}"
+                                                              th:if="${#fields.hasErrors('secondLang')}"></span>
+                                                    </label>
+                                                    <div>
+                                                        <select id="second_language" class="form-control" th:field="*{secondLang}">
+                                                            <option style="display:none" th:text="#{profile.language.placeholder}"
+                                                                    th:value="null">Primary language
+                                                                preference
+                                                            </option>
+                                                            <option th:each="language : ${languages}"
+                                                                    th:selected="${language.id == user.secondLang?.id}"
+                                                                    th:text="#{${language.name.replaceAll(' ', '_').toLowerCase()}}"
+                                                                    th:value="${language.id}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </fieldset>
+
+                                            <div class="text-right">
+                                                <button class="btn btn-primary" th:text="#{save}" type="submit">Save</button>
+                                            </div>
+                                        </form>
+                                    </div> </div> </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div><!-- /main content -->
+        </div>
+        <!-- /main content -->
+    </main>
+</div>
+<!-- /page content -->
+
+
+<!-- <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Trigger modal</a> -->
+<div class="modal fade" id="resetFormModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 th:text="#{profile.change_password}">CHANGE YOUR PASSWORD</h3>
+                <button class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only" th:text="#{close}">Close</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+
+                <!-- <img class="w-75 my-3" src="../static/images/reset_password.png" th:src="@{/images/reset_password.png}" alt="Reset your password"> -->
+
+                <form method="post" th:action="@{/my-profile-password}" th:object="${passwordDTO}">
+
+                    <div class="form-group">
+                        <label for="old-password" class="col-form-label float-left" th:text="#{login.password}">Password</label>
+                        <div>
+                            <div class="input-group">
+                                <input class="form-control first-focusable-element" id="old-password" autocomplete="current-password" th:field="*{password}" type="password">
+                                <span class="input-group-append bg-info p-2 rounded">
+									<i class="mt-1 text-white far fa-eye switch-password pointer"
+                                       data-input-id="old-password" th:aria-label="#{aria_label.display_password}"></i>
+								</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new-password" class="col-form-label float-left" th:text="#{profile.new_password}">New password</label>
+                        <div>
+                            <div class="input-group">
+                                <input class="form-control" id="new-password" autocomplete="new-password" th:field="*{matchingPassword}"
+                                       type="password">
+                                <span class="input-group-append bg-info p-2 rounded">
+									<i class="mt-1 text-white far fa-eye switch-password pointer"
+                                       data-input-id="new-password" th:aria-label="#{aria_label.display_password}"></i>
+								</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-right">
+                        <button class="btn btn-primary" th:text="#{save}" type="submit">Change my password</button>
+                    </div>
+                </form>
+
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

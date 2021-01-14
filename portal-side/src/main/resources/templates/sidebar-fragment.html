@@ -1,0 +1,263 @@
+<th:block th:fragment="sidebar" xmlns:th="http://www.thymeleaf.org">
+    <div id="in-page-menu" aria-labelledby="in-page-menu-button" class="sidebar sidebar-light sidebar-main sidebar-expand-md align-self-start card">
+
+        <!-- Sidebar mobile toggler -->
+        <div class="sidebar-mobile-toggler text-center">
+            <a class="sidebar-mobile-main-toggle" href="#">
+                <i class="fas fa-times" aria-hidden="true"></i>
+                <span class="sr-only" th:text="#{usermenu.close}">Close usermeny</span>
+            </a>
+            <a class="sidebar-mobile-expand" href="#">
+                <i class="fas fa-expand-arrows-alt" aria-hidden="true"></i>
+                <i class="fas fa-compress-arrows-alt" aria-hidden="true"></i>
+                <span class="sr-only" th:text="#{usermenu.expand}">Expand/Compress usermeny</span>
+            </a>
+        </div>
+        <!-- /sidebar mobile toggler -->
+
+
+        <!-- Sidebar content -->
+       
+        <div class="sidebar-content">
+            <nav aria-label="page-navigation">
+            <!-- User details (with sample pattern) -->
+                <div class="card">
+                    <div class="card-body text-center card-img-top p-3 row">
+
+                        <div class="card-img-actions profile-pic mb-3 col-12">
+                            <a data-toggle="modal" data-target="#updatePicModal" href="#">
+                            <img th:alt="#{messages.your_avatar}" class="rounded-circle pointer" 
+                                height="170"
+                                src="../static/images/demo/face4.jpg" th:src="@{/show-image/{id}(id=${user.picture.id})}" width="170">
+                            <div class="edit">
+                                <i class="fas fa-edit pointer" aria-hidden="true"></i>
+                            </div>
+                            <!-- <a class="btn btn-default pointer" data-toggle="modal" href="#updatePicModal" role="button">Change your pic</a> -->
+                            </a>
+                        </div>
+
+
+                        <div class="col-12">
+                            <h1 class="h6" th:text="${user.username}">Julia Herman</h1>
+                            <ul class="list-inline">
+                                <li class="list-inline-item text-muted mb-1">
+                                    <label th:text="#{${user.profile.toString().replaceAll(' ', '_').toLowerCase()}}">Senior</label>
+                                </li>
+                                <li class="list-inline-item text-muted">
+                                    <i class="fas fa-flag mr-1" aria-hidden="true"></i><label th:text="${languageName}">English</label>
+                                </li>
+                                <li class="list-inline-item text-muted">
+                                    <i class="fas fa-map-marker-alt mr-1" aria-hidden="true"></i><label
+                                        th:text="${localityName}">Budapest</label>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div class="col-12">
+                            <p><span th:text="#{progress_bar_1}">Your profile is</span>&nbsp;<span
+                                    th:text="${percentage}"></span>&nbsp;<span th:text="#{progress_bar_2}">completed</span>
+                            </p>
+
+                            <div class="progress">
+                                <div class="progress-bar bg-primary w-" id="percentage-progress-bar">
+                                    <span th:text="${percentage}">85%</span>
+                                </div>
+                                <script th:inline="javascript">
+                                    /*<![CDATA[*/
+                                    var percentage = /*[[${percentage}]]*/ "0";
+                                    var bar = document.getElementById("percentage-progress-bar");
+                                    bar.style.width = percentage;
+                                    /*]]>*/
+                                </script>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /user details (with sample pattern) -->
+                <!-- Main navigation -->
+                <div class="card card-sidebar-mobile">
+                    <ul class="nav nav-sidebar" data-nav-type="accordion">
+
+                        <!-- Main -->
+                        <!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard.html"
+                            th:classappend="${category=='dashboard'}?'active':''">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span th:text="#{dashboard}">
+                                        Dashboard
+                                    </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/my-profile.html" th:classappend="${category=='profile'}?'active':''">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                                <span th:text="#{profile}">
+                                        My profile
+                                    </span>
+                            </a>
+                        </li>
+                        <li class="nav-item"
+                            th:if="${user.profile == T(com.socatel.utils.enums.ProfileEnum).SERVICE_PROVIDER}">
+                            <a class="nav-link" href="/organisation"
+                            th:classappend="${category=='organisation'}?'active':''">
+                                <i class="fas fa-building" aria-hidden="true"></i>
+                                <span th:text="#{my_organisation}">
+                                        My organisation
+                                    </span>
+                            </a>
+                        </li>
+                        <li class="nav-item" th:if="${user.role == T(com.socatel.utils.enums.UserRoleEnum).MODERATOR}">
+                            <a class="nav-link" href="/moderator" th:classappend="${category=='moderator'}?'active':''">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <span th:text="#{moderator}">
+                                        My moderator
+                                    </span>
+                            </a>
+                        </li>
+                        <li class="nav-item" th:if="${user.role == T(com.socatel.utils.enums.UserRoleEnum).FACILITATOR}">
+                            <a class="nav-link" href="/facilitator" th:classappend="${category=='facilitator'}?'active':''">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <span th:text="#{facilitator}">
+                                        My moderator
+                                    </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/topics-posted.html"
+                            th:classappend="${category=='topics'}?'active':''">
+                                <i class="fas fa-list-ul" aria-hidden="true"></i>
+                                <span th:text="#{topics}">
+                                        My topics
+                                    </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/messages.html" th:classappend="${category=='messages'}?'active':''">
+                                <i class="fas fa-comments" aria-hidden="true"></i>
+                                <span th:text="#{messages}">
+                                        My messages
+                                    </span>
+                                <span class="badge bg-danger text-white badge-pill ml-auto" th:if="${newMessageNumber!=0}"
+                                    th:text="${newMessageNumber}">1</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/notifications.html"
+                            th:classappend="${category=='notifications'}?'active':''">
+                                <i class="fas fa-bell" aria-hidden="true"></i>
+                                <span th:text="#{my_notifications}">
+                                        My notifications
+                                    </span>
+                                <span class="badge bg-danger text-white badge-pill ml-auto" th:if="${newNotifNumber!=0}"
+                                    th:text="${newNotifNumber}">2</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/history.html" th:classappend="${category=='history'}?'active':''">
+                                <i class="fas fa-history" aria-hidden="true"></i>
+                                <span th:text="#{history}">
+                                        My history
+                                    </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/my-data.html" th:classappend="${category=='data'}?'active':''">
+                                <i class="fas fa-cog" aria-hidden="true"></i>
+                                <span th:text="#{my_data}">
+                                        My data
+                                    </span>
+                            </a>
+                        </li>
+
+
+                        <!-- /page kits -->
+
+                    </ul>
+                </div>
+            <!-- /main navigation -->
+            </nav>
+        </div>
+        
+        <!-- /sidebar content -->
+
+    </div>
+
+    <div class="modal fade" id="updatePicModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 th:text="#{update_avatar.title}">Change your profil picture</h2>
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <h3 class="modal-title text-left my-2" th:text="#{update_avatar.explanation1}">You can choose an avatar</h3>
+                    <p th:text="#{update_avatar.explanation2}">You just have to click on the one you prefer</p>
+
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=1)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=2)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=3)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=4)"></th:block>
+
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=5)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=6)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=7)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=8)"></th:block>
+
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=9)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=10)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=11)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=12)"></th:block>
+
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=13)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=14)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=15)"></th:block>
+                    <th:block th:replace="sidebar-fragment ::avatar-select(number=16)"></th:block>
+
+                    <h3 class="modal-title text-left my-2" th:text="#{update_avatar.explanation3}">Or you can upload your picture</h3>
+
+                    <p th:text="#{update_avatar.explanation4}">If you add a cover photo to your profile, it will be visible to the public. This means that
+                        anyone can see your current cover photo.</p>
+
+                    <form enctype="multipart/form-data" method="post" th:action="@{/uploadPicture}">
+
+                        <div class="my-3">
+
+                            <div class="alert alert-danger d-none" id="alert-upload">
+                                <strong><span class="errormsg"></span></strong>
+                            </div>
+
+                            <b th:text="#{update_avatar.attach_image}">Indicate the path to your picture</b>: <br>
+                            <div class="custom-file">
+                                <input class="custom-file-input" id="user-picture-file" name="file" type="file"/>
+                                <label class="custom-file-label" for="user-picture-file" th:text="#{create_topic.choose_file}">Choose
+                                    File</label>
+                                <small th:text="#{update_avatar.image_specification}">The file must be a .jpg, max size 4Mo</small>
+                            </div>
+                        </div>
+
+                        <button th:text="#{update_avatar.button}" class="btn btn-primary float-right" id="btnsubmit" type="submit">Send picture</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="avatar-select" xmlns:th="http://www.thymeleaf.org">
+    <a href="/change-avatar/1" th:href="@{/change-avatar/{number}(number=${number})}">
+        <img th:alt="#{avatar} + ' ' + ${number}" class="img-fluid rounded-circle m-1"
+             height="80" src="../static/images/demo/face1.jpg" th:src="@{/images/demo/face{number}.jpg(number=${number})}" width="80">
+    </a>
+</th:block>
+

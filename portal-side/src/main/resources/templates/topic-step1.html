@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=${group.name} + ' | ' + #{topic.step} + '1')">
+</th:block>
+
+<body class="chatboard" style="overflow-x: hidden;">
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+<th:block th:replace="topic-fragment :: resume"></th:block>
+
+<a id="top-paginate"></a>    <!-- Used for pagination scroll - must be kept -->
+
+<div class="container-fluid px-0">
+    <div class="row p-2">
+
+        <div class="col-sm-3 d-none d-lg-block">
+            <th:block th:replace="topic-sidebar-fragment :: left(step=1)"></th:block>
+        </div>
+
+        <div class="col-12 col-lg-9">
+
+
+            <div class="stepcontainer">
+
+
+                <th:block th:replace="topic-fragment :: tabs(var=1)"></th:block>
+
+                <!-- <div class="tab-pane bg-white fade show active card mt-1 p-2" id="step1" role="tabpanel" aria-labelledby="step1-tab"> -->
+                <div aria-labelledby="step1-tab" class="tab-pane bg-white fade show active mt-0 p-2" id="step1"
+                     role="tabpanel">
+
+
+                    <div class="alert alert-info d-none" data-group-id="1" id="commentsNotification"
+                         th:data-group-id="${group.id}">
+                        <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
+
+                        <button class="btn btn-info float-right" onClick="window.location.reload();" type="button">
+                            <i class="fas fa-sync fa-spin m-1 pointer" aria-hidden="true"></i><span th:text="#{refresh}">Refresh </span>
+                        </button>
+                        <strong th:text="#{topic.step1.new_comments}">New comments have been posted on this topic !</strong><br><span
+                            th:text="#{topic.step1.new_comments2}">You should refresh the page to see them.</span>
+                    </div>
+
+                    <!-- Topic chatboard -->
+                    <div class="p-3">
+
+                        <div class="row" th:if="${group.status.ordinal() > 1}">
+                            <div class="col">
+                                <div class="alert alert-danger">
+                                    <strong th:text="#{topic.step1.end}">step 1 contribution have ended please review the step
+                                        that is open for contributions</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info" th:if="${group.status.ordinal() == 1}">
+                            <strong th:text="#{topic.step1.explanation}">Step 1 Co-ideate: Communicate
+                                your needs and discuss possible
+                                solutions with others.</strong><br><br>
+                            <strong><a href="#" th:text="#{topic.step1.introduction1}">Click to
+                                view video.</a></strong>
+                        </div>
+
+                        <div class="alert alert-info" th:if="${posts.size() == 0}">
+                            <button class="close" data-dismiss="alert" type="button">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only" th:text="#{close}"></span>
+                            </button>
+                            <strong th:text="#{topic.step1.no_comments}">No comment the moment !</strong> <br> <span
+                                th:text="#{topic.step1.no_comments2}">Use the form below and be the first to comment this topic !</span>
+                        </div>
+
+                        <div class="alert alert-info" sec:authorize="!isAuthenticated()">
+                            <span th:text="#{find_topic.no_comments4}">Please</span> <a class="btn btn-primary"
+                                                                                        href="login" th:href="@{/login}"
+                                                                                        th:text="#{main.signin}">sign in</a>
+                            <span th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-white-pink ml-1"
+                                                                                    href="registration.html"
+                                                                                    th:href="@{/registration}"
+                                                                                    th:text="#{register}">register</a> <span
+                                th:text="#{find_topic.no_comments6}">and you will be able to create and propose topics relevant to you , others will then join you to share their personal experience.</span>
+                        </div>
+
+
+                        <div class="paginate-step1 p-3">
+                            <!-- POSTS 1st LEVEL -->
+                            <div class="row paginate-item" th:each="post, iStat : ${posts}" th:id="'post' + ${post.id}">
+
+                                <div class="media-body">
+                                    <th:block th:replace="topic-fragment :: step1-post(post=${post},parent_id=${post.id})"></th:block>
+
+
+
+                                    <!-- REPLIES 2nd LEVEL  -->
+                                    <!--i th:if="${!post.repliesPage().isEmpty()}" class="fas fa-ellipsis-h"></i-->
+                                    <div th:if="${!post.repliesPage().isEmpty()}" th:id="'collapseReplies'+${post.id}" class="collapse border-left">
+                                        <div class="row response my-3" th:each="reply : ${post.repliesPage().content}"
+                                             th:id="'post' + ${reply.id}">
+
+                                            <!--th:block th:replace="user-fragment :: modal(user_info=${reply.author})"></th:block-->
+                                            <div class="col-10">
+
+                                                <div class="media-body">
+                                                    <th:block th:replace="topic-fragment :: step1-post(post=${reply},parent_id=${reply.id})"></th:block>
+
+
+
+                                                    <!-- REPLIES 3rd LEVEL  -->
+                                                    <!--i th:if="${!reply.repliesPage().isEmpty()}" class="fas fa-ellipsis-h"></i-->
+                                                    <div th:if="${!reply.repliesPage().isEmpty()}" th:id="'collapseReplies'+${reply.id}" class="collapse border-left">
+                                                        <div class="row response my-3" th:each="reply3lvl : ${reply.repliesPage().content}"
+                                                             th:id="'post' + ${reply3lvl.id}">
+
+                                                            <div class="col-10">
+
+                                                                <div class="media-body">
+                                                                    <th:block th:replace="topic-fragment :: step1-post(post=${reply3lvl},parent_id=${reply.id})"></th:block>
+                                                                </div>
+                                                            </div>
+
+                                                        </div> <!-- col10-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- col10-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="card bg-transparent text-center border-1 m-2">
+                            <ul class="pagination align-self-center">
+                                <li class="page-item mr-3 font-weight-bold" th:if="${postsPage.hasPrevious()}"><a th:href="@{/topic/{group_id}/step1#tabs(group_id=${group.id}, page=${currentPage-1})}" class=""><i class="fa fa-angle-left fa-2x"></i></a></li>
+                                <li class="page-item font-weight-bold mt-1"><span th:text="#{find_topic.page}">Page</span> <span th:text="${currentPage+1}">1</span> <span th:text="#{find_topic.of}">of</span> <span th:text="${postsPage.totalPages}">10</span></li>
+                                <li class="page-item ml-3 font-weight-bold" th:if="${postsPage.hasNext()}"><a th:href="@{/topic/{group_id}/step1#tabs(group_id=${group.id}, page=${currentPage+1})}" class=""><i class="fa fa-angle-right fa-2x"></i></a></li>
+                            </ul>
+                        </div> -->
+
+
+                    </div> <!-- /iteration process -->
+
+                    <th:block th:replace="topic-fragment :: post-form(group_ordinal=1, tag=true)"></th:block>
+                        <!-- FORM -->
+
+
+                </div>
+
+            </div> <!-- stepcontainer -->
+            <!-- </div> tab-content -->
+
+
+        </div>
+    </div>
+
+
+
+
+    <!-- </div> page content -->
+
+
+    <!-- modal pop up add-proposition start
+    <div class="modal fade" id="add-proposition">
+            <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+                    <div class="col-xl-12 col-sm-12 p-0 m-0">
+                        <div class="card p-0 m-0">
+                                <div class="card-body text-center w-100">
+                                    <div class="modal-body text-center">
+                                    <h5 class="col-12">Write your proposition</h5>
+                                    <textarea class="col-12" placeholder="Write here"></textarea>
+                                    </div>
+                                    <div class="modal-footer column">
+                                            <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#add-propositionSuccess" class="btn btn-primary col-6"><a href="" class="text-white">Validate</a></button>
+                                            <button type="button" data-dismiss="modal" class="btn btn-primary col-6"><a href="" class="text-white">Cancel</a></button>
+                                    </div>
+                            </div>
+                    </div>
+    </div>
+    </div>
+    </div>
+    </div>modal pop add-proposition end -->
+
+
+</div>
+</main>
+
+<th:block th:replace="topic-message-fragment :: topic-modals"></th:block>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+
+</body>
+</html>

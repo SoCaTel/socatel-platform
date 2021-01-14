@@ -1,0 +1,1181 @@
+<!-- 
+DEPRECATED ??? 
+<div th:fragment="unsuscribed">
+	<div class="topic" 
+									 data-toggle="popover" 
+									 data-trigger="hover" 
+									 title="How to suscribe to this topic?" 
+									 data-placement="top" 
+									 data-content="Click on the heart to subscribe to this group">
+									
+									<div class="row">
+										<div class="col text-left">
+											<span class="badge text-primary"># Wellness</span>
+											<span class="badge text-primary"># Food</span>
+											<span class="badge text-primary"># Health</span>
+											<br>
+											<hr class="my-1 w-25 float-left">
+										</div>
+										<div class="col text-right">
+											<span class="mr-1 text-muted">5 days left</span>
+											<span class="mr-1"><i class="fas fa-clock"></i></span>
+											<span class="mr-1">|</span>
+											<span class="mr-1"><a class="text-primary font-weight-bold" href="#">Suscribe <i class="far fa-heart text-danger"></i></a> 81</span>
+										</div>
+									</div>							
+									
+										<div class="row">
+											<div class="col topic-subject" data-toggle="collapse" data-target="#collapseExample2">
+											Fighting loneliness at home
+											</div>
+										</div>					
+									
+										<div class="row details my-2">											
+											<div class="col">Dublin, Ireland</div>
+											<div class="col">July 5Th, 2018</div>
+											<div class="col">Proposed by James542</div>
+											<div class="col">24 Participants</div>
+										</div>
+
+										<i data-toggle="collapse" data-target="#collapseExample2" class="fas fa-chevron-down pointer text-primary"></i> 
+										<div class="collapse table-inbox-description font-weight-normal" id="collapseExample2">
+											<div class="my-1 description">														
+												Loneliness is a complex and usually unpleasant emotional response to isolation. Older persons who are not in regular contact with the outside world and the community need company to keep in touch with the outside world. Many services exist to help older persons to socialise, but it is not always easy to access them. This topic requires a thorough discussion on the challenges and solutions to enable social contact for older persons and to identify who can help them fight isolation. [...]
+											</div>
+											<a class="mt-1 btn btn-primary" href="topic.html">View</a>
+										</div>									
+
+								</div>
+</div>
+
+
+<div th:fragment="suscribed">
+								<div class="topic" 
+									 data-toggle="popover" 
+									 data-trigger="hover" 
+									 title="You are already subscribed to this group" 
+									 data-placement="top" 
+									 data-content="">
+									
+									<div class="row">
+										<div class="col text-left">
+											<span class="badge text-primary"># Wellness</span>
+											<span class="badge text-primary"># Food</span>
+											<span class="badge text-primary"># Health</span>
+											<br>
+											<hr class="my-1 w-25 float-left">
+										</div>
+										<div class="col text-right">
+											<span class="mr-1 text-muted">3 days left to contribute this step !</span>
+											<span class="mr-1"><i class="fas fa-clock"></i></span>
+											<span class="mr-1">|</span>
+											<span class="mr-1"><a class="text-primary font-weight-bold" href="#"><i class="fas fa-heart text-danger"></i></a> 81</span>
+										</div>
+									</div>							
+									
+										<div class="row">
+											<div class="col topic-subject" data-toggle="collapse" data-target="#collapseExample">
+											The quality of food delivery services
+											</div>
+										</div>					
+									
+										<div class="row details my-2">											
+											<div class="col">Dublin, Ireland</div>
+											<div class="col">July 5Th, 2018</div>
+											<div class="col">Proposed by James542</div>
+											<div class="col">24 Participants</div>
+										</div>
+
+										<i data-toggle="collapse" data-target="#collapseExample" class="fas fa-chevron-down pointer text-primary"></i> 
+										<div class="collapse table-inbox-description font-weight-normal" id="collapseExample">
+											<div class="my-1 description">														
+												Essential for older persons that cannot buy food or cook, food delivery services are not yet widespread and equally efficient. A number of state-sponsored and private services exist nowadays, yet they only serve areas with high-density and have constraints as to the range of food served and delivery times. The HSE is looking to gather feedback from the various stakeholders involved in food delivery, to understand the possible solutions.
+											</div>
+											<a class="mt-1 btn btn-primary" href="topic.html">View</a>
+										</div>									
+
+								</div>
+</div>
+-->
+
+<th:block th:fragment="home" xmlns:th="http://www.thymeleaf.org">
+    <div class="row">
+        <div class="col text-left">
+            <a th:href="@{/topic-find(query=${theme.name.replaceAll(' ', '_').toLowerCase()})}" th:each="theme : ${group.themes}"><span class="text-primary" > # <span
+                    th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">Wellness</span> </span></a>
+            <br>
+            <br>
+            <hr class="my-1 w-25 float-left">
+        </div>
+        <div class="col-8 text-right">
+            <span class="mr-1 text-muted" th:text="${times_remaining.get(iter.index)}">3 days left to contribute this step !</span>
+            <span class="mr-1"><i class="fas fa-clock" aria-hidden="true"></i></span>
+            <span class="mr-1">|</span>
+            <span class="mr-1"><i class="fas fa-heart text-pink" aria-hidden="true"></i><span
+                    th:text="${subscribers.get(iter.index)}">81</span></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Deprecated Collapse Description <div class="col topic-subject" data-toggle="collapse" th:data-target="'#collapseTopic' + ${group.id}" > -->
+        <div class="col topic-subject" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">
+            <a th:href="@{/topic.html/{id}(id=${group.id})}" th:text="${group.name}">Fighting loneliness at home</a>
+        </div>
+    </div>
+
+    <div class="my-1 description replace-links text-justify" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}" th:text="${group.description}">
+        Essential for older persons that cannot buy food or cook, food delivery
+        services are not yet widespread and equally efficient. A number of state-sponsored and private services
+        exist nowadays, yet they only serve areas with high-density and have constraints as to the range of food
+        served and delivery times. The HSE is looking to gather feedback from the various stakeholders involved in
+        food delivery, to understand the possible solutions.
+    </div>
+
+    <div class="row details my-2">
+        <div class="col" th:text="#{topic.step} + ' ' + ${group.getStepNumber()}">STEP 1</div>
+        <div class="col" th:text="#{${group.locality.name.replaceAll(' ', '_').toLowerCase()}}">Dublin, Ireland</div>
+        <div class="col"><span th:text="${group.fancyTimestamp()}">July 5Th, 2018</span></div>
+        <div class="col"><span th:text="#{find_topic.proposed}">Proposed by</span> <span
+                th:text="${group.initiator.isAnonymized()} ? #{anonymous} : ${group.initiator.username}">James542</span>
+        </div>
+        <div class="col"><span th:text="${participants.get(iter.index)}">24</span> <span
+                th:text="#{find_topic.participants}">Participants</span></div>
+    </div>
+
+    <!-- Deprecated Collapse Description <i data-toggle="collapse" th:data-target="'#collapseTopic' + ${group.id}" class="fas fa-chevron-down pointer text-primary"></i>-->
+    <!-- <div class="collapse table-inbox-description font-weight-normal" th:id="'collapseTopic' + ${group.id}"> -->
+
+    <!-- </div> -->
+
+    <a class="mt-1 btn btn-primary" th:href="@{/topic.html/{id}(id=${group.id})}">
+        <span th:text="#{view}">View</span>
+        <span th:text="${group.name}" class="sr-only"></span>
+    </a>
+</th:block>
+
+
+<th:block th:fragment="resume" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="topic resume m-2 bg-white"
+         th:attr="data-group-id=${group.id}, data-relation=${relation?.getRelation()?.toString()}">
+        <div class="container" id="content" tabindex="-1">
+            <div class="row">
+                <!-- <div class="col-8 text-right"> -->
+                <div class="col-12 col-sm-8 text-left order-sm-2 text-sm-right small">
+
+                    <span class="text-primary" th:text="${timeRemaining}">3 days left to contribute this step !</span>
+                    <span><i class="fas fa-clock mx-1" aria-hidden="true"></i></span>
+
+                    <!-- 	<span><a sec:authorize="isAuthenticated()" class="text-primary subscribe" href="#" th:attr="data-group-id=${group.id}, data-action='subscribe'" ><span th:if="${relation == null}" th:text="#{subscribe}">Subscribe</span></a></span>
+                    <span><a sec:authorize="isAuthenticated()" class="text-primary unsubscribe" href="#" th:attr="data-group-id=${group.id}, data-action='unsubscribe'" ><span th:if="${relation != null}" th:text="${relation.relation == T(com.socatel.utils.enums.GroupUserRelationEnum).SUBSCRIBED} ? #{unsubscribe} : ''" >Unsubscribe</span></a></span>
+                    <span><i class="text-pink heart-icon" th:attr="data-group-id=${group.id}" th:classappend="${relation != null} ? 'fas fa-heart' : 'far fa-heart'"></i> <span class="suscribers" th:attr="data-group-id=${group.id}" th:text="${numSubscribers}">81</span></span>
+                                                         -->
+                    <span><a class="text-primary subscribe" href="#"
+                             sec:authorize="isAuthenticated()" th:attr="data-group-id=${group.id}, data-action='subscribe'"
+                             th:if="${relation == null}"><span th:text="#{subscribe}">Subscribe</span></a></span>
+                    <span><a class="text-primary unsubscribe"
+                             href="#"
+                             sec:authorize="isAuthenticated()" th:attr="data-group-id=${group.id}, data-action='unsubscribe'"
+                             th:if="${relation != null && relation.relation.equals(T(com.socatel.utils.enums.GroupUserRelationEnum).SUBSCRIBED)}"><span
+                            th:text="#{unsubscribe}">Unsubscribe</span></a></span>
+                    <span><i class="text-pink heart-icon" aria-hidden="true" th:attr="data-group-id=${group.id}"
+                             th:classappend="${relation != null} ? 'fas fa-heart' : 'far fa-heart'"></i> <span
+                            class="suscribers" th:attr="data-group-id=${group.id}" th:text="${numSubscribers}">81</span></span>
+
+                </div>
+
+                <div class="col-12 col-sm-4 text-left order-sm-1 mb-2 mb-sm-0">
+                    <a th:href="@{/topic-find(query=${theme.name.replaceAll(' ', '_').toLowerCase()})}" th:each="theme : ${group.themes}"><span class="text-primary" > #<span
+                            th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">Wellness</span> </span></a>
+                    <br>
+                    <hr class="my-1 w-25 float-left">
+                </div>
+
+            </div>
+
+            <div class="row">
+                <!-- <div class="col topic-subject" data-toggle="collapse" data-target="#collapseResume"> -->
+                <div class="col topic-subject" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">
+                    <h1 th:text="${group.name}">The quality of food delivery services</h1>
+                </div>
+            </div>
+
+            <div class="my-1 description replace-links text-justify" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}" style="font-size: 20px" th:text="${group.description}">
+                Essential for older persons that cannot buy food or cook, food delivery services are not yet widespread
+                and equally efficient. A number of state-sponsored and private services exist nowadays, yet they only
+                serve areas with high-density and have constraints as to the range of food served and delivery times.
+                The HSE is looking to gather feedback from the various stakeholders involved in food delivery, to
+                understand the possible solutions.
+            </div>
+
+            <div class="row details my-2">
+                <div class="col" th:text="#{${group.locality.name.replaceAll(' ', '_').toLowerCase()}}">Dublin, Ireland</div>
+                <div class="col" th:text="${group.fancyTimestamp()}">July 5Th, 2018</div>
+                <div class="col"><span th:text="#{find_topic.proposed}">Proposed by</span> <span
+                        th:text="${group.initiator.isAnonymized()} ? #{anonymous} : ${group.initiator.username}">James542</span>
+                </div>
+                <div class="col"><span th:text="${numParticipants}">24</span> <span
+                        th:text="#{find_topic.participants}">Participants</span></div>
+            </div>
+
+            <!--
+            <hr>
+            <ul class="list-inline mb-3 mb-sm-0">
+                <li class="list-inline-item">
+                    <span>
+                        <a sec:authorize="isAuthenticated()" class="text-primary font-weight-bold" href="#" th:onclick="'javascript:subscribe(' + ${group.id} + ', true);'" ><span th:if="${relation == null}" th:text="#{subscribe}">Subscribe</span></a>
+                        <a sec:authorize="isAuthenticated()" class="text-primary font-weight-bold" href="#" th:onclick="'javascript:subscribe(' + ${group.id} + ', false);'"><span th:if="${relation != null}" th:text="${relation.relation == T(com.socatel.utils.enums.GroupUserRelationEnum).SUBSCRIBED} ? #{unsubscribe} : ''" >Unsubscribe</span></a> - ->
+                        <a sec:authorize="isAuthenticated()" class="text-primary font-weight-bold subscribe" href="#" th:attr="data-id=${group.id}, data-action='subscribe'" ><span th:if="${relation == null}" th:text="#{subscribe}">Subscribe</span></a>
+                        <a sec:authorize="isAuthenticated()" class="text-primary font-weight-bold subscribe" href="#" th:attr="data-id=${group.id}, data-action='unsubscribe'" ><span th:if="${relation != null}" th:text="${relation.relation == T(com.socatel.utils.enums.GroupUserRelationEnum).SUBSCRIBED} ? #{unsubscribe} : ''" >Unsubscribe</span></a>
+                        <a class="text-primary font-weight-bold" href="#" th:onclick="'javascript:like(' + ${group.id} + ');'"><i class="text-danger" th:classappend="${liked} ? 'fas fa-heart' : 'far fa-heart'"></i> <span th:text="${group.likes}">81</span></a> - ->
+                        <a class="text-primary font-weight-bold like" href="#" th:attr="data-id=${group.id}"><i class="text-danger" th:classappend="${liked} ? 'fas fa-heart' : 'far fa-heart'"></i> <span th:text="${group.likes}">81</span></a>
+                    </span>
+
+                </li>
+            </ul>
+            -->
+
+        </div>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="tabs" xmlns:th="http://www.thymeleaf.org">
+
+    <a id="tabs"></a>
+    <ul class="nav nav-tabs border-0 mt-0 mb-0 text-center" role="tablist">
+
+        <li class="nav-item m-0 py-0 w-20" style="display: table; height: 100px">
+            <a class="nav-link h-100 step"
+               id="step1-tab" role="tab" th:classappend="${var==1}?'active':''" th:href="@{/topic/{id}/step1#tabs(id=${group.id})}">
+                <span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 1</span>
+            </a>
+        </li>
+
+        <li class="nav-item m-0 py-0 w-20" th:classappend="${group.status.ordinal() < 2}?'disabled':''" style="display: table; height: 100px">
+            <th:block th:if="${group.status.ordinal() >= 2}">
+                <a class="nav-link h-100 step"
+                   id="step2-tab" role="tab"
+                   th:classappend="${var==2}?'active':''" th:href="${group.status.ordinal() >= 2}?@{/topic/{id}/step2#tabs(id=${group.id})}:'#tabs'"><span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 2</span>
+                </a>
+            </th:block>
+            <th:block th:if="${group.status.ordinal() < 2}">
+                <div class="mt-2 step">
+                    <span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 2</span>
+                </div>
+            </th:block>
+        </li>
+
+        <li class="nav-item m-0 py-0 w-20" th:classappend="${group.status.ordinal() < 3}?'disabled':''" style="display: table; height: 100px">
+            <th:block th:if="${group.status.ordinal() >= 3}">
+                <a class="nav-link h-100 step"
+                   id="step3-tab" role="tab"
+                   th:classappend="${var==3}?'active':''" th:href="${group.status.ordinal() >= 3}?@{/topic/{id}/step3#tabs(id=${group.id})}:'#tabs'"><span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 3</span>
+                </a>
+            </th:block>
+
+            <th:block th:if="${group.status.ordinal() < 3}">
+                <div class="mt-2 step">
+                    <span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 3</span>
+                </div>
+            </th:block>
+        </li>
+
+        <li class="nav-item m-0 py-0 w-20" th:classappend="${group.status.ordinal() < 4}?'disabled':''" style="display: table; height: 100px">
+            <th:block th:if="${group.status.ordinal() >= 4}">
+                <a class="nav-link h-100 step"
+                   id="step4-tab" role="tab"
+                   th:classappend="${var==4}?'active':''" th:href="${group.status.ordinal() >= 4}?@{/topic/{id}/step4#tabs(id=${group.id})}:'#tabs'"><span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 4</span>
+                </a>
+            </th:block>
+
+            <th:block th:if="${group.status.ordinal() < 4}">
+                <div class="mt-2 step">
+                    <span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 4</span>
+                </div>
+            </th:block>
+        </li>
+
+        <li class="nav-item m-0 py-0 w-20" th:classappend="${group.status.ordinal() < 5}?'disabled':''" style="display: table; height: 100px">
+            <th:block th:if="${group.status.ordinal() >= 5}">
+                <a class="nav-link h-100 step"
+                   id="step5-tab" role="tab"
+                   th:classappend="${var==5}?'active':''" th:href="${group.status.ordinal() >= 5}?@{/topic/{id}/step5#tabs(id=${group.id})}:'#tabs'"><span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 5</span>
+                </a>
+            </th:block>
+
+            <th:block th:if="${group.status.ordinal() < 5}">
+                <div class="mt-2 step">
+                    <span th:text="#{topic.step}" class="font-weight-bold">STEP</span><span class="font-weight-bold"> 5</span>
+                </div>
+            </th:block>
+        </li>
+    </ul>
+</th:block>
+
+<th:block th:fragment="step1-post" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="p-3" th:classappend="${post.postType == T(com.socatel.utils.enums.PostTypeEnum).IDEA}?'border-danger border-3':'border-secondary border-1'" >
+        <div class="media-title">
+            <a data-target="#user-modal-dev" data-toggle="modal" href="#"
+               th:data-target="${!post.author.isAnonymized()}?'#view-profile' + ${post.author.id} : ''"><img
+                    th:alt="${post.author.isAnonymized()} ? #{anonymous} + ' ' + #{avatar} : ${post.author.username} + ' ' + #{avatar}"
+                    class="rounded-circle mr-2"
+                    height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${post.author.picture.id})}" width="36"></a>
+            <a data-toggle="modal" href="#"
+               th:data-target="${!post.author.isAnonymized()}?'#view-profile' + ${post.author.id} : ''" class="font-weight-semibold mr-1"
+               th:text="${post.author.isAnonymized()} ? #{anonymous} : ${post.author.username}">William555</a>
+            <span class="badge border-1 border-danger text-danger"  th:if="${post.postType == T(com.socatel.utils.enums.PostTypeEnum).IDEA}">
+                <i aria-hidden="true" class="far fa-lightbulb mr-1"></i>
+                <span th:text="#{idea}">IDEA</span>
+            </span>
+            <span class="badge border-1 border-primary text-primary"
+                  th:if="${!post.author.isAnonymized() && post.author.organisation != null}"
+                  th:text="${post.author.organisation.name}">Organisation</span>
+            <span class="badge border-1 border-success text-success"
+                  th:if="${!post.author.isAnonymized() && post.author.isModerator()}"
+                  th:text="#{moderator}">Moderator</span>
+            <span class="badge border-1 border-success text-success"
+                  th:if="${!post.author.isAnonymized() && post.author.isFacilitator()}"
+                  th:text="#{facilitator}">Moderator</span>
+            <span class="font-size-sm text-muted mx-1" th:text="${post.fancyTimestamp()}">Just now</span>
+
+            <th:block th:replace="topic-message-fragment :: gear-step1(author=${post.author}, id_message=${post.id}, step=1)"></th:block>
+
+        </div>
+
+        <div class="media-description my-2 replace-links" style="white-space: pre-wrap;" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}" th:text="${post.text}">
+            There are many companies providing food delivery services, that are listed on the
+            right.
+        </div>
+
+        <!-- LIKE / DISLIKE ROW + COMMENT FORM  -->
+        <div class="media-description my-2"
+             th:if="${post.postType == T(com.socatel.utils.enums.PostTypeEnum).IDEA}">
+            <th:block th:if="${user == null || !user.isModerator()}">
+                <th:block sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 1 && !post.author.equals(user)}">
+                    <a class="vote pointer mr-1 border-right" data-action="upvote" th:data-id="${post.id}"
+                       th:data-path="post" th:id="'up' + ${post.id}">
+                        <i class="text-success" aria-hidden="true"
+                           th:classappend="${user != null && post.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                        <span class="votes" th:text="${post.upvotes}">114</span>
+                    </a>
+
+                    <a class="vote pointer ml-1" data-action="downvote" th:data-id="${post.id}"
+                       th:data-path="post" th:id="'down' + ${post.id}">
+                        <i class="text-danger" aria-hidden="true"
+                           th:classappend="${user != null && post.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                        <span class="votes" th:text="${post.downvotes}">22</span>
+                    </a>
+                </th:block>
+                <th:block th:if="${group.status.ordinal() != 1 || user == null || post.author.equals(user)}">
+                    <span class="mr-1 border-right" th:id="'up' + ${post.id}">
+                        <i class="grey" aria-hidden="true"
+                           th:classappend="${user != null && post.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                        <span class="votes" th:text="${post.upvotes}">114</span>
+                    </span>
+
+                    <span class="ml-1" th:id="'down' + ${post.id}">
+                        <i class="grey" aria-hidden="true"
+                           th:classappend="${user != null && post.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                        <span class="votes" th:text="${post.downvotes}">22</span>
+                    </span>
+                </th:block>
+            </th:block>
+
+            <th:block sec:authorize="isAuthenticated()" th:if="${user.isModerator()}">
+                <a data-toggle="modal" th:data-target="'#list-upvotes'+${post.id}" href="#" class="pointer mr-1 border-right" th:id="'up' + ${post.id}">
+                    <i class="far fa-thumbs-up text-success" aria-hidden="true"></i>
+                    <span class="votes" th:text="${post.upvotes}">114</span>
+                </a>
+
+                <a data-toggle="modal" th:data-target="'#list-downvotes'+${post.id}" href="#" class="pointer ml-1" data-action="downvote" th:id="'down' + ${post.id}">
+                    <i class="far fa-thumbs-down text-danger" aria-hidden="true"></i>
+                    <span class="votes" th:text="${post.downvotes}">22</span>
+                </a>
+
+                <th:block th:replace="user-fragment :: list-users-modal(id=${'list-upvotes'+post.id}, title=#{topic.users.upvote}, users_list=${post.getUsersUpvote()})"></th:block>
+                <th:block th:replace="user-fragment :: list-users-modal(id=${'list-downvotes'+post.id}, title=#{topic.users.downvote}, users_list=${post.getUsersDownvote()})"></th:block>
+            </th:block>
+        </div>
+        <div class="row" sec:authorize="isAuthenticated()"
+             th:if="${group.status.ordinal() == 1}">
+            <div class="col-12">
+
+                <button class="btn btn-primary collapsed w-auto"
+                        th:data-reply="${post.author.username}"
+                        data-toggle="collapse"
+                        th:data-target="'#collapseReplyForm' + ${post.id}"
+                        th:data-textarea-id="${post.id}" th:text="#{topic.reply}">
+                    <span th:text="#{topic.reply}">Reply</span>
+                    <span th:text="${post.id}"></span>
+                </button>
+                <button th:if="${!post.repliesPage().isEmpty()}" class="collapsed collapse-icon btn btn-primary w-auto" aria-expanded="false" data-toggle="collapse" th:data-target="'#collapseReplies'+${post.id}">
+                    <i aria-hidden="true" class="fas fa-angle-up"></i>
+                    <span th:text="#{show_replies}">Show replies</span>
+                    <span class="sr-only" th:text="${post.id}">Show replies</span>
+                </button>
+
+                <div class="collapse p-3 card" th:id="'collapseReplyForm' + ${post.id}">
+
+                    <div class="w-100">
+                        <form enctype="multipart/form-data"
+                              method="post"
+                              th:action="@{/topic/{group_id}/post/{parent_id}(group_id=${group.id},parent_id=${parent_id})}" th:object="${newPost}">
+                            <label th:for="'comment' + ${post.id}" th:text="#{topic.leave_comment}"></label>
+                            <textarea class="form-control mb-2"  name="comment"
+                                      rows="3" maxlength="280" minlength="2"
+                                      th:field="*{text}" th:id="'comment' + ${post.id}" required></textarea>
+
+                            <th:block th:replace="topic-message-fragment :: choosetag(id=${post.id})"></th:block>
+
+                            <th:block th:replace="topic-message-fragment :: choosefile(id=${post.id})"></th:block>
+
+                            <button class="btn btn-primary submit float-right"
+                                    th:text="#{topic.contribute}">Send contribution
+                            </button>
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" sec:authorize="isAuthenticated()"
+             th:unless="${group.status.ordinal() == 1}">
+            <div class="col-12">
+                <button th:if="${!post.repliesPage().isEmpty()}" class="collapsed collapse-icon btn btn-primary w-auto" aria-expanded="false" data-toggle="collapse" th:data-target="'#collapseReplies'+${post.id}">
+                    <i aria-hidden="true" class="fas fa-angle-up"></i>
+                    <span th:text="#{show_replies}">Show replies</span>
+                    <span class="sr-only" th:text="${post.id}">Show replies</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="step1-replies" xmlns:th="http://www.thymeleaf.org">
+    <!--i th:if="${!replies.isEmpty()}" class="fas fa-ellipsis-h"></i-->
+    <div th:if="${!replies.isEmpty()}" class="row response my-3" th:each="reply : ${replies}"
+         th:id="'post' + ${reply.id}">
+
+        <div class="col-10">
+
+            <div class="media-body ">
+                <th:block th:replace="topic-fragment :: step1-post(post=${reply})"></th:block>
+            </div>
+        </div>
+
+    </div> <!-- col10-->
+</th:block>
+
+<th:block th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+    <div class="bg-white py-3 mb-3">
+        <h2 th:text="#{topic.title}">Let’s work together !</h2>
+        <h3 th:text="#{topic.subtitle}">Follow the 3 steps to express your opinion and co-design new services</h3>
+        <img alt="Topic Chatboard" class="img-fluid" src="../static/images/chatboard.png"
+             th:src="@{/images/chatboard.png}">
+    </div>
+</th:block>
+
+
+<th:block th:fragment="propositionVote" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <ul class="no-dot p-0">
+        <li class="row mb-2" style="margin:auto" th:each="prop : ${propositions}">
+            <div class="text-center m-auto" >
+
+                <th:block th:replace="topic-message-fragment :: gear-step2(id_message=${prop.id})"></th:block>
+                <th:block th:if="${user == null || !user.isModerator()}">
+                    <th:block sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == group_ordinal && !prop.user.equals(user)}">
+                        <a class="vote pointer thumbs mx-2" data-action="upvote" th:data-id="${prop.id}"
+                           th:data-path="proposition" th:id="'up' + ${prop.id}">
+                            <i class="mr-1 text-success" aria-hidden="true"
+                               th:classappend="${user != null && prop.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                            <span class="votes" th:text="${prop.upvotes}">114</span>
+                        </a>
+
+                        <a class="vote pointer thumbs mx-2" data-action="downvote" th:data-id="${prop.id}"
+                           th:data-path="proposition" th:id="'down' + ${prop.id}">
+                            <i class="mr-1 text-danger" aria-hidden="true"
+                               th:classappend="${user != null && prop.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                            <span class="votes" th:text="${prop.downvotes}">22</span>
+                        </a>
+                    </th:block>
+                    <th:block th:if="${group.status.ordinal() != group_ordinal || user == null || prop.user.equals(user)}">
+                        <span class="thumbs mx-2" th:id="'up' + ${prop.id}">
+                            <i class="mr-1 grey" aria-hidden="true"
+                               th:classappend="${user != null && prop.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                            <span class="votes" th:text="${prop.upvotes}">114</span>
+                        </span>
+
+                        <span class="thumbs mx-2" th:id="'down' + ${prop.id}">
+                            <i class="mr-1 grey" aria-hidden="true"
+                               th:classappend="${user != null && prop.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                            <span class="votes" th:text="${prop.downvotes}">22</span>
+                        </span>
+                    </th:block>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()" th:if="${user.isModerator()}">
+                    <a data-toggle="modal" th:data-target="'#list-upvotes'+${prop.id}" href="#" class="thumbs pointer mx-2" th:id="'up' + ${prop.id}">
+                        <i class="far fa-thumbs-up mr-1 text-success" aria-hidden="true"></i>
+                        <span class="votes" th:text="${prop.upvotes}">114</span>
+                    </a>
+
+                    <a data-toggle="modal" th:data-target="'#list-downvotes'+${prop.id}" href="#" class="pointer thumbs mx-2" data-action="downvote" th:id="'down' + ${prop.id}">
+                        <i class="far fa-thumbs-down mr-1 text-danger" aria-hidden="true"></i>
+                        <span class="votes" th:text="${prop.downvotes}">22</span>
+                    </a>
+                    <th:block th:replace="user-fragment :: list-users-modal(id=${'list-upvotes'+prop.id}, title=#{topic.users.upvote}, users_list=${prop.getUsersUpvote()})"></th:block>
+                    <th:block th:replace="user-fragment :: list-users-modal(id=${'list-downvotes'+prop.id}, title=#{topic.users.downvote}, users_list=${prop.getUsersDownvote()})"></th:block>
+                </th:block>
+            </div>
+            <th:block th:replace="topic-fragment :: switch-hat-icon(hat=${prop.hat})"></th:block>
+            <div th:if="${group_ordinal == 3}" style="margin:auto; font-size: 30px;">
+                <th:block th:if="${prop.documents != null && !prop.documents.isEmpty()}">
+                    <a data-toggle="modal"
+                       th:href="'#documents-modal'+${prop.id}">
+                        <span class="sr-only" th:text="#{see_attached_files}">See attached files</span>
+                        <i class="fas fa-paperclip ml-1 text-muted" aria-hidden="true"
+                           data-toggle="popover"
+                           data-placement="right"
+                           data-trigger="hover"
+                           th:data-content="#{messages.see_files}"
+                           title=""></i>
+                    </a>
+                    <th:block th:replace="topic-fragment :: list-documents(id='documents-modal'+${prop.id}, documents=${prop.documents}, owner=${prop.user})"></th:block>
+                </th:block>
+                <th:block th:unless="${prop.documents != null && !prop.documents.isEmpty()}">
+                    <a>
+                        <i class="fas fa-paperclip ml-1 text-white" aria-hidden="true"
+                           title=""></i>
+                    </a>
+                </th:block>
+            </div>
+            <div class="col-8 replace-links" style="margin:auto" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}" th:text="${prop.text}">
+                Pucibus. Curabitur gravida lectus odio, in placerat tortor fermentum
+            </div>
+        </li>
+    </ul>
+
+</th:block>
+
+<th:block th:fragment="switch-hat-icon" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:if="${hat != null}" th:switch="${hat}">
+        <div style="margin:auto; font-size: 36px;">
+            <i th:case="${T(com.socatel.utils.enums.PropositionHatEnum).END_USER_HAT}" class="fab fa-redhat text-success"
+               th:aria-label="#{topic.hat.end_user}"
+               data-toggle="popover"
+               data-placement="right"
+               data-trigger="hover"
+               th:data-content="#{topic.hat.end_user}"
+               title=""></i>
+            <i th:case="${T(com.socatel.utils.enums.PropositionHatEnum).RELATIVE_HAT}" class="fab fa-redhat text-primary"
+               th:aria-label="#{topic.hat.relative}"
+               data-toggle="popover"
+               data-placement="right"
+               data-trigger="hover"
+               th:data-content="#{topic.hat.relative}"
+               title=""></i>
+            <i th:case="${T(com.socatel.utils.enums.PropositionHatEnum).PROFESSIONAL_HAT}" class="fab fa-redhat text-warning"
+               th:aria-label="#{topic.hat.professional}"
+               data-toggle="popover"
+               data-placement="right"
+               data-trigger="hover"
+               th:data-content="#{topic.hat.professional}"
+               title=""></i>
+            <i th:case="${T(com.socatel.utils.enums.PropositionHatEnum).SERVICE_PROVIDER_HAT}" class="fab fa-redhat text-danger"
+               th:aria-label="#{topic.hat.service_provider}"
+               data-toggle="popover"
+               data-placement="right"
+               data-trigger="hover"
+               th:data-content="#{topic.hat.service_provider}"
+               title=""></i>
+            <i th:case="${T(com.socatel.utils.enums.PropositionHatEnum).POLICY_MAKER_HAT}" class="fab fa-redhat text-black"
+               th:aria-label="#{topic.hat.policy_maker}"
+               data-toggle="popover"
+               data-placement="right"
+               data-trigger="hover"
+               th:data-content="#{topic.hat.policy_maker}"
+               title=""></i>
+        </div>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="list-documents" xmlns:th="http://www.thymeleaf.org">
+    <div th:id="${id}" class="modal fade">
+        <div class="modal-dialog" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{list-documents-modal.title}">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item p-2" th:each="doc : ${documents}">
+
+                            <div class="row container">
+
+                                <button class="col view-file-trigger btn btn-secondary first-focusable-element"
+                                        data-toggle="modal"
+                                        data-dismiss="modal"
+                                        data-target=".modal-view-file"
+                                        th:data-file-id="${doc.id}"
+                                        th:data-file-path="@{/downloadFile/{id}(id=${doc.id})}"
+                                        th:data-file-type="${doc.type}"
+                                        th:if="${doc.type == 'image/jpeg' || doc.type == 'image/png' || doc.type == 'image/gif'}"
+                                        th:title="#{modal_view_file_preview} + ' ' + ${doc.name}">
+                                    <i class="far mr-1" th:classappend="${doc.getCssClass()}" aria-hidden="true"></i>
+                                    <span th:text="${doc.name}">See attached file</span>
+                                    <i class="far fa-eye ml-1" aria-hidden="true"></i>
+                                    <span class="sr-only" th:text="#{modal_view_file_preview} + ' ' + ${doc.name}">View file</span>
+                                </button>
+
+                                <a class="col btn btn-secondary"
+                                   th:href="@{/downloadFile/{id}(id=${doc.id})}"
+                                   th:if="${doc.type != 'image/jpeg' && doc.type != 'image/png' && doc.type != 'image/gif'}"
+                                   th:title="#{aria_label.download} + ' ' + ${doc.name}">
+                                    <i class="far mr-1" th:classappend="${doc.getCssClass()}" aria-hidden="true"></i>
+                                    <span th:text="${doc.name}">Download attached file</span>
+                                    <i class="fas fa-download ml-1" aria-hidden="true"></i>
+                                    <span class="sr-only" th:text="#{aria_label.download} + ' ' + ${doc.name}">Download the file</span>
+                                </a>
+
+                                <button data-target="#delete-file"
+                                        data-toggle="modal" th:id="'deldoc-' + ${doc.id}" class="btn btn-danger mx-1" th:if="${user != null && (user.equals(owner) || user.isModerator())}" th:title="#{delete_file} + ' ' + ${doc.name}">
+                                    <i class="fa fa-trash"></i>
+                                    <span class="sr-only" th:text="#{delete_file} + ' ' + ${doc.name}">Delete the file</span>
+                                </button>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="post-form" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3" sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == group_ordinal}">
+        <hr>
+
+        <form enctype="multipart/form-data" method="post"
+              th:action="@{/topic/{group_id}/post/0(group_id=${group.id})}" th:object="${newPost}">
+            <label for="text" th:text="#{topic.leave_comment}">Leave a new comment </label>:
+            <textarea class="form-control mb-2"  name="comment" id="text"
+                      rows="3" maxlength="280" minlength="2"
+                      th:field="*{text}" required></textarea>
+            <th:block th:if="${tag}">
+                <th:block th:replace="topic-message-fragment :: choosetag(id=null)"></th:block>
+            </th:block>
+            <th:block th:replace="topic-message-fragment :: choosefile (id=null)"></th:block>
+
+            <button class="btn btn-primary float-right" th:text="#{topic.contribute}">Send contribution
+            </button>
+        </form>
+        <div class="clearfix"></div>
+
+    </div> <!-- FORM -->
+</th:block>
+
+<!-- =============================================
+=            STEP 2            					=
+============================================= -->
+
+<th:block th:fragment="step2block" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div class="col-12 p-0" th:id="'block-' + ${type}">
+        <div class="card bg-white border-1" th:classappend="${border_color}">
+            <div class="_card-header text-center">
+                <button class="btn-toogle text-left collapsed" aria-expanded="true" data-toggle="collapse" th:data-target="'#collapseBloc' + ${type}">
+                    <!-- <span class="font-weight-semibold" th:text="${title}">Problems solved?</span> -->
+                    <i aria-hidden="true" class="fas fa-angle-up float-right"></i>
+                    <span th:class="${text_color}" th:text="${description}">The benefits for the end-users</span>
+                </button>
+            </div>
+
+            <div class="card-body mb-2 collapse show" th:id="'collapseBloc' + ${type}">
+
+                <th:block th:if="${group.status.ordinal() == 2}"
+                          th:replace="topic-fragment :: propositionVote(propositions=${propositions}, group_ordinal=2)"></th:block>
+
+                <th:block sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 2}"
+                          th:replace="topic-fragment :: step2form"></th:block>
+            </div>
+
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="step2form" th:if="${group.status.ordinal() == 2}" xmlns:th="http://www.thymeleaf.org">
+
+    <form class="w-100 my-2" method="post" th:action="@{/topic/{group_id}/post/{post_id}/propose/{t}(group_id=${group.id},post_id=${ideas.get(0).id},t=${type})}"
+          th:object="${proposition}">
+        <input class="form-control mb-2" maxlength="180" required="required" th:field="*{text}"
+               th:id="'collapseExample' + ${type}">
+        <span class="text-muted small">180 char. max</span>
+        <!-- <textarea class="form-control mb-2" th:field="*{text}" th:id="'collapseExample' + ${type}" rows="3" required="required"></textarea> -->
+        <!-- <th:block th:replace="topic-message-fragment :: choosetag"></th:block> -->
+        <div>
+            <button class="btn btn-primary submit float-right mb-2" th:text="#{topic.contribute}" type="submit">Send
+                contribution
+            </button>
+            <select id="hat_select" class="form-control float-right mr-2 " style="width:10%" required th:field="*{hat}">
+                <option style="display:none" th:text="#{topic.hat_select}" th:value="${null}">hat</option>
+                <option th:each="hat : ${T(com.socatel.utils.enums.PropositionHatEnum).values()}"
+                        th:text="#{${hat.toString().replaceAll(' ', '_').toLowerCase()}}"
+                        th:value="${hat}"></option>
+            </select>
+            <label for="hat_select" class="float-right mr-1" style="font-size:28px">
+                <i class="fa fa-question-circle mx-1"
+                   th:aria-label="#{topic.hat.description}"
+                   data-placement="left"
+                   data-toggle="popover"
+                   data-trigger="hover"
+                   th:data-content="#{topic.hat.description}"
+                   title=""></i>
+            </label>
+        </div>
+    </form>
+
+</th:block>
+
+<!-- =============================================
+=            STEP 3            					=
+============================================= -->
+
+<th:block th:fragment="step3block" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="card bg-white border-0">
+
+        <div class="_card-header text-center pointer">
+            <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="false" data-toggle="collapse" th:data-target="'#collapseBloc' + ${bloc_num}">
+                <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                <span th:class="${text_color}" th:text="${title}"></span>
+            </button>
+        </div>
+
+
+        <div class="row card-body mb-2 collapse" th:classappend="${show?'show':''}" th:id="'collapseBloc' + ${bloc_num}">
+            <div th:each="qa, iStat : ${bloc}" class="mb-1 col" >
+
+                <div class="card-header text-left" >
+                    <span th:text="#{${qa.question.text}}"></span>
+                </div>
+
+
+                <div class="d-flex flex-wrap card-body mb-2 border-2 border-light">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <th:block th:if="${group.status.ordinal() == 3}">
+                            <a tabindex="0" th:id="'answer-' + ${qa.question.id} + '-' + ${answer.id}" th:data-question-id="${qa.question.id}" th:data-id="${answer.id}" th:each="answer : ${qa.answers}" class="btn col pointer mr-2 vote-answer" th:classappend="${answer.hasVoted(user)?'btn-primary':'btn-outline-primary'}" >
+                                <span th:text="#{${answer.text}}">Children</span>
+                                <div>
+                                    <span th:text="${answer.votes}" class="votes">114</span>
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                            </a>
+                        </th:block>
+                        <th:block th:if="${group.status.ordinal() != 3}">
+                            <a  tabindex="0" th:each="answer : ${qa.answers}" class="btn pointer col mr-2" th:classappend="${answer.hasVoted(user)?'btn-secondary':'btn-outline-secondary'}" >
+                                <span th:text="#{${answer.text}}">Children</span>
+                                <div>
+                                    <span th:text="${answer.votes}" class="votes">114</span>
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                            </a>
+                        </th:block>
+                    </th:block>
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <a tabindex="0" th:each="answer : ${qa.answers}" class="btn pointer col mr-2 btn-outline-secondary" >
+                            <span th:text="#{${answer.text}}">Children</span>
+                            <div>
+                                <span th:text="${answer.votes}" class="votes">114</span>
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                        </a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<!-- =============================================
+=            STEP 4            					=
+============================================= -->
+
+<th:block th:fragment="step4block" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div class="alert alert-danger" th:if="${group.status.ordinal() > 4}">
+        <strong th:text="#{topic.step4.end}">Step2 ends</strong><br>
+    </div>
+
+    <div class="alert alert-info" th:if="${group.status.ordinal() == 4}">
+        <strong th:text="#{topic.step4.explanation}">Explanation of STEP1 - Co-ideation</strong>
+        <strong><a href="#" th:text="#{topic.step4.introduction1}">We need your input to ensure that the
+            shortlisted ideas can work in the real world.</a>
+        </strong>
+    </div>
+
+    <div class="row" sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 4}" style="padding-left: 1rem!important; padding-right: 1rem!important; padding-bottom: 1rem!important;">
+        <a class="btn mr-2 btn-primary"
+           data-toggle="modal"
+           href="#modal-vote" th:if="${user.organisation != null && user.organisation.equals(organisation)}" th:text="#{topic.step3.set_vote}">Set up a
+            vote</a>
+        <a class="btn mr-2 btn-primary"
+           data-toggle="modal"
+           href="#modal-request" th:if="${user.organisation != null && user.organisation.equals(organisation)}"
+           th:text="#{topic.step3.request_information}">Request information</a>
+        <a class="btn mr-2 btn-outline-danger pointer toogleArchive"
+           data-status="0"
+           th:data-text1="#{topic.step3.see_archive}"
+           th:data-text2="#{topic.step3.see_archive_2}"
+           th:if="${user.organisation != null && user.organisation.equals(organisation)}" th:text="#{topic.step3.see_archive}">See Archive</a>
+    </div>
+
+
+    <div class="alert alert-info" sec:authorize="!isAuthenticated()">
+        <span th:text="#{find_topic.no_comments4}">Please</span> <a class="btn btn-primary"
+                                                                    href="login" th:href="@{/login}"
+                                                                    th:text="#{main.signin}">sign in</a>
+        <span th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-white-pink ml-1"
+                                                                href="registration.html"
+                                                                th:href="@{/registration}"
+                                                                th:text="#{register}">register</a> <span
+            th:text="#{find_topic.no_comments6}">and you will be able to create and propose topics relevant to you , others will then join you to share their personal experience.</span>
+    </div>
+
+    <div class="alert alert-info" th:if="${feedbacks==null || feedbacks.isEmpty()}">
+        <button class="close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only" th:text="#{close}">Close</span></button>
+        <strong th:text="#{topic.step3.no_contributions}">No contribution yet ! </strong>
+    </div>
+
+
+    <div class="card bg-white mb-3 p-3" th:classappend="${fc.feedback.visible.toString() == 'HIDDEN'} ? 'd-none' : ''"
+         th:data-archive="${fc.feedback.visible.toString()}" th:each="fc, iStat : ${feedbacks}"
+         th:id="'feedback' + ${fc.feedback.id}">
+        <div class="card-header text-left">
+            <a class="text-muted pointer"
+                  data-toggle="collapse" th:href="'#collapseBloc' + ${fc.feedback.id}"
+                  th:text="${fc.feedback.title}" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">Color of the menu</a>
+            <a class="float-right" data-toggle="collapse" th:href="'#collapseBloc' + ${fc.feedback.id}">
+                <i class="fa fa-bars pointer" aria-hidden="true"></i>
+                <span class="sr-only" th:text="#{aria_label.collapse_step4}"></span>
+            </a>
+            <a class="pointer float-right text-primary mr-3 proposition-trigger" style="text-decoration: underline;"
+               sec:authorize="isAuthenticated()"
+               th:data-archive="${fc.feedback.visible.toString()}"
+               th:data-proposition-id="${fc.feedback.id}"
+               th:if="${user != null && user.organisation != null && user.organisation.equals(organisation)}"
+               th:text="${fc.feedback.visible.toString() == 'HIDDEN'} ? #{topic.step3.unarchive} : #{topic.step3.archive}">
+            </a>
+        </div>
+
+        <div class="collapse p-2" th:id="'collapseBloc' + ${fc.feedback.id}">
+            <p class="replace-links" th:text="${fc.feedback.description}" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                sapiente ea proident.</p>
+
+            <div class="mb-1" th:if="${fc.documents != null && !fc.documents.isEmpty()}">
+                <p><strong th:text="#{topic.attached_files}">Attached files</strong></p>
+                <ul class="list-group">
+                    <li class="list-group-item p-2" th:each="doc : ${fc.documents}">
+
+                        <div class="container">
+                            <button class="view-file-trigger btn btn-secondary"
+                               data-toggle="modal"
+                               data-target=".modal-view-file"
+                               th:data-file-id="${doc.id}"
+                               th:data-file-path="@{/downloadFile/{id}(id=${doc.id})}"
+                               th:data-file-type="${doc.type}"
+                               th:if="${doc.type == 'image/jpeg' || doc.type == 'image/png' || doc.type == 'image/gif'}"
+                               th:title="#{modal_view_file_preview} + ' ' + ${doc.name}">
+                                <i class="far mr-1" th:classappend="${doc.getCssClass()}" aria-hidden="true"></i>
+                                <span th:text="${doc.name}">See attached file</span>
+                                <i class="far fa-eye ml-1" aria-hidden="true"></i>
+                                <span class="sr-only" th:text="#{modal_view_file_preview} + ' ' + ${doc.name}">View file</span>
+                            </button>
+
+                            <a class="btn btn-secondary"
+                               th:href="@{/downloadFile/{id}(id=${doc.id})}"
+                               th:if="${doc.type != 'image/jpeg' && doc.type != 'image/png' && doc.type != 'image/gif'}"
+                               th:title="#{aria_label.download} + ' ' + ${doc.name}">
+                                <i class="far mr-1" th:classappend="${doc.getCssClass()}" aria-hidden="true"></i>
+                                <span th:text="${doc.name}">Download attached file</span>
+                                <i class="fas fa-download ml-1" aria-hidden="true"></i>
+                                <span class="sr-only" th:text="#{aria_label.download} + ' ' + ${doc.name}">Download the file</span>
+                            </a>
+
+                            <button data-target="#delete-file"
+                                    data-toggle="modal" th:id="'deldoc-' + ${doc.id}" class="btn btn-danger mx-1" th:if="${user != null && ((user.organisation != null && user.organisation.equals(organisation)) || user.isModerator())}" th:title="#{delete_file} + ' ' + ${doc.name}">
+                                <i class="fa fa-trash"></i>
+                                <span class="sr-only" th:text="#{delete_file} + ' ' + ${doc.name}">Delete the file</span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <p><strong th:text="${fc.feedback.question}" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">Do you have any problems with the colour contrasts of the main
+                menu ?</strong></p>
+
+            <div th:unless="${fc.feedback.isByOrg()}">
+                <th:block th:if="${fc.answers != null && !fc.answers.isEmpty()}" sec:authorize="isAuthenticated()">
+                    <th:block th:if="${group.status.ordinal() == 4}">
+                        <a th:id="'answer-' + ${fc.feedback.id} + '-' + ${answer.id}" th:data-question-id="${fc.feedback.id}" th:data-id="${answer.id}" th:each="answer : ${fc.answers}" class="btn pointer mr-2 vote-answer" th:classappend="${answer.hasVoted(user)?'btn-primary':'btn-outline-primary'}" >
+                            <span th:text="${answer.text}">Children</span>
+                            <div>
+                                <span th:text="${answer.votes}" class="votes">114</span>
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                        </a>
+                    </th:block>
+                    <th:block th:if="${group.status.ordinal() != 4}">
+                        <a th:each="answer : ${fc.answers}" class="btn mr-2" th:classappend="${answer.hasVoted(user)?'btn-secondary':'btn-outline-secondary'}" >
+                            <span th:text="${answer.text}">Children</span>
+                            <div>
+                                <span th:text="${answer.votes}" class="votes">114</span>
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                        </a>
+                    </th:block>
+                </th:block>
+                <th:block th:if="${fc.answers != null && !fc.answers.isEmpty()}" sec:authorize="!isAuthenticated()">
+                    <a th:each="answer : ${fc.answers}" class="btn pointer mr-2 vote-answer btn-outline-secondary" >
+                        <span th:text="${answer.text}">Children</span>
+                        <div>
+                            <span th:text="${answer.votes}" class="votes">114</span>
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                    </a>
+                </th:block>
+                <div th:unless="${fc.answers != null && !fc.answers.isEmpty()}" class="col d-flex">
+
+                    <div class="mr-3">
+                        <a class="vote yesno btn mr-1" sec:authorize="isAuthenticated()"
+                           th:classappend="${user != null && fc.feedback.hasUpVoted(user.username)?'btn-success':'btn-outline-success'}" th:data-action="${group.status.ordinal() == 4?'upvote':''}"
+                           th:data-id="${fc.feedback.id}"
+                           th:data-path="feedback"
+                           th:id="'up' + ${fc.feedback.id}">Yes
+                            <span class="votes" th:text="${fc.upvotes}">114</span>
+                        </a>
+                        <a class="vote yesno btn mr-1" sec:authorize="!isAuthenticated()"
+                           th:classappend="${user != null && fc.feedback.hasUpVoted(user.username)?'btn-success':'btn-outline-success'}"
+                           th:id="'up' + ${fc.feedback.id}">Yes
+                            <span class="votes" th:text="${fc.upvotes}">114</span>
+                        </a>
+                    </div>
+
+                    <div class="mr-3">
+                        <a class="vote yesno btn mr-1" sec:authorize="isAuthenticated()"
+                           th:classappend="${user != null && fc.feedback.hasDownVoted(user.username)?'btn-danger':'btn-outline-danger'}" th:data-action="${group.status.ordinal() == 4?'downvote':''}"
+                           th:data-id="${fc.feedback.id}"
+                           th:data-path="feedback"
+                           th:id="'down' + ${fc.feedback.id}">No
+                            <span class="votes" th:text="${fc.downvotes}">22</span>
+                        </a>
+                        <a class="vote yesno btn mr-1" sec:authorize="!isAuthenticated()"
+                           th:classappend="${user != null && fc.feedback.hasDownVoted(user.username)?'btn-danger':'btn-outline-danger'}"
+                           th:id="'down' + ${fc.feedback.id}">No
+                            <span class="votes" th:text="${fc.downvotes}">22</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="card-body mb-2 p-0" th:if="${fc.feedback.isByOrg()}">
+                <div class="alert alert-info" th:if="${fc.posts==null || fc.posts.isEmpty()}">
+                    <button class="close" data-dismiss="alert" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span></button>
+                    <strong th:text="#{topic.step3.no_contributions}">No contribution yet ! </strong>
+                </div>
+                <th:block
+                        th:replace="topic-fragment :: step4posts(num=${fc.feedback.id}, posts=${fc.posts}, group_ordinal=4)"></th:block>
+                <th:block sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 4 && fc.feedback.isVisible()}"
+                          th:replace="topic-fragment :: step4form"></th:block>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card p-3">
+        <span class="font-weight-bold mb-1" style="font-size: large" th:text="#{topic.step4.posts}">POSTS</span>
+        <div class="alert alert-info" th:if="${posts == null || posts.isEmpty()}">
+            <button class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only" th:text="#{close}">Close</span></button>
+            <strong th:text="#{topic.no_comments}">No comment the moment !</strong> <br> <span
+                th:text="#{topic.no_comments2}">Use the form below and be the first to comment this topic !</span>
+        </div>
+        <th:block th:replace="topic-fragment :: step4posts(num=0, posts=${posts}, group_ordinal=4)"></th:block>
+        <th:block th:replace="topic-fragment :: post-form(group_ordinal=4, tag=false)"></th:block>
+
+    </div>
+</th:block>
+
+<th:block th:fragment="step4posts" xmlns:th="http://www.thymeleaf.org">
+    <div class="p-3" th:id="'paginate-posts-step4-' + ${num}" th:if="${posts != null && !posts.isEmpty()}">
+        <div class="row border-primary border-1 mb-3" th:classappend="'paginate-item-' + ${num}" style="border-radius: 25px" th:each="post, iStat : ${posts}" th:id="'post' + ${post.id}">
+            <div class="p-3">
+                <div class="media-title">
+                    <a data-target="#user-modal-dev" data-toggle="modal" href="#"
+                       th:data-target="${!post.author.isAnonymized()}?'#view-profile' + ${post.author.id} : ''"><img
+                            th:alt="${post.author.isAnonymized()} ? #{anonymous} + ' ' + #{avatar} : ${post.author.username} + ' ' + #{avatar}"
+                            class="rounded-circle mr-2"
+                            height="36" src="../static/images/demo/face5.jpg" th:src="@{/show-image/{id}(id=${post.author.picture.id})}" width="36"></a>
+                    <a data-toggle="modal" href="#"
+                       th:data-target="${!post.author.isAnonymized()}?'#view-profile' + ${post.author.id} : ''" class="font-weight-semibold mr-1"
+                       th:text="${post.author.isAnonymized()} ? #{anonymous} : ${post.author.username}">William555</a>
+                    <span class="badge border-1 border-primary text-primary"
+                          th:if="${!post.author.isAnonymized() && post.author.organisation != null}"
+                          th:text="${post.author.organisation.name}">Organisation</span>
+                    <span class="badge border-1 border-success text-success"
+                          th:if="${!post.author.isAnonymized() && post.author.isModerator()}"
+                          th:text="#{moderator}">Moderator</span>
+                    <span class="badge border-1 border-success text-success"
+                          th:if="${!post.author.isAnonymized() && post.author.isFacilitator()}"
+                          th:text="#{facilitator}">Moderator</span>
+                    <span class="font-size-sm text-muted mx-1" th:text="${post.fancyTimestamp()}">Just now</span>
+                    <th:block th:replace="topic-message-fragment :: gear-step1(author=${post.author}, id_message=${post.id}, step=${group_ordinal})"></th:block>
+                    <th:block th:if="${post.documents != null && !post.documents.isEmpty()}">
+                        <a data-toggle="modal"
+                           th:href="'#documents-modal'+${post.id}">
+                            <span class="sr-only" th:text="#{see_attached_files}">See attached files</span>
+                            <i class="fas fa-paperclip ml-1 text-muted" aria-hidden="true"
+                               data-toggle="popover"
+                               data-placement="right"
+                               data-trigger="hover"
+                               th:data-content="#{messages.see_files}"
+                               title=""></i>
+                        </a>
+                        <th:block th:replace="topic-fragment :: list-documents(id='documents-modal'+${post.id}, documents=${post.documents}, owner=${post.author})"></th:block>
+                    </th:block>
+                    <!--th:block sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 1}"
+                              th:replace="topic-message-fragment :: menu(author=${post.author}, id_message=${post.id})"></th:block-->
+                </div>
+                <div class="media-description my-2 replace-links" style="white-space: pre-wrap;" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}" th:text="${post.text}">
+                    There are many companies providing food delivery services, that are listed on the
+                    right.
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="step4form" th:if="${group.status.ordinal() == 4}" xmlns:th="http://www.thymeleaf.org">
+    <hr>
+    <form class="w-100 my-2" method="post" th:action="@{/topic/{group_id}/feedback/{feedback_id}/propose/(group_id=${group.id},feedback_id=${fc.feedback.id})}"
+          th:object="${newPost}" enctype="multipart/form-data">
+        <div class="form-group my-3">
+            <label th:for="'collapseExample' + ${fc.feedback.id}" th:text="#{topic.contribute} + ':'"></label>
+            <input class="form-control mb-2" maxlength="180" required="required"
+                   th:field="*{text}" th:id="'collapseExample' + ${fc.feedback.id}">
+            <span class="text-muted small">180 char. max</span>
+        </div>
+        <div class="form-group my-3">
+            <label for="file" id="attach-a-file2" th:text="#{create_topic.file}">Attach files :</label>
+
+            <div class="custom-file">
+                <input aria-labelledby="attach-a-file2"  class="custom-file-input pointer" id="file" multiple name="file" type="file"/>
+                <label class="custom-file-label" for="file" th:text="#{create_topic.choose_file}">Choose
+                    File</label>
+            </div>
+
+        </div>
+        <button class="btn btn-primary submit float-right mb-2" th:text="#{topic.contribute}" type="submit">Send
+            contribution
+        </button>
+    </form>
+
+</th:block>
+
+
+<th:block th:fragment="step4modal" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="modal fade" id="modal-request" th:id="'modal-'+${type}">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content p-2">
+                <div class="modal-header">
+                    <h4 class="modal-title" th:text="${modal_title}">Modal Title</h4>
+                    <button  class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+
+                <form enctype="multipart/form-data"
+                      method="post"
+                      th:action="@{/topic/{group_id}/post/{post_id}/feedback(group_id=${group.id},post_id=${ideas.get(0).id})}" th:object="${feedback}">
+
+
+                    <input name="byOrg" th:if="${type}=='vote'" th:value="${T(com.socatel.utils.enums.ByOrgEnum).BY_USER}"
+                           type="hidden"/> <!-- for user -->
+                    <input name="byOrg" th:if="${type}=='request'" th:value="${T(com.socatel.utils.enums.ByOrgEnum).BY_ORG }"
+                           type="hidden"/> <!-- for org -->
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label th:for="'title-'+${type}" th:text="#{topic.step3.title}">Give a title</label>
+                            <input class="form-control first-focusable-element" th:id="'title-'+${type}" placeholder="" required="required" th:field="*{title}"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label th:for="'description-'+${type}" th:text="#{topic.step3.description}">Description</label>
+                            <textarea class="form-control" th:id="'description-'+${type}" required="required" rows="2"
+                                      th:field="*{description}"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label th:for="'question-'+${type}" th:text="#{topic.step3.question}">Question</label>
+                            <textarea class="form-control" th:id="'question-'+${type}" required="required" rows="2"
+                                      th:field="*{question}"></textarea>
+                        </div>
+
+                        <div th:if="${type}=='vote'" class="form-group field_wrapper">
+                            <label for="question-answers" th:text="#{topic.step4.possible_answers}">Possible answers</label>
+                            <div class="row mx-0 mb-1">
+                                <input id="question-answers" type="text" class="form-control col-sm-11" name="answers[]" value="" required/>
+                                <a href="javascript:void(0);" class="add_button col-sm-1 m-auto" title="Add field"><i class="fas fa-plus-circle text-success fa-2x" th:aria-label="#{aria_label.add_field}"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="custom-file">
+                            <input class="custom-file-input" th:id="'file-'+${type}" multiple name="file" type="file"/>
+                            <label class="custom-file-label" th:for="'file-'+${type}" th:text="#{create_topic.choose_file}">Choose
+                                File</label>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" th:text="#{close}" type="button">Close
+                        </button>
+                        <button class="btn btn-primary" th:text="#{topic.step3.validate}" type="submit">Validate the
+                            create
+                        </button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</th:block>
+
+
+
+
+	

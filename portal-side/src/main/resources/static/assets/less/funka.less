@@ -1,0 +1,224 @@
+// WHEN KEYBOARD FOCUS
+body {
+
+  .sr-only-focusable:focus {
+    position: absolute;
+    z-index: 10;
+    color: @white;
+    background: @bleu-canard;
+    padding: 1rem;
+    left: 190px;
+    top: 20px;
+    font-size: 1.25rem;
+  }
+
+  .form-control,
+  .custom-file-label {
+    border: 1px solid @gris;
+  }
+
+
+  .close:not(:disabled):not(.disabled):focus, 
+  .close:not(:disabled):not(.disabled):hover {
+    opacity: 1;
+  }
+
+  a, input, button, textarea, select, .btn {
+    &.tabbed {
+        outline: 3px solid @tabbed-color;
+        outline-offset: 3px;
+        box-shadow: none;
+        //box-shadow: 0 0 0 3px @tabbed-color;
+    }
+
+    &.btn-toogle {
+      //position: relative;
+        display: block;
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        padding: 1em 2.5em 1em 1.25em;
+        font-weight: bold;
+        background-color: rgba(0,0,0,0.03);
+
+        i {
+          font-size: 1.25em;
+          position: relative;
+          right: -1.25em;
+        }
+
+        &:hover {
+          background-color: rgba(0,0,0,0.01);
+          text-decoration:  underline;
+        }
+
+        &[aria-expanded=false] {
+          i {
+            transform: rotate(0deg);
+          }
+        }
+
+        &[aria-expanded=true] {
+          i {
+            transform: rotate(180deg);
+          }
+        }
+
+        &.tabbed {
+          outline-offset: -3px;
+      }
+    }
+
+    &.collapse-icon {
+      &[aria-expanded=false] {
+        i {
+          transform: rotate(0deg);
+        }
+      }
+
+      &[aria-expanded=true] {
+        i {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &.close {
+      opacity: 1;
+    }
+  }
+
+
+  a {
+    &.tabbed {
+        text-decoration: underline;
+    }
+
+    &.white { 
+      &.tabbed {
+        outline: 3px solid @color-white;
+        //box-shadow: 0 0 0 3px @color-white;
+      }
+    }
+
+  }
+
+  .btn {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .form-control {
+    &:focus {
+      outline: 3px solid @tabbed-color !important;
+    }
+  }
+
+
+  .form-group {
+    input {
+      &[type=radio], &[type=checkbox] {
+        margin-top: 30px;
+        vertical-align: top;
+      
+        & + label[for] {
+            width: 90%;
+        }
+      
+        &.tabbed {
+            outline: 0;
+      
+            & + label {
+              outline: 3px solid @tabbed-color;
+              outline-offset: 3px;
+            }
+
+            & + input + label{      
+                outline: 3px solid @tabbed-color;
+                outline-offset: 3px;
+            }
+        }
+
+      }
+    }
+  }
+
+  .on-off {
+    input {
+      &[type=checkbox] {      
+        &.tabbed {      
+            & + .slider {
+              outline: 3px solid @tabbed-color;
+              outline-offset: 3px;
+            }
+        }
+      }
+    }
+  }
+
+  .sidebar.sidebar-fullscreen .sidebar-mobile-expand i {
+    display: inline-block;
+  }
+  .sidebar.sidebar-fullscreen .sidebar-mobile-expand i:first-child {
+    display: none;
+  }
+
+  .sidebar .sidebar-mobile-expand i {
+    display: none;
+  }
+  .sidebar .sidebar-mobile-expand i:first-child {
+    display: inline-block;
+  }
+
+  .filter-by-themes {
+    padding: 0.25rem 0 0 0;
+    margin-bottom: 0.5rem;
+
+    li {
+      padding: 3px 0;
+    }
+
+    .form-check-label {
+      width: 85%;
+    }
+
+    .form-check-input {
+      margin-left: 0;
+      margin-top: 1px;
+      position: relative;
+      vertical-align: text-top;
+    }
+
+    input {
+      &.tabbed {
+        outline: 0;
+
+        & + label {
+          outline: 3px solid @tabbed-color;
+          outline-offset: 3px;
+        }
+      }
+    }
+
+  }
+
+  .bg-info {
+    background-color: @bleu-canard !important;
+    min-width: 2.25rem;
+  }
+
+  .validation-invalid-label {
+    border: 3px solid @pink;
+    padding: 0.75rem 0.5rem;;
+    color: @black-text-color;
+    border-radius: 5px;
+    background-color: @pink-lightest;
+  }
+
+  .yellow-bg {
+    background-color: yellow;
+    padding: 1rem;
+    border: 1px solid #dd0;
+  }
+}

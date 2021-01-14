@@ -1,0 +1,704 @@
+<th:block th:fragment="participants" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div class="card bg-white text-dark text-center">
+
+        <div class="_card-header pointer">
+            <h2 class="h6 m-0">
+                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseParticipants">
+                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                    <span th:text="#{find_topic.participants}">Paricipants</span>
+                </button>
+            </h2>
+        </div>
+
+        <div class="collapse show" id="collapseParticipants">
+            <div class="row m-3">
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-toggle="modal"
+                   data-target="#older_person">
+                    <span class="sr-only" th:text="#{older_person.see}"></span>
+                    <ul class="list-inline"
+                        style="height: 20px; margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numOlderPeople}" style="font-size: 20px; margin-right:0; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-user text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='older_person', title=#{older_person}, users_list=${olderPeople})"></th:block>
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-toggle="modal"
+                   data-target="#family_friend">
+                    <span class="sr-only" th:text="#{family_friend.see}"></span>
+                    <ul class="list-inline"
+                        style="margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numFamilyFriends}" style="font-size: 20px; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-heart text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='family_friend', title=#{family_friend}, users_list=${familyFriends})"></th:block>
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-toggle="modal"
+                   data-target="#care_assistant">
+                    <span class="sr-only" th:text="#{care_assistant.see}"></span>
+                    <ul class="list-inline"
+                        style="margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numCareAssistants}" style="font-size: 20px; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-hands-helping text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='care_assistant', title=#{care_assistant}, users_list=${careAssistants})"></th:block>
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-toggle="modal"
+                   data-target="#healthcare_specialist">
+                    <span class="sr-only" th:text="#{healthcare_specialist.see}"></span>
+                    <ul class="list-inline"
+                        style="margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numHealthcareSpecialist}" style="font-size: 20px; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-user-md text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='healthcare_specialist', title=#{healthcare_specialist}, users_list=${healthcareSpecialist})"></th:block>
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-toggle="modal"
+                   data-target="#service_provider">
+                    <span class="sr-only" th:text="#{service_provider.see}"></span>
+                    <ul class="list-inline"
+                        style="margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numServiceProviders}" style="font-size: 20px; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-clinic-medical text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='service_provider', title=#{service_provider}, users_list=${serviceProviders})"></th:block>
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-placement="right"
+                   data-toggle="modal"
+                   data-target="#policy_maker">
+                    <span class="sr-only" th:text="#{policy_maker.see}"></span>
+                    <ul class="list-inline"
+                        style="margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numPolicyMakers}" style="font-size: 20px; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-university text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='policy_maker', title=#{policy_maker}, users_list=${policyMakers})"></th:block>
+                <a class="card p-2 pointer"
+                   style="width: 20%;"
+                   tabindex="0"
+                   data-toggle="modal"
+                   data-target="#other">
+                    <span class="sr-only" th:text="#{other.see}"></span>
+                    <ul class="list-inline"
+                        style="margin-top: 14px">
+                        <li class="list-inline-item" th:text="${numOthers}" style="font-size: 20px; margin-right:0;">10</li>
+                        <li class="list-inline-item">
+                            <i style="font-size: 20px; width: 20px;" class="fas fa-question text-secondary" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </a>
+                <th:block th:replace="user-fragment :: list-users-modal(id='other', title=#{other}, users_list=${otherProfiles})"></th:block>
+            </div>
+
+            <div class="row m-3" sec:authorize="isAuthenticated()" th:if="${group.getFacilitator() != null}">
+                <a th:href="@{/messages/{username}(username=${group.getFacilitator().getUsername()})}" tabindex="0" class="btn btn-primary pointer w-100" th:text="#{topic.contact_facilitator}">Contact facilitator</a>
+            </div>
+
+            <div class="row m-3" sec:authorize="isAuthenticated()">
+                <a tabindex="0" class="btn btn-primary pointer w-100" data-target="#modal-invite-participants" th:text="#{topic.invite_participants}" data-toggle="modal">Invite participants</a>
+            </div>
+
+            <div class="row m-3" sec:authorize="isAuthenticated()" th:if="${user != null && (user.isModerator() || user.isFacilitator())}">
+                <a tabindex="0" class="btn btn-primary pointer w-100" data-target="#modal-contact-participants" th:text="#{topic.contact_participants}" data-toggle="modal">Contact participants</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- Invite participant modals -->
+    <div class="modal fade" id="modal-invite-participants">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" th:text="#{topic.invite_new_participants}">Invite new participants</h4>
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="invite-participants" th:action="@{/topic/{group_id}/invite(group_id=${group.id})}" method="post">
+                        <label for="participantSearch" th:text="#{topic.invite_participants.text}">Please indicate the name of the user
+                            you want to discuss with : </label>
+
+                        <div class="alert alert-danger d-none" id="searchNotification">
+                            <button class="close" data-dismiss="alert" type="button">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                                <span class="sr-only" th:text="#{close}">Close</span>
+                            </button>
+                            <strong th:text="#{messages.indicate_username2}">Your search must be superior
+                                than 2 characters</strong>
+                        </div>
+
+                        <div class="input-group my-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user" aria-hidden="true"></i></span>
+                            </div>
+
+                            <input class="form-control first-focusable-element"
+                               id="participantSearch" th:data-group-id="${group.id}" th:placeholder="#{topic.invite_participants.placeholder}"
+                               type="text" name="participant">
+                            <button id="invite-participants-button" class="btn btn-primary" type="submit" th:text="#{invite}">Invite</button>
+                        </div>
+
+                        <ul id="results"></ul>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button" th:text="#{close}">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="modal-invite-successful" class="modal fade bd-example-modal-ml">
+        <div class="modal-dialog modal-ml">
+            <div class="modal-content" role="dialog" tabindex="-1" aria-modal="true">
+                <div class="modal-header bg-success">
+                    <button class="close text-white" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="#{topic.invite_successful}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-invite-error" class="modal fade bd-example-modal-ml">
+        <div class="modal-dialog modal-ml" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <button class="close text-white" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="#{topic.invite_error}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Invite participant modals -->
+
+    <!-- Contact participant modals -->
+    <div class="modal fade" id="modal-contact-participants">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" th:text="#{topic.contact_participants}">Contact participants</h4>
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="contact-participants" th:action="@{/topic/{group_id}/contact(group_id=${group.id})}" method="post">
+                        <div class="form-group">
+                            <label for="contact-subject" th:text="#{topic.contact_participants.subject}">Subject:</label>
+                            <input class="form-control first-focusable-element" id="contact-subject" required name="subject">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-message" th:text="#{topic.contact_participants.message}">Message:</label><br>
+                            <span th:text="#{email.dear}"></span>,<br>
+                            <textarea class="form-control" id="contact-message" required name="message"></textarea>
+                            <span th:text="#{email.regards}"></span>,<br>
+                            <span th:text="#{email.socatel_team}"></span>
+                        </div>
+                        <button id="contact-participants-button" class="btn btn-primary" type="submit" th:text="#{user_modal.send_message}">Contact</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button" th:text="#{close}">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="modal-contact-successful" class="modal fade bd-example-modal-ml">
+        <div class="modal-dialog modal-ml">
+            <div class="modal-content" role="dialog" tabindex="-1" aria-modal="true">
+                <div class="modal-header bg-success">
+                    <button class="close text-white" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="#{topic.contact_successful}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-contact-error" class="modal fade bd-example-modal-ml">
+        <div class="modal-dialog modal-ml" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <button class="close text-white" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="#{topic.contact_error}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Contact participant modals -->
+</th:block>
+
+
+<th:block th:fragment="ideas" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div class="card bg-white text-dark text-center" id="js-moove0">
+
+        <div class="_card-header pointer">
+            <h2 class="h6 m-0">
+                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseIdeas">
+                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                    <span class="pink" th:text="${step == 1}?#{topic.ideas}:#{idea}">IDEAS</span>
+                </button>
+            </h2>
+        </div>
+
+
+        <div class="table-responsive collapse show p-3" id="collapseIdeas">
+
+
+            <ul class="list-group text-left">
+
+                <li class="list-group-item p-2" th:each="idea : ${ideas}" th:if="${step == 1}">
+
+
+                    <div class="text-pink-400">
+
+                        <!-- <ul class="list-inline">
+                            <li class="list-inline-item"> -->
+                                <strong class="d-block" th:text="${idea.author.isAnonymized()} ? #{anonymous} : ${idea.author.username}">Will544</strong>
+                           
+                                <!--li class="list-inline-item"><i class="mr-1 text-success"
+                                                                th:classappend="${username != null && idea.hasUpVoted(username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i><span
+                                        th:text="${idea.upvotes}">150</span></li>
+                                <li class="list-inline-item"><i class="mr-1 text-danger"
+                                                                th:classappend="${username != null && idea.hasDownVoted(username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i><span
+                                        th:text="${idea.downvotes}">85</span></li-->
+                                <th:block sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 1}">
+                                    <a class="vote pointer mr-1" data-action="upvote" th:data-id="${idea.id}"
+                                    th:data-path="post" th:id="'idea-up' + ${idea.id}">
+                                        <i class="text-success" aria-hidden="true"
+                                        th:classappend="${user != null && idea.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                                        <span class="votes" th:text="${idea.upvotes}">114</span>
+                                    </a>
+
+                                    <a class="vote pointer mr-1" data-action="downvote" th:data-id="${idea.id}"
+                                    th:data-path="post" th:id="'idea-down' + ${idea.id}">
+                                        <i class="text-danger" aria-hidden="true"
+                                        th:classappend="${user != null && idea.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                                        <span class="votes" th:text="${idea.downvotes}">22</span>
+                                    </a>
+                                </th:block>
+                                <th:block th:if="${group.status.ordinal() != 1 || user == null}">
+                                            <span class="mr-1" th:id="'idea-up' + ${idea.id}">
+                                                <i class="grey" aria-hidden="true"
+                                                th:classappend="${user != null && idea.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                                                <span class="votes" th:text="${idea.upvotes}">114</span>
+                                            </span>
+
+                                    <span class="mr-1" th:id="'idea-down' + ${idea.id}">
+                                                <i class="grey" aria-hidden="true"
+                                                th:classappend="${user != null && idea.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                                                <span class="votes" th:text="${idea.downvotes}">22</span>
+                                            </span>
+                                </th:block>
+                            <!-- </li>
+                        </ul> -->
+
+                        <span th:text="${idea.text}" class="replace-links">All registered food providers should get rated like TripAdvisor ..</span>
+                    </div>
+
+
+                </li>
+
+                <li class="list-group-item p-2" th:each="idea, iStat : ${ideas}" th:if="${step != 1}">
+
+
+                        <div class="text-pink-400">
+
+                            <!-- <ul class="list-inline">
+                                <li class="list-inline-item"> -->
+                                    <strong class="d-block" th:text="${idea.author.isAnonymized()} ? #{anonymous} : ${idea.author.username}">Will544</strong>
+                               
+                                    <th:block th:if="${user != null}">
+                                            <span class="mr-1" th:id="'idea-up' + ${idea.id}">
+                                                <i class="mr-1 text-success" aria-hidden="true"
+                                                th:classappend="${user != null && idea.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                                                <span class="votes" th:text="${idea.upvotes}">114</span>
+                                            </span>
+
+                                        <span class="mr-1" th:id="'idea-down' + ${idea.id}">
+                                                <i class="mr-1 text-danger" aria-hidden="true"
+                                                th:classappend="${user != null && idea.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                                                <span class="votes" th:text="${idea.downvotes}">22</span>
+                                            </span>
+                                    </th:block>
+                                    <th:block th:if="${user == null}">
+                                            <span class="mr-1" th:id="'idea-up' + ${idea.id}">
+                                                <i class="mr-1 grey" aria-hidden="true"
+                                                th:classappend="${user != null && idea.hasUpVoted(user.username)?'fas fa-thumbs-up':'far fa-thumbs-up'}"></i>
+                                                <span class="votes" th:text="${idea.upvotes}">114</span>
+                                            </span>
+
+                                        <span class="mr-1" th:id="'idea-down' + ${idea.id}">
+                                                <i class="mr-1 grey" aria-hidden="true"
+                                                th:classappend="${user != null && idea.hasDownVoted(user.username)?'fas fa-thumbs-down':'far fa-thumbs-down'}"></i>
+                                                <span class="votes" th:text="${idea.downvotes}">22</span>
+                                            </span>
+                                    </th:block>
+
+                                <!-- </li>
+                            </ul> -->
+
+                            <span th:text="${idea.text}">All registered food providers should get rated like TripAdvisor ..</span>
+                        </div>
+
+
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="attached-files" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="card" id="js-display1" th:if="${!documents.isEmpty()}">
+
+        <div class="_card-header pointer">
+            <h2 class="h6 m-0">
+                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseContent">
+                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                    <span th:text="#{topic.relevant_content}">Relevant content</span>
+                </button>
+            </h2>
+        </div>
+
+        <div class="table-responsive collapse show" id="collapseContent">
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item p-1" th:each="document : ${documents}">
+                        <div class="row">
+                            <!-- moderator menu start-->
+                            <div class="dropdown-menu border-1 font-weight-semibold dropdown-menu-right dropdown-content wmin-md-225"
+                                 sec:authorize="hasRole('MODERATOR')">
+                                <div class="dropdown-content-header">
+                                    <ul class="no-dot p-0 m-0">
+                                        <li>
+                                            <a tabindex="0" data-target="#delete-file" data-toggle="modal" href="">Delete this file</a>
+                                        </li>
+                                        <li>
+                                            <a tabindex="0" data-target="#rename-file" data-toggle="modal" href="">Rename this file</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col m-auto">
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="far mr-1" th:classappend="${document.getCssClass()}" aria-hidden="true"></i>
+                                        <span class="" th:text="${document.name}">List of food delivery providers.doc</span>
+                                    </div>
+                                </div>
+
+                                <ul class="list-inline list-inline-dotted list-inline-condensed small text-muted">
+                                    <li class="list-inline-item">
+                                        <span th:text="#{document.size}">Size</span>: <span th:text="${document.size()}">1.2Mb</span></li>
+                                    <li class="list-inline-item">
+                                        <span th:text="#{document.by}">By</span>
+                                        <a href="#" th:text="${document.getUser().isAnonymized()} ? #{anonymous} : ${document.getUser().username}">SoCaTel</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col m-auto">
+
+                                <a th:href="@{/downloadFile/{id}(id=${document.id})}" class="btn btn-secondary"
+                                   th:title="#{aria_label.download} + ' ' + ${document.name}">
+                                    <i class="fas fa-download fa-sm" aria-hidden="true"></i>
+                                    <span class="sr-only" th:text="#{aria_label.download} + ' ' + ${document.name}">Download the file</span>
+                                </a>
+
+                                <button class="view-file-trigger btn btn-primary"
+                                   data-toggle="modal" data-target=".modal-view-file"
+                                   th:data-file-id="${document.id}"
+                                   th:data-file-path="@{/downloadFile/{id}(id=${document.id})}" th:data-file-type="${document.type}"
+                                   th:if="${document.type == 'image/jpeg' || document.type == 'image/png' || document.type == 'image/gif'}"
+                                   th:title="#{modal_view_file_preview} + ' ' + ${document.name}">
+                                    <span class="sr-only" th:text="#{modal_view_file_preview}"></span>
+                                    <i class="far fa-eye fa-sm" aria-hidden="true"></i>
+                                    <span class="sr-only" th:text="#{modal_view_file_preview} + ' ' + ${document.name}">Download the file</span>
+                                </button>
+
+                                <button data-target="#delete-file"
+                                        data-toggle="modal" th:id="'deldoc-' + ${document.id}" class="btn btn-danger" th:if="${user != null && user.isModerator()}" th:title="#{delete_file} + ' ' + ${document.name}">
+                                    <i class="fa fa-trash"></i>
+                                    <span class="sr-only" th:text="#{delete_file} + ' ' + ${document.name}">Delete the file</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <th:block th:replace="topic-sidebar-fragment :: modal-view-file"></th:block>
+
+
+    </div>
+</th:block>
+
+<th:block th:fragment="modal-view-file" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="modal fade modal-view-file">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                    <!-- <h4 class="modal-title">Modal title</h4> -->
+                </div>
+                <div class="modal-body">
+
+                    <img th:alt="#{modal_view_file_preview}" class="img-fluid img-viewer" src="/show-image/1">
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary float-right img-downloader first-focusable-element" th:text="#{download}">Download</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</th:block>
+
+<th:block th:fragment="group-summary" th:if="${step > 1 && step < 6}" xmlns:th="http://www.thymeleaf.org">
+    <div class="card bg-white text-dark text-center">
+
+        <div class="_card-header pointer">
+            <h2 class="h6 m-0">
+                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseSummary">
+                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                    <span th:text="#{topic.facilitator_comments}">Facilitator comments</span>
+                    <!--span th:if="${step == 2}" th:text="#{topic.summary.step1}">Summary</span>
+                    <span th:if="${step == 3}" th:text="#{topic.summary.step2}">Summary</span>
+                    <span th:if="${step == 4}" th:text="#{topic.summary.step3}">Summary</span>
+                    <span th:if="${step == 5}" th:text="#{topic.summary.step4}">Summary</span-->
+                </button>
+            </h2>
+        </div>
+
+        <div class="row collapse show m-3" id="collapseSummary">
+            <form th:if="${user != null && (user.isModerator() || user.isFacilitator())}" th:action="@{/topic/{id}/summary/{num}(id=${group.id}, num=${step})}" method="post">
+                <label for="summary_textarea" th:text="#{topic.summary.lang}">Make sure the language is the group one</label>
+                <textarea name="summary" id="summary_textarea" style="width: 100%; height: 300px;" th:text="${summary}" required></textarea>
+                <div>
+                    <label>
+                        <input type="checkbox" required><span th:text="#{topic.summary.sure}">Are you sure?</span>
+                    </label>
+                    <button class="btn btn-primary" type="submit" th:text="#{save}">Save</button>
+                </div>
+            </form>
+            <span class="w-100" style="text-align: left; white-space: pre-wrap;" th:if="${user == null || (!user.isModerator() && !user.isFacilitator())}" th:text="${summary}"></span>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="step-information"  xmlns:th="http://www.thymeleaf.org">
+    <div class="card bg-white text-dark text-center">
+
+        <div class="_card-header pointer">
+            <h2 class="h6 m-0">
+                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseStep">
+                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+
+                    <span th:text="#{step}"></span> <span th:text="${step}"></span>:
+                    <span th:if="${step == 1}" th:text="#{coideation}">Co-ideation</span>
+                    <span th:if="${step == 2}" th:text="#{codefinition}">Co-definition</span>
+                    <span th:if="${step == 3}" th:text="#{codesign}">Co-design</span>
+                    <span th:if="${step == 4}" th:text="#{codevelopment}">Co-development</span>
+                    <span th:if="${step == 5}" th:text="#{covalidation}">Co-validation</span>
+                </button>
+            </h2>
+        </div>
+
+        <div class="collapse show" id="collapseStep">
+            <a class="view-file-trigger"
+               data-toggle="modal" href="#modal-view-steps">
+                <img th:alt="#{steps_image}" class="w-100 p-3" src="../static/images/STEPBYSTEP_en.jpg" th:src="@{/images/{img_name}(img_name=${image_name})}">
+            </a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal-view-steps">
+                <div class="modal-dialog modal-xl modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title w-100" th:text="#{modal_view_steps.title}">Socatel co-creation steps</h4>
+                            <button class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only" th:text="#{close}">Close</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <img th:alt="#{modal_view_file_preview}" class="img-fluid" id="img-steps" th:src="@{/images/{img_name}(img_name=${image_name})}">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}"></button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="kb-button"  xmlns:th="http://www.thymeleaf.org">
+    <div th:if="${step == -1}" class="text-dark text-center" style="margin-bottom: 20px; display: table; height: 50px; width: 100%">
+        <a th:href="@{/topic/{group_id}(group_id=${group.id})}"
+           class="btn btn-warning pointer" style="display: table-cell; vertical-align: middle; text-align:center; font-size: large;">
+            <i class="fa fa-pencil mt-1" aria-hidden="true" style="font-size: 26px;"></i>
+            <br>
+            <span style="font-size: large;" th:text="#{topic.kb_button.return}">Return to the co-creation dashboard</span>
+        </a>
+    </div>
+
+    <div th:if="${step != -1}" class="text-dark text-center" style="margin-bottom: 20px; display: table; height: 50px; width: 100%">
+        <a th:href="@{/topic/{group_id}/kb_data(group_id=${group.id})}"
+           class="btn btn-warning pointer" style="display: table-cell; vertical-align: middle; text-align:center; font-size: large;">
+            <i class="far fa-eye mt-1" aria-hidden="true" style="font-size: 26px;"></i>
+            <br>
+            <span style="font-size: large;" th:text="#{topic.kb_button.see}">See additional information related to the topic</span>
+        </a>
+    </div>
+</th:block>
+
+<th:block th:fragment="co-creation-5-steps" xmlns:th="http://www.thymeleaf.org">
+    <div class="text-dark text-center" style="margin-bottom: 20px; height: 50px; width: 100%; display: table;">
+        <button class="btn btn-secondary w-100" style="font-size: large;" data-toggle="modal" data-target="#modal-view-steps">
+            <i class="fas fa-question" aria-hidden="true"  style="font-size: 26px;"></i> <br>
+            <span th:text="#{topic.cocreation_5_steps}">Co-creation in 5 steps</span>
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-view-steps">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" th:text="#{modal_view_steps.title}">Socatel co-creation steps</h4>
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <img th:alt="#{modal_view_file_preview}" class="img-fluid" id="img-steps" th:src="@{/images/{img_name}(img_name=${image_name})}">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}"></button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</th:block>
+
+<th:block th:fragment="video-meeting"  xmlns:th="http://www.thymeleaf.org">
+    <div class="card bg-white text-dark text-center">
+
+        <div class="_card-header pointer">
+            <h2 class="h6 m-0">
+                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseVideoMeeting">
+                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                    <span th:text="#{topic.video_meeting}">Video meeting</span>
+                </button>
+            </h2>
+        </div>
+
+        <div class="row collapse show m-3" id="collapseVideoMeeting">
+            <th:block th:unless="${group.isMeetingDisplayed()}">
+                <span th:text="#{topic.video_meeting.text}">The facilitator has to start the meeting</span>
+                <button class="btn btn-warning w-100" th:onclick="'javascript:perform_post_call(\'/facilitator/group-meeting/' + ${group.id} + '/show\')'" th:if="${user != null && user.isFacilitator()}" th:text="#{topic.video_meeting.start}">Start the meeting</button>
+            </th:block>
+            <th:block th:if="${group.isMeetingDisplayed()}">
+                <a class="btn btn-primary w-100" th:href="${group.getMeetingCode()}" target="_blank" th:text="#{topic.video_meeting.join}">Join now!</a>
+                <button class="btn btn-warning w-100" th:onclick="'javascript:perform_post_call(\'/facilitator/group-meeting/' + ${group.id} + '/hide\')'" th:if="${user != null && user.isFacilitator()}" th:text="#{topic.video_meeting.hide}">Hide the meeting</button>
+            </th:block>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="left" xmlns:th="http://www.thymeleaf.org">
+
+    <th:block th:replace="topic-sidebar-fragment :: kb-button(group=${group}, step=${step})"></th:block>
+    <th:block th:replace="topic-sidebar-fragment :: co-creation-5-steps"></th:block>
+    <!--th:block th:replace="topic-sidebar-fragment :: step-information(step=${step})"></th:block-->
+    <th:block th:replace="topic-sidebar-fragment :: group-summary(summary=${summary}, step=${step})"></th:block>
+    <th:block th:replace="topic-sidebar-fragment :: ideas(step=${step})"></th:block>
+    <th:block th:replace="topic-sidebar-fragment :: video-meeting(group=${group})"></th:block>
+    <th:block th:replace="topic-sidebar-fragment :: participants"></th:block>
+    <th:block th:replace="topic-sidebar-fragment :: attached-files"></th:block>
+
+    <th:block th:replace="user-fragment :: create-users-modals(users_list=${contributors})"></th:block>
+
+</th:block>

@@ -1,0 +1,589 @@
+<th:block th:fragment="gear-step2" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <a sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == 2 && user.isModerator()}" aria-expanded="false" class="dropdown-toggle caret-0" data-toggle="dropdown" href="#">
+        <i aria-hidden="true" class="fa fa-gear mr-1 gearIcon"></i>
+        <span class="sr-only" th:text="#{aria_label.gear}"></span>
+    </a>
+    <div sec:authorize="isAuthenticated()" class="dropdown-menu dropdown-menu-right border-1 font-weight-semibold dropdown-content wmin-md-225">
+        <div class="dropdown-content-header">
+            <!-- moderator menu strat -->
+            <ul class="no-dot pl-3 m-0">
+                <li th:if="${user.isModerator()}">
+                    <a tabindex="0" class="action-message" data-action="delete-message" data-target="#delete-message" data-toggle="modal" href="" th:data-message-id="${id_message}">
+                        <span th:text="#{topic_menu_modal.delete_contribution}">Delete this message</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="gear-step1" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <a sec:authorize="isAuthenticated()" th:if="${group.status.ordinal() == step}" aria-expanded="false" class="dropdown-toggle caret-0" data-toggle="dropdown" href="#">
+        <i class="fa fa-gear mr-1 gearIcon" th:aria-label="#{aria_label.gear}"></i>
+    </a>
+    <div sec:authorize="isAuthenticated()" class="dropdown-menu dropdown-menu-right border-1 font-weight-semibold dropdown-content wmin-md-225">
+        <div class="dropdown-content-header">
+            <!-- moderator menu strat -->
+            <ul class="no-dot pl-3 m-0">
+
+                <li th:if="${user.equals(author) && !user.isModerator()}"><a class="action-message"
+                                                                             data-action="delete-mymessage"
+                                                                             data-target="#delete-myMessage" data-toggle="modal"
+                                                                             href=""
+                                                                             th:data-message-id="${id_message}"><span
+                        th:text="#{topic_menu_modal.delete_my_contribution}">Delete this message</span></a></li>
+                <li th:if="${user.isModerator()}"><a class="action-message" data-action="delete-message"
+                                                     data-target="#delete-message" data-toggle="modal" href=""
+                                                     th:data-message-id="${id_message}"><span
+                        th:text="#{topic_menu_modal.delete_contribution}">Delete this message</span></a></li>
+                <li th:if="${!user.equals(author) && !user.isModerator()}"><a class="action-message"
+                                                                              data-action="report-message"
+                                                                              data-target="#report-message" data-toggle="modal"
+                                                                              href=""
+                                                                              th:data-message-id="${id_message}"><span
+                        th:text="#{topic_menu_modal.report}">Report</span></a></li>
+
+                <li th:if="${user.isModerator() && !user.equals(author)}"><a class="action-user" data-action="ban-user"
+                                                                             data-target="#ban"
+                                                                             data-toggle="modal" href=""
+                                                                             th:data-message-id="${id_message}"
+                                                                             th:data-username="${author.username}"><span
+                        th:text="#{topic_menu_modal.ban_user}">Ban this person</span></a></li>
+
+                <li th:if="${step == 1 && (user.isModerator() || user.isFacilitator())}"><a class="action-message" data-action="change-tag"
+                                                     data-target="#change-tag" data-toggle="modal" href=""
+                                                     th:data-message-id="${id_message}"><span
+                        th:text="#{topic_menu_modal.change_tag}">Change the tag</span></a></li>
+
+                <!-- <li th:if="${!user.equals(author)}"><a href="" data-toggle="modal" data-target="#send-message"><span th:text="#{topic_menu_modal.send_message}">Send a message</span></a></li> -->
+            </ul> <!-- moderator menu end -->
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="choosetag" xmlns:th="http://www.thymeleaf.org">
+    <!--div class="form-check-inline my-2">
+        <input class="form-check-input" th:field="*{postType}" th:id="${id!=null?'idea-checkbox'+id:'idea-checkbox'}"
+               th:value="${T(com.socatel.utils.enums.PostTypeEnum).IDEA}" type="checkbox">
+        <label class="form-check-label font-weight-bold" th:for="${id!=null?'idea-checkbox'+id:'idea-checkbox'}"
+               th:text="#{topic.idea}">Idea</label>
+    </div-->
+    <label th:for="${id!=null?'idea-checkbox'+id:'idea-checkbox'}" th:text="#{topic.step1.choose_tag}">Select your contribution's type</label>:
+    <select th:id="${id!=null?'idea-checkbox'+id:'idea-checkbox'}" class="pointer form-control" required th:field="*{postType}">
+        <option style="display:none" th:text="#{topic.step1.tag}" th:value="${null}">Age range</option>
+        <option th:each="type : ${T(com.socatel.utils.enums.PostTypeEnum).values()}"
+                th:text="#{${type.toString().replaceAll(' ', '_').toLowerCase()}}"
+                th:value="${type}"></option>
+    </select>
+</th:block>
+
+
+<th:block th:fragment="choosefile" xmlns:th="http://www.thymeleaf.org">
+    <div class="my-3">
+        <label th:for="'file' + ${id}" id="attach-a-file" th:text="#{create_topic.file}">Attach a file to your message : </label><br>
+        <div class="custom-file">
+            <input aria-labelledby="attach-a-file" class="custom-file-input pointer" multiple name="file" th:id="'file' + ${id}" type="file"/>
+            <label class="custom-file-label" th:for="'file' + ${id}" th:text="#{create_topic.choose_file}">Choose
+                File</label>
+        </div>
+    </div>
+</th:block>
+
+<th:block  th:fragment="topic-modals" xmlns:th="http://www.thymeleaf.org">
+    <div class="modal fade" id="report-message">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 th:text="#{topic_menu_modal.report}">Report this contribution</h4>
+                    <button class="close" data-dismiss="modal" type="button" >
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}"></span></button>
+                </div>
+                <div class="modal-body text-center">
+
+                    <div class="initial">
+                        <!-- <form id="report-form" data-message-id="" th:action="@{/report/post/{post_id}}" method="post" th:object="${report}"> -->
+                        <form data-message-id="" id="report-form" th:object="${report}">
+                            <div class="form-group mb-5">
+                                <label class="float-left" for="explanation" th:text="#{topic_menu_modal.report.explanation}">Explain us why you report
+                                    this contribution </label>
+                                <!-- <textarea class="form-control" required th:field="*{text}" maxlength="250"></textarea> -->
+                                <textarea class="form-control first-focusable-element" id="explanation" maxlength="250" required></textarea>
+                                <span class="float-left small text-muted">250 char. max</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="float-left" for="report-reason" th:text="#{topic_menu_modal.report.reason}">Reason</label>
+                                <select class="form-control" id="report-reason" required th:field="*{reason}">
+                                    <option style="display:none" th:text="#{topic_menu_modal.report_reason}" th:value="${null}">Report reason
+                                    </option>
+                                    <option th:each="r : ${T(com.socatel.utils.enums.ReportReason).values()}"
+                                            th:text="#{${r.toString().replaceAll(' ', '_').toLowerCase()}}"
+                                            th:value="${r}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <!-- <button type="submit" class="btn btn-primary" th:text="#{topic_menu_modal.report}" >topic_menu_modal.report</button> -->
+                                <button class="btn btn-primary send-action-message" data-action="report-message"
+                                        th:text="#{topic_menu_modal.report}">topic_menu_modal.report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="d-none success">
+                        <div class="alert alert-info">
+                            <strong th:text="#{topic_menu_modal.report.success}">This contribution was reported to
+                                moderators ! </strong>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal pop up add-propositionSuccess start-->
+    <div class="modal fade" id="add-propositionSuccess">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="font-weight-bold">Congratulation your message is written</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="btn btn-primary col-12 first-focusable-element" data-dismiss="modal" data-toggle="modal" type="button" th:text="#{close}">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal pop up add-propositionSuccess end -->
+
+
+    <!-- modal pop up delete-message start-->
+    <div class="modal fade" data-message-id="" id="delete-myMessage">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 initial">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="modal-body text-center">
+                                <h5 th:text="#{topic_menu_modal.delete_my_contribution.title}">Are you sure you want delete
+                                    this message ?</h5>
+                            </div>
+                            <div class="modal-footer column">
+                                <!-- <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#delete-myMessageSuccess" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{yes}">Yes</a></button> -->
+                                <a class="btn btn-primary col-6 send-action-message first-focusable-element" data-action="delete-mymessage"
+                                   href="/post/post_id/delete" th:text="#{yes}">Yes</a>
+                                <button class="btn btn-primary col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 d-none success">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                                </div>
+                                <div class="modal-body">
+                                <span class="font-weight-bold"
+                                      th:text="#{topic_menu_modal.delete_my_contribution.success.title}">The message is no more visible for the participants.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="btn btn-primary col-12" data-dismiss="modal" type="button" th:text="#{close}">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div><!-- modal pop up delete-message end -->
+
+    <!-- modal pop up delete-messageSuccess start- ->
+    <div class="modal fade" id="delete-myMessageSuccess">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x bg-green-400 mt-2 text-white border-radius-5"></i>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="font-weight-bold" th:text="#{topic_menu_modal.delete_my_contribution.success.title}">The message is no more visible for the participants.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" data-dismiss="modal" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{close}">Close</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><! -- modal pop up delete-messageSuccess end -->
+
+    <!-- all admin modal start -->
+    <!-- modal pop up delete-message start-->
+    <div class="modal fade" data-message-id="" id="delete-message">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 initial">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="modal-body text-center">
+                                <h5 class="col-12" th:text="#{topic_menu_modal.delete_contribution.title}">Are you sure you
+                                    want delete this message ?</h5>
+                            </div>
+                            <div class="modal-footer column">
+                                <!-- <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#delete-messageSuccess" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{yes}">Yes</a></button> -->
+                                <a class="btn btn-primary col-6 send-action-message first-focusable-element" data-action="delete-message" data-contribution="post"
+                                   href="/post/post_id/delete" th:text="#{yes}">Yes</a>
+                                <button class="btn btn-primary col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 d-none success">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                                </div>
+                                <div class="modal-body">
+                                <span class="font-weight-bold"
+                                      th:text="#{topic_menu_modal.delete_my_contribution.success.title}">The message is no more visible for the participants.</span>
+                                    <span th:text="#{topic_menu_modal.delete_contribution.explanation}">Pleas explain why you delete this message to the participant</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="btn btn-primary col-12" data-dismiss="modal" type="button" th:text="#{close}">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div><!-- modal pop up delete-message end -->
+
+    <!-- modal pop up delete-messageSuccess start- ->
+    <div class="modal fade" id="delete-messageSuccess">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x bg-green-400 mt-2 text-white border-radius-5"></i>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="font-weight-bold" th:text="#{topic_menu_modal.delete_my_contribution.success.title}">The message is no more visible for the participants.</span>
+                                    <span th:text="#{topic_menu_modal.delete_contribution.explanation}">Pleas explain why you delete this message to the participant</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#ban-message" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{topic_menu_modal.send_message}">Send a message</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><! -- modal pop up delete-messageSuccess end -->
+
+    <!-- modal pop up ban start-->
+    <div class="modal fade" data-username="" id="ban">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 initial">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="modal-body">
+                                <h5 class="col-12" th:text="#{topic_menu_modal.ban_user.title}">Are you sure you want ban
+                                    this person ?</h5>
+                            </div>
+                            <div class="modal-footer column">
+                                <a class="btn btn-primary col-6 ban-user first-focusable-element" data-action="ban-user" href=""
+                                   th:text="#{yes}">Yes</a>
+                                <!-- <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#ban-message" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{yes}">Yes</a></button> -->
+                                <button class="btn btn-danger col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 d-none success">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="modal-body">
+                                <div class="alert alert-info">
+                                    <strong th:text="#{topic_menu_modal.ban_user.title.success}">User was Ban ! </strong>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="btn btn-danger col-12" data-dismiss="modal" type="button" th:text="#{close}">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div><!-- modal pop up ban end -->
+
+    <!-- modal pop up ban-success start- ->
+    <div class="modal fade" id="ban-message">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x bg-green-400 mt-2 text-white border-radius-5"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <span class="font-weight-bold" th:text="#{topic_menu_modal.ban_user.title.success}">This person has been banned</span>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" data-dismiss="modal" class="col-5 btn btn-primary" th:text="#{close}">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><! -- modal pop up ban-success end -->
+
+    <!-- modal pop up change-tag start-->
+    <div class="modal fade" data-message-id="" id="change-tag">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 initial">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <span th:text="#{topic_menu_modal.change_tag}">Change the tag of this message :</span>
+                            </div>
+                            <div class="card-body">
+                                <span th:text="#{topic_menu_modal.change_tag.subtitle}"></span>
+                            </div>
+                            <div class="modal-footer column">
+                                <!-- <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#change-tagSuccess" class="col-6 btn btn-primary" th:text="#{change}">Change</button> -->
+                                <!-- <button type="button" data-dismiss="modal" data-toggle="modal" data-target="#change-tagSuccess" class="col-6 btn btn-primary" th:text="#{change}">Change</button> -->
+                                <a class="btn btn-primary col-6 send-action-message first-focusable-element" data-action="change-tag"
+                                   href="/post/post_id/delete"
+                                   th:text="#{change}">Change</a>
+                                <button class="col-6 btn btn-danger" data-dismiss="modal" th:text="#{close}" type="button">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12 col-sm-12 p-0 m-0 d-none success">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="font-weight-bold" th:text="#{topic_menu_modal.change_tag.title.success}">The tag of this message is change</p>
+                                    <p th:text="#{topic_menu_modal.change_tag.explanation}">Pleas explain why you change the tag of this message to the participant</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="btn btn-danger col-12" data-dismiss="modal" type="button" th:text="#{close}">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div><!-- modal pop up change-tag end -->
+
+    <!-- modal pop up change-tagSuccess start- ->
+    <div class="modal fade" id="change-tagSuccess">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x bg-green-400 mt-2 text-white border-radius-5"></i>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="font-weight-bold" th:text="#{topic_menu_modal.change_tag.title.success}">The tag of this message is change</span>
+                                    <span th:text="#{topic_menu_modal.change_tag.explanation}">Pleas explain why you change the tag of this message to the participant</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" data-dismiss="modal" class="btn btn-primary col-6"><a href="" class="text-white" th:text="#{topic_menu_modal.send_message}">Send a message</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><! -- modal pop up change-tagSuccess end -->
+
+    <!-- modal pop up delete-fileSuccess start-->
+    <div class="modal fade" id="delete-fileSuccess">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                            <span class="font-weight-bold"
+                                  th:text="#{topic_menu_modal.delete_file}">This file is delete</span>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="col-5 btn btn-primary first-focusable-element" data-dismiss="modal" th:text="#{close}" type="button">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal pop up delete-fileSuccess end -->
+
+    <!-- modal pop up rename-file start-->
+    <div class="modal fade" id="rename-file">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <span th:text="#{topic_menu_modal.rename_file}">Rename this file :</span>
+                            </div>
+                            <div class="card-body">
+                                <input type="text" class="first-focusable-element">
+                            </div>
+                            <div class="modal-footer column">
+                                <button class="col-6 btn btn-primary" data-dismiss="modal" data-target="#rename-fileSuccess"
+                                        data-toggle="modal" th:text="#{change}" type="button">
+                                    Change
+                                </button>
+                                <button class="col-6 btn btn-primary" data-dismiss="modal" th:text="#{close}" type="button">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal pop up rename-file end -->
+
+    <!-- modal pop up rename-fileSuccess start-->
+    <div class="modal fade" id="rename-fileSuccess">
+        <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="card-header text-center">
+                                <div class="modal-header row justify-content-center">
+                                    <i class="fa fa-check fa-2x mt-2 text-success border-radius-5" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <span class="font-weight-bold" th:text="#{topic_menu_modal.rename_file.title}">This file is renamed</span>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button class="col-5 btn btn-primary first-focusable-element" data-dismiss="modal" th:text="#{close}" type="button">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal pop up rename-fileSuccess end -->
+    <!-- all admin modal end -->
+    <!-- modal pop up delete-file start-->
+    <div class="modal fade" id="delete-file">
+        <div class="modal-dialog modal-sm" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="col-xl-12 col-sm-12 p-0 m-0">
+                    <div class="card border-2 p-0 m-0">
+                        <div class="card-body text-center w-100">
+                            <div class="modal-body text-center">
+                                <h3 class="col-12" th:text="#{topic_menu_modal.delete_file}">Are you sure you want delete this
+                                    notification ?</h3>
+                            </div>
+                            <div class="modal-footer column">
+                                <button tabindex="1" class="btn btn-primary col-6 first-focusable-element" data-dismiss="modal" id="delete-doc" type="submit" th:text="#{yes}">
+                                </button>
+                                <button class="btn btn-danger col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal pop up delete-file end -->
+</th:block>

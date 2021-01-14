@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{facilitator})">
+    <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <title>SOCATEL</title>
+
+        <!-- /Favicon -->
+        <link href="../static/images/socatel_favicon.png" rel="shortcut icon" th:href="@{favicon.ico}"
+              type="image/x-icon">
+        <link href="../static/images/socatel_favicon.png" rel="apple-touch-icon"
+        / th:href="@{favicon.ico}">
+        <!-- /Favicon -->
+
+        <!-- Global stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+              type="text/css">
+        <link href="../static/global_assets/css/icons/icomoon/styles.css"
+              rel="stylesheet" th:href="@{/global_assets/css/icons/icomoon/styles.css}" type="text/css">
+        <link href="../static/assets/css/bootstrap.min.css" rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}"
+              type="text/css">
+        <!-- <link href="../static/assets/css/bootstrap_limitless.min.css" th:href="@{/assets/css/bootstrap_limitless.min.css}" rel="stylesheet" type="text/css"> -->
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+        <!-- <link href="../static/assets/css/colors.min.css" th:href="@{/assets/css/colors.min.css}" rel="stylesheet" type="text/css"> -->
+
+        <!-- /global stylesheets -->
+
+        <!-- Core JS files -->
+        <script src="../static/global_assets/js/main/jquery.min.js"
+                th:src="@{/global_assets/js/main/jquery.min.js}"></script>
+        <script src="../static/global_assets/js/main/bootstrap.bundle.min.js"
+                th:src="@{/global_assets/js/main/bootstrap.bundle.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+        <!-- /core JS files -->
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/sticky.min.js"
+                th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js"
+                th:src="@{/global_assets/js/demo_pages/extra_fab.js}"></script>
+        <!-- <script src=" global_assets/js/plugins/extensions/jquery_ui/interactions.min.js"></script> -->
+        <!-- <script src=" global_assets/js/plugins/forms/selects/select2.min.js"></script>	 -->
+        <script src="../static/global_assets/js/demo_pages/form_select2.js"
+                th:src="@{/global_assets/js/demo_pages/form_select2.js}"></script>
+
+        <!-- /theme JS files -->
+
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+
+    </head>
+</th:block>
+
+
+<body>
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+<!-- Page content -->
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='facilitator')"></th:block>
+
+
+    <!-- Main content -->
+    <main class="w-100">
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{facilitator} )"></th:block>
+
+                <!-- ROW --->
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.topic}">Topic moderation</h3>
+                                <div class="alert alert-info">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.topic.explanation1}">List of the new topics
+                                        submitted</strong> <span th:text="#{moderator.topic.explanation2}">you can Accept or Reject them.</span>
+                                </div>
+
+                                <ul class="list-group paginate-suggesteds">
+                                    <li class="list-group-item m-1 align-text-top paginate-item"
+                                        th:each="group : ${suggested_groups}">
+                                        <th:block th:replace="notifications-fragments :: topic-list-group-item"></th:block>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ROW --->
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{moderator.process}">Process moderation</h3>
+                                <div class="alert alert-info">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{moderator.process.explanation1}">List the status of all topics being
+                                        discussed </strong> <span th:text="#{moderator.process.explanation2}">you can update the status</span>
+                                </div>
+
+                                <ul class="list-group paginate-process">
+                                    <li class="list-group-item m-1 align-text-top paginate-item" th:each="group : ${groups}">
+                                        <th:block th:replace="notifications-fragments :: topic-list-process"></th:block>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /main content -->
+        </div>
+        <!-- /main content -->
+    </main>
+</div>
+<!-- /page content -->
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

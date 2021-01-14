@@ -1,0 +1,40 @@
+/* html,body,:not([style*="background-color:"]),
+html,body,:not([style*="color:"]) { font-size: 20px}*/
+cite:not([style*="color:"]),
+span:not([style*="font-size:"]){font-size: 20px}
+
+/* div.row:not([style*="display:"]){display: inline-block;} */
+
+div.contener:not([style*="width:"]){width: 100%}
+
+div.col-md-4.col-xl-4:not([style*="max-width:"]){max-width: 100%;}
+div.col-md-8.col-xl-8:not([style*="max-width:"]){max-width: 100%;}
+div.list-feed:not([style*="max-width:"]){max-width: 100%;}
+div.card-body .row:not([style*="width:"]){width: 100%;}
+div.d-flex.justify-content-center div:not([style*="width:"]){width: 180px}
+
+/* div.col-5:not([style*="max-width"]){max-width: 85%}  /* admin-topic */ /* topic */
+/* div.col-6:not([style*="max-width"]){max-width: 100%} /* admin-topic */ /* topic */
+/* div.col-md-6.col-xl-6:not([style*="max-width:"]){max-width: 100%!important} /* my-profile */
+/* div.col-md-12.col-xl-12:not([style*="max-width:"]){max-width: 100%!important} /* notifications */
+/* div.col-md-7.col-xl-7:not([style*="max-width:"]){max-width: 100%} /* topic-find */
+/* div.col-md-5.col-xl-5.border.p-3:not([style*="max-width:"]){max-width: 100%} /* topic-find */
+
+.card.bg-transparent div.row.justify-content-center:not([style*="display:"]){display: flex} /* faq */
+div.row.history:not([style*="display:"]){display: flex!important} /* history */
+div.row.my-data:not([style*="display:"]){display: flex!important} /* my-data */
+a.btn.bg-secondary.col-2:not([style*="max-width:"]){max-width: 50%} /* my-data */
+a.btn.bg-blue-400.col-2:not([style*="max-width:"]){max-width: 50%} /* my-data */
+div.row.notifications:not([style*="display:"]){display: flex!important} /* notifications */
+div.row.topic-create:not([style*="display:"]){display: flex!important} /* topic-creat */
+div.row.topics-posted:not([style*="display:"]){display: flex!important} /* topics-posted */
+
+html,body { font-size: 20px!important; }
+
+h1 { font-size: 56px!important; }
+h2 { font-size: 42px!important; }
+h3 { font-size: 32px!important; }
+h4 { font-size: 20px!important; }
+h5 { font-size: 18px!important; }
+
+.about-extra .section-header h3, .about-extra .section-header h4 { font-size: 32px!important; }

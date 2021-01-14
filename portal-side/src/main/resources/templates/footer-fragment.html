@@ -1,0 +1,73 @@
+<th:block th:fragment="footer" xmlns:th="http://www.thymeleaf.org">
+    <footer id="footer">
+        <div class="container text-center">
+            <ul class="list-inline social-links">
+                <li class="list-inline-item">
+                    <a href="https://www.facebook.com/socatel.cocreation/"
+                       target="_blank" th:href="@{https://www.facebook.com/socatel.cocreation/}" title="Facebook">
+                        <span class="sr-only" th:text="#{facebook}"></span>
+                        <span class="fa-stack">
+                            <i class="far fa-circle fa-stack-2x" aria-hidden="true"></i>
+                            <i class="fab fa-facebook-f fa-stack-1x" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="https://twitter.com/socatel_co" target="_blank" th:href="@{https://twitter.com/socatel_co}"
+                       title="Twitter">
+                        <span class="sr-only" th:text="#{twitter}"></span>
+                        <span class="fa-stack">
+                            <i class="far fa-circle fa-stack-2x" aria-hidden="true"></i>
+                            <i class="fab fa-twitter fa-stack-1x" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="https://www.linkedin.com/in/socatel-co-creation-766693165/"
+                       target="_blank" th:href="@{https://www.linkedin.com/in/socatel-co-creation-766693165/}"
+                       title="LinkedIn">
+                        <span class="sr-only" th:text="#{linkedin}"></span>
+                        <span class="fa-stack">
+                            <i class="far fa-circle fa-stack-2x" aria-hidden="true"></i>
+                            <i class="fab fa-linkedin-in fa-stack-1x" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container text-center">
+            &copy; <label th:text="#{main.copyright}">Copyright <strong>SoCaTel</strong>. All Rights Reserved</label>
+        </div>
+        <div class="container text-center">
+            <a href="/privacy-policy" target="_blank" th:text="#{main.privacy}">Privacy Policy Statement</a> /
+            <a href="/terms-conditions" target="_blank" th:text="#{main.terms}">Terms and conditions</a> /
+            <a href="https://www.socatel.eu" target="_blank" th:text="#{main.about}">About us</a>
+        </div>
+    </footer><!-- #footer -->
+
+    <script src="../static/front/js/main.js" th:src="@{/front/js/main.js}"></script>
+    <a class="back-to-top" href="#">
+        <span class="sr-only" th:text=#{aria_label.top_page}>Back to top</span>
+        <i class="fas fa-chevron-up mt-2" aria-hidden="true"></i>
+    </a>
+
+
+</th:block>
+
+<!-- deprecated
+<th:block th:fragment="emoji">
+    <script src="../static/assets/js/config.js" th:src="@{/assets/js/config.js}"></script>
+    <script src="../static/assets/js/util.js" th:src="@{/assets/js/util.js}"></script>
+    <script src="../static/assets/js/jquery.emojiarea.js" th:src="@{/assets/js/jquery.emojiarea.js}"></script>
+    <script src="../static/assets/js/emoji-picker.js" th:src="@{/assets/js/emoji-picker.js}"></script>
+</th:block> -->
+
+<th:block th:fragment="back-to-top" xmlns:th="http://www.thymeleaf.org">
+
+    <script src="../static/front/js/main.js" th:src="@{/front/js/main.js}"></script>
+    <a class="back-to-top" href="#">
+        <span class="sr-only" th:text=#{aria_label.top_page}>Back to top</span>
+        <i class="fas fa-chevron-up mt-2" aria-hidden="true"></i>
+    </a>
+
+</th:block>

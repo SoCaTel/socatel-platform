@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{notifications})">
+</th:block>
+
+<body>
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='notifications')"></th:block>
+
+    <main>
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{my_notifications} )"></th:block>
+
+
+                <div class="row notifications">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="_card-header pointer">
+                                <h3 class="h6 m-0">
+                                    <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseMyNotifications">
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                        <span th:text="#{notifications}">Notifications</span>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <div class="card-body collapse show" id="collapseMyNotifications">
+
+                                <div class="alert alert-info" th:if="${notificationsPage.isEmpty()}">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <strong th:text="#{notifications.empty}">You don't have any notifications</strong>
+                                </div>
+
+                                <ul class="list-group">
+                                    <li class="list-group-item px-0 notification-item"
+                                        th:each="notification, iStat : ${notificationsPage.content}"
+                                        th:id="'notifrow-' + ${notification.id}">
+
+                                        <span class="badge badgenotification border-1 border-danger text-danger mx-2"
+                                            th:id="'badgenotif-' + ${notification.id}"
+                                            th:if="${notification.isNewNotification()}" th:text="#{new}">NEW</span>
+
+                                    <a th:class="${notification.isNewNotification()}?'feed-timestamp font-size-m font-weight-bold'"
+                                       th:href="@{/notifications/click/{notification_id}(notification_id=${notification.id})}"
+                                       th:id="'linknotif-' + ${notification.id}">
+                                        <span th:text="#{${notification.text}}">Your solution to topic 1254 is now the most voted</span>
+                                        <span th:text="${notification.reference}"></span>
+                                    </a>
+                                    <span class="text-muted small" th:text="${notification.fancyTimestamp()}">4 minutes ago</span>
+                                    <span class="d-inline-block float-right">
+                                        <button class="float-right btn btn-danger" data-target="#delete-notification"
+                                                data-toggle="modal" th:id="'delnotif-' + ${notification.id}">
+                                            <span class="sr-only" th:text="#{delete_notification} + ' ' + ${notification.id}"></span>
+                                            <i class="fa mx-1 fa-trash" th:aria-label="#{aria_label.delete_notification}"></i>
+                                        </button>
+                                        <button class="float-right viewnotification btn btn-primary"
+                                                th:data-id="@{{notification_id}(notification_id=${notification.id})}"
+                                                th:id="'viewnotif-' + ${notification.id}"
+                                                th:if="${notification.isNewNotification()}">
+                                            <span class="sr-only" th:text="#{read_notification} + ' ' + ${notification.id}"></span>
+                                            <i class="far mx-1 fa-eye" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-white text-right">
+
+                                <a class="btn btn-outline-primary" th:href="@{/notifications(size=${notificationsPage.size + 5})}"
+                                th:if="${notificationsPage.hasNext()}">
+                                    <span th:text="#{see_more}">See more</span>
+                                </a>
+                                <a tabindex="0" href=" " class="btn btn-outline-primary notifications-action pointer"
+                                data-action="read_all">
+                                    <span th:text="#{read_all}">Read all</span>
+                                </a>
+                                <a tabindex="0" href="" class="btn btn-outline-danger notifications-action pointer"
+                                data-action="delete_all">
+                                    <span th:text="#{delete_all}">Delete all</span>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header header-elements-inline">
+                                <h3 class="text-uppercase h6 my-1" th:text="#{notifications.manage_notifications}">Manage my notifications</h3>
+                            </div>
+
+                            <form>
+
+
+                                <div class="notifications-alert alert alert-success mx-3 fade d-none">
+                                    <strong th:text="#{notifications.success}">Your preferences have been saved successfully
+                                        !</strong>
+                                </div>
+
+                                <div class="card-body font-weight-normal">
+                                    <ul class="list-group">
+                                        <li class="list-group-item on-off">
+                                            <i class="far fa-bell" aria-hidden="true"></i>
+                                            <span th:text="#{notifications.mail_notification}">Be alerted by email when we receive a message</span>
+                                            <label for="notifyByEmail" class="ml-1 float-right" th:text="#{notifications.on}">On</label>
+                                            <label class="switch float-right">
+                                                <input id="notifyByEmail" th:checked="${notifyByEmail}" type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <label for="notifyByEmail" class="mr-1 float-right" th:text="#{notifications.off}">Off</label>
+                                        </li>
+                                        <li class="list-group-item on-off">
+                                            <i class="far fa-bell" aria-hidden="true"></i>
+                                            <span th:text="#{notifications.new_topic_notification}">Be alerted when a proposed topic has been published</span>
+                                            <label for="notifyMessageByEmail" class="ml-1 float-right" th:text="#{notifications.on}">On</label>
+                                            <label class="switch float-right">
+                                                <input aria-label id="notifyMessageByEmail" th:checked="${notifyMessageByEmail}" type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <label for="notifyMessageByEmail" class="mr-1 float-right" th:text="#{notifications.off}">Off</label>
+                                        </li>
+                                        <!--li class="list-group-item">
+                                            <i class="far fa-bell"></i>
+                                            <span th:text="#{notifications.all_notifications}">Activate all notifications</span>
+                                            <label class="ml-1 float-right" th:text="#{notifications.on}">On</label>
+                                            <label class="switch float-right">
+                                                <input id="notifyAll" th:checked="${notifyAll}" type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <label class="mr-1 float-right" th:text="#{notifications.off}">Off</label>
+                                        </li-->
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /content area -->
+            <!-- /content area -->
+            <!-- /content area -->
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+    </main>
+
+</div>
+<!-- /page content -->
+
+<!-- modal pop up delete-notification start-->
+<div class="modal fade" id="delete-notification">
+    <div class="modal-dialog modal-sm" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+            <div class="col-12 p-0 m-0">
+                <div class="card border-2 p-0 m-0">
+                    <div class="card-body text-center w-100">
+                        <div class="modal-body text-center">
+                            <h5 class="col-12" th:text="#{notifications.confirm}">Are you sure you want delete this
+                                notification ?</h5>
+                        </div>
+                        <div class="modal-footer column">
+                            <button tabindex="1" class="btn btn-primary col-6 first-focusable-element" data-dismiss="modal" id="delete-notif" type="submit" th:text="#{yes}">
+                            </button>
+                            <button class="btn btn-danger col-6" data-dismiss="modal" type="button" th:text="#{no}">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- modal pop up delete-notification end -->
+
+<!-- modal pop up delete-notificationSuccess start-->
+<div class="modal fade" id="delete-notificationSuccess" role="dialog" tabindex="-1" aria-modal="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="col-12 p-0 m-0">
+                <div class="card border-2 p-0 m-0">
+                    <div class="card-body text-center w-100">
+                        <div class="card-header text-center">
+                            <div class="modal-header row justify-content-center">
+                                <i class="fa fa-check fa-2x bg-green-400 mt-2 text-white border-radius-10" aria-hidden="true"></i>
+                            </div>
+                            <div class="modal-body">
+                                <span class="font-weight-bold" th:text="#{notifications.deleted}">The notifications is delete</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button class="btn btn-primary col-6 first-focusable-element" data-dismiss="modal" type="button" th:text="#{close}">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- modal pop up delete-notificationSuccess end -->
+
+<script src="../static/assets/js/notifications.js" th:src="@{/assets/js/notifications.js}"></script>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<th:block th:fragment="step3" xmlns:th="http://www.thymeleaf.org">
+
+    <!-- AUTO SHOW ON LOAD  <div class="modal fade autoload" id="congratulation" th:id="${'congratulation_' + display}"> -->
+    <div class="modal fade" id="congratulation" th:id="${'congratulation_' + display}">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content bg-gradient">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                      <span aria-hidden="true">&times;</span>
+                      <span class="sr-only" th:text="#{close}">Close</span></button>
+                </div>
+                <div class="modal-body text-center">
+
+
+                    <!-- Display this on loadpage for user -->
+                    <!-- <div sec:authorize="hasRole('USER')"> -->
+                    <th:block th:if="${display=='user'}">
+                        <h3 class="modal-title text-white">Great job, your idea is now visible to service providers
+                            !</h3>
+                        <img alt="Topic Chatboard" class="w-50 my-3"
+                             src="../static/images/chatboard-step-3.png" th:src="@{/images/chatboard-step-3.png}">
+                        <p>You will be notified when a service provider agrees to develop the idea into a solution. You
+                            will the have the possibility to help co-design and test the service being developed, so
+                            what is produced really matches your needs.</p>
+                    </th:block>
+
+
+                    <!-- Display this on loadpage for provider -->
+                    <th:block th:if="${display=='provider'}">
+                        <h3 class="modal-title text-white">This idea put forward is ready for implementation !</h3>
+                        <img alt="Topic Chatboard" class="w-50 my-3"
+                             src="../static/images/chatboard-step-3-provider.png" th:src="@{/images/chatboard-step-3-provider.png}">
+                        <p>Register your interest, our moderators will get back to you shortly to engage the
+                            process.</p>
+                    </th:block>
+
+
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> -->
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+
+<!-- <th:block th:fragment="user_profile">
+<div class="modal fade" id="view-profile" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center p-3">
+       		<div class="container">
+       			<div class="row">
+				
+       			<div class="col-4">
+					<img class="img-fluid rounded-circle" src="../static/images/demo/face7.jpg" th:src="@{/images/demo/face7.jpg}" width="125" height="125" alt="">
+					<h5 class="font-weight-bold mb-2 text-warning-400">Julia365</h5>
+					<button class="btn btn-primary border-1 my-2 p-1 w-100" href="#">Send a message<i class="fa fa-envelope-o ml-md-2"></i></button>
+				</div>
+       			
+				<div class="col-8">
+					<span class="d-block"><i class="fa fa-female mr-md-2"></i>Senior</span>
+					<span class="d-block"><i class="fa fa-home mr-md-2"></i>Budapest</span>
+					<span class="d-block"><i class="fa fa-flag-o mr-md-2"></i>English</span>
+					<span class="d-block">Membre since Septembre 04th 2019</span>
+					<hr>				
+					<ul class="no-dot p-0 m-0 mt-2">
+						<li class="list-item">Topics she has created : 5</li>
+						<li class="list-item">Topics she follows : 7</li>
+						<li class="list-item">Topics she contributes : 1</li>
+					</ul>
+						
+
+						
+				</div>					
+			</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</th:block> -->

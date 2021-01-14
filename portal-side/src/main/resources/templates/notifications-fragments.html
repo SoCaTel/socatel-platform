@@ -1,0 +1,392 @@
+<th:block th:fragment="content-list-group-item" xmlns:th="http://www.thymeleaf.org">
+
+    <button class="float-right btn btn-danger mr-1" onclick="perform_post_call('/moderator/ban-user/' + this.getAttribute('data-username'));"
+            th:data-username="${report.reported.username}"
+            th:text="#{moderator.ban_user}">Ban User
+    </button>
+    <button class="float-right btn btn-warning mr-1"
+            th:onclick="'javascript:perform_post_call(\'/moderator/mask/' + ${report.id} + '\')'"
+            th:text="#{moderator.mask_content}">Mask content
+    </button>
+
+    <span th:text="${report.getContributionText()}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero ex magni illo rem, a eaque consequatur aperiam praesentium.</span>
+
+</th:block>
+
+
+<th:block th:fragment="topic-list-group-item" xmlns:th="http://www.thymeleaf.org">
+
+
+    <button class="float-right btn btn-danger mr-1"
+            th:onclick="'javascript:perform_post_call(\'/moderator/reject-group/' + ${group.id} + '\')'"
+            th:text="#{moderator.reject}">Reject
+    </button>
+    <button class="float-right btn btn-success mr-1"
+            th:onclick="'javascript:perform_post_call(\'/moderator/next-group-step/' + ${group.id} + '\')'"
+            th:text="#{moderator.accept}">Accept
+    </button>
+
+    <h4 th:text="${group.name}">Lorem ipsum dolor sit amet</h4>
+    <p class="my-1 description" th:text="${group.description}">
+        Essential for older persons that cannot buy food or cook, food delivery services are not yet widespread and
+        equally efficient. A number of state-sponsored and private services exist nowadays, yet they only serve areas
+        with high-density and have constraints as to the range of food served and delivery times. The HSE is looking to
+        gather feedback from the various stakeholders involved in food delivery, to understand the possible solutions.
+    </p>
+
+
+</th:block>
+
+
+<th:block th:fragment="topic-list-process" xmlns:th="http://www.thymeleaf.org">
+
+    <th:block th:if="${T(Integer).parseInt(group.getStepNumber()) < 5}">
+        <th:block th:if="${T(Integer).parseInt(group.getStepNumber()) == 1}">
+            <button class="float-right btn btn-success mr-1"
+                    th:if="${group.hasIdea()}"
+                    th:onclick="'javascript:perform_post_call(\'/moderator/next-group-step/' + ${group.id} + '\')'"
+                    th:text="#{moderator.next_step}">NEXT STEP
+            </button>
+            <button class="float-right btn btn-secondary mr-1"
+                    th:if="${!group.hasIdea()}"
+                    th:text="#{moderator.no_ideas}" disabled>NEXT STEP
+            </button>
+        </th:block>
+        <th:block th:if="${T(Integer).parseInt(group.getStepNumber()) == 4}">
+            <button class="float-right btn btn-secondary mr-1"
+                    th:if="${!group.hasOrganisation() && !group.hasProposals()}"
+                    th:text="#{moderator.no_organisations}" disabled>NEXT STEP
+            </button>
+            <button class="float-right btn btn-success mr-1"
+                    th:if="${!group.hasOrganisation() && group.hasProposals()}"
+                    th:onclick="'javascript:perform_post_call(\'/moderator/next-group-step/' + ${group.id} + '\')'"
+                    th:text="#{moderator.choose_organisation}">NEXT STEP
+            </button>
+            <button class="float-right btn btn-success mr-1"
+                    th:if="${group.hasOrganisation()}"
+                    th:onclick="'javascript:perform_post_call(\'/moderator/next-group-step/' + ${group.id} + '\')'"
+                    th:text="#{moderator.next_step}">NEXT STEP
+            </button>
+        </th:block>
+        <th:block th:if="${T(Integer).parseInt(group.getStepNumber()) == 2 || T(Integer).parseInt(group.getStepNumber()) == 3}">
+            <button class="float-right btn btn-success mr-1"
+                    th:onclick="'javascript:perform_post_call(\'/moderator/next-group-step/' + ${group.id} + '\')'"
+                    th:text="#{moderator.next_step}">NEXT STEP
+            </button>
+        </th:block>
+    </th:block>
+
+    <button class="float-right btn btn-danger mr-1"
+            th:if="${T(Integer).parseInt(group.getStepNumber()) > 1}"
+            th:onclick="'javascript:perform_post_call(\'/moderator/previous-group-step/' + ${group.id} + '\')'" th:text="${T(Integer).parseInt(group.getStepNumber()) == 4 && group.hasOrganisation()}?#{moderator.vote_again}:#{moderator.previous_step}">PREVIOUS STEP
+    </button>
+
+    <button class="float-right btn btn-warning mr-1"
+            th:if="${T(Integer).parseInt(group.getStepNumber()) < 3}"
+            th:onclick="'javascript:perform_post_call(\'/moderator/extend-group-step/' + ${group.id} + '\')'" th:text="#{moderator.extend_step}">EXTEND STEP
+    </button>
+    
+    <a class="float-right btn btn-primary mr-1" th:href="@{/topic.html/{id}(id=${group.id})}" ><span th:text="#{view}">View</span> <span class="sr-only" th:text="${group.name}"></span></a>
+    
+    <h4 class="h6">
+			<span class="badge border-1 border-danger text-danger">
+				<span th:text="#{topic.step}">STEP</span> <span th:text="${group.getStepNumber()}">1</span>
+			</span>
+        <span th:text="${group.name}">Lorem ipsum dolor sit amet</span>
+        - <span class="text-muted small"><span th:text="#{moderator.topic.end}">This steps ends</span> <span
+            th:text="${group.fancyNextStepTimestamp()}">5 days left</span></span>
+    </h4>
+
+</th:block>
+
+<th:block th:fragment="topic-list-col" xmlns:th="http://www.thymeleaf.org">
+    <div class="col-xl-6 col-12">
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h4 class="text-uppercase h6 my-1" th:text="${title}">Insight title</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group" th:if="${list != null}" th:classappend="${paginate}">
+                    <li class="list-group-item m-1 paginate-item" th:each="group : ${list}">
+                        <th:block th:replace="notifications-fragments :: topic-list-insight"></th:block>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="topic-list-insight" xmlns:th="http://www.thymeleaf.org">
+
+    <a class="float-right btn btn-primary mr-1" th:href="@{/topic.html/{id}(id=${group.id})}"><span th:text="#{view}">View</span> <span class="sr-only" th:text="${group.name}"></span></a>
+    <h5 class="h6">
+		<span class="badge border-1 border-danger text-danger">
+			<span th:text="#{topic.step}">STEP</span> <span th:text="${group.getStepNumber()}">1</span>
+		</span>
+        <span th:text="${group.name}">Lorem ipsum dolor sit amet</span>
+    </h5>
+
+</th:block>
+
+<th:block th:fragment="service-list-col" xmlns:th="http://www.thymeleaf.org">
+    <div class="col-xl-6 col-12">
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h4 class="text-uppercase h6 my-1" th:text="${title}">Insight title</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group paginate-service-list">
+                    <li class="list-group-item m-1 paginate-item" th:each="service : ${list}">
+                        <th:block th:replace="notifications-fragments :: service-list-insight"></th:block>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="service-list-insight" xmlns:th="http://www.thymeleaf.org">
+    <a class="float-right" target="_blank" th:href="@{service.website==null?'#':${service.website}}">
+        <i class="fas fa-link" aria-hidden="true"></i>
+        <span class="sr-only" th:text="#{aria_label.service_website}"></span>
+    </a>
+    <div class="font-weight-semibold mr-1">
+        <a class="text-info" target="_blank"
+           th:href="@{service.website==null?'#':${service.website}}"
+           th:text="${service.name}">Delivery on wheels</a>
+    </div>
+    <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
+        <li class="list-inline-item">
+            <span th:text="#{document.by}">By</span>
+            <a target="_blank" th:href="@{service.website==null?'#':${service.website}}">
+                <span th:text="${service.organisation.name}">Wheelys</span>
+            </a>
+        </li>
+    </ul>
+</th:block>
+
+<th:block th:fragment="content-list-service-item" xmlns:th="http://www.thymeleaf.org">
+    <div class="col-10">
+        <h4 data-target="#collapseTopic" data-toggle="collapse" th:attr="data-target='#collapseService'+${service.id}">
+            <span th:text="${service.name}">Lorem ipsum dolor sit amet</span>
+
+            <i class="fas fa-chevron-down pointer text-primary" aria-hidden="true"></i>
+            <span class="sr-only" th:text="#{aria_label.collapse_service}"></span>
+
+        </h4>
+        <!--span class="badge text-primary" th:each="theme : ${service.themes}"># <span th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">Wellness</span></span-->
+        <hr>
+
+        <div class="collapse table-inbox-description font-weight-normal" id="collapseService"
+             th:id="'collapseService'+${service.id}">
+            <p class="my-1 description" th:text="${service.getDescription(lang_code)}">
+                Essential for older persons that cannot buy food or cook, food delivery services are not yet widespread
+                and equally efficient. A number of state-sponsored and private services exist nowadays, yet they only
+                serve areas with high-density and have constraints as to the range of food served and delivery times.
+                The HSE is looking to gather feedback from the various stakeholders involved in food delivery, to
+                understand the possible solutions.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-2 text-right align-text-top">
+        <button class="btn btn-success mr-1"
+                th:onclick="'javascript:perform_post_call(\'/moderator/accept-service/' + ${service.id} + '\')'"
+                th:text="#{moderator.accept}">Accept
+        </button>
+        <button class="btn btn-danger mr-1"
+                th:onclick="'javascript:perform_post_call(\'/moderator/reject-service/' + ${service.id} + '\')'"
+                th:text="#{moderator.reject}">Reject
+        </button>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="user_actions" xmlns:th="http://www.thymeleaf.org">
+    <div class="modal fade" th:id="'user_modal' + ${user_info.id}">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-4">
+                                <img th:alt="#{messages.your_avatar}" class="img-fluid rounded-circle"
+                                     height="125" src="../static/images/demo/face7.jpg" th:src="@{/show-image/{id}(id=${user_info.picture.id})}"
+                                     width="125">
+                                <h5 class="font-weight-bold mb-2 text-warning-400" th:text="${user_info.username}">
+                                    Julia365</h5>
+                                <button class="btn btn-warning first-focusable-element text-white border-1 my-2 p-1 w-100" href="#">
+                                    <i class="fa fa-envelope-o ml-md-2" aria-hidden="true"></i>
+                                    <span th:text="#{user_modal.send_message}">Send a message</span>
+                                </button>
+                            </div>
+
+                            <div class="col-8">
+                                <h2 th:text="#{user_modal.banned_user}">This user has been banned</h2>
+                                <span class="d-block"><i class="fa fa-female mr-md-2" aria-hidden="true"></i><span
+                                        th:text="#{${user_info.profile.toString().replaceAll(' ', '_').toLowerCase()}}">Senior</span></span>
+                                <span class="d-block"><i class="fa fa-home mr-md-2" aria-hidden="true"></i><span
+                                        th:text="#{${user_info.locality.name.replaceAll(' ', '_').toLowerCase()}}">Budapest</span></span>
+                                <span class="d-block"><i class="fa fa-flag-o mr-md-2" aria-hidden="true"></i><span
+                                        th:text="#{${user_info.firstLang.name.replaceAll(' ', '_').toLowerCase()}}">English</span></span>
+                                <span class="d-block"><span
+                                        th:text="#{user_modal.member_since}">Member since</span> <span
+                                        th:text="${user_info.createTime.toString()}">September 04th 2019</span></span>
+                                <span class="d-block">Banned on June 15th, 2019</span>
+                                <span class="d-block"><a class="btn btn-danger my-3"
+                                                         href="#"
+                                                         th:href="'javascript:perform_post_call(\'/moderator/unban-user/' + ${user_info.username} + '\');'"
+                                                         ><span th:text="#{user_modal.unban}">UNBAN</span> <span class="sr-only" th:text="${user_info.username}"></span></a></span>
+                                <hr>
+
+                                <ul class="no-dot p-0 m-0 mt-2">
+                                    <li class="list-item"><span th:text="#{user_modal.topics_created}">Topics she has created</span>
+                                        : <span th:text="${user_info.countTopicsCreated()}">5</span></li>
+                                    <li class="list-item"><span th:text="#{user_modal.topics_subscribed}">Topics she is subscribed to</span>
+                                        : <span th:text="${user_info.countTopicsSubscribed()}">7</span></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="modal-update-service" xmlns:th="http://www.thymeleaf.org">
+    <div class="modal fade" th:id="'modal-update-service'+${service.id}">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only" th:text="#{close}">Close</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label"
+                               th:text="#{organisation.service_name}">Service</label>
+                        <div class="col-sm-9">
+                            <p class="form-control" th:text="${service.name}" style="height:100%" th:id="'service'+${service.id}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" ><span
+                                th:text="#{organisation.service_native_description}">Description</span><br>
+                        </label>
+                        <div class="col-sm-9">
+                            <p th:text="${service.nativeDescription}" class="form-control" style="height:100%" th:id="'native-description'+${service.id}"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" ><span
+                                th:text="#{organisation.service_description}">Description</span><br>
+                        </label>
+                        <div class="col-sm-9">
+                            <p th:text="${service.description}" class="form-control" style="height:100%" th:id="'description'+${service.id}"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label"
+                               th:text="#{organisation.website}">Website</label>
+                        <div class="col-sm-9">
+                            <p class="form-control" th:id="'website'+${service.id}" style="height:100%" th:text="${service.website}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-3" th:text="#{login.location}">Location</label>
+                        <div class="col-lg-9">
+                            <p class="form-control" th:text="#{${service.locality.name.replaceAll(' ', '_').toLowerCase()}}">
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-3"
+                               th:text="#{organisation.language}">Language</label>
+                        <div class="col-lg-9">
+                            <p class="form-control" th:text="#{${service.language.name.replaceAll(' ', '_').toLowerCase()}}">
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-3"><span
+                                th:text="#{organisation.themes}">Themes list</span>
+                            <!-- <i class="fa fa-question-circle mx-1"
+                              data-toggle="popover"
+                              data-trigger="hover"
+                              title=""
+                              data-placement="right"
+                              th:data-content="#{profile.interests.description}"></i> -->
+                        </label>
+                        <div class="col-lg-9">
+
+                            <div class="border border-primary p-2">
+
+                                <a th:aria-controls="'collapsePOI'+${service.id}" aria-expanded="false"
+                                   class="text-primary" data-toggle="collapse"
+                                   th:href="'#collapsePOI'+${service.id}">
+                                    <!-- <span th:text="#{profile.interests.collapse}">Choose your points of interest</span> -->
+                                    <span th:text="#{organisation.themes}">Choose among these thematics for this new service</span>
+                                    <i class="icon-arrow-down15 pointer text-primary float-right" aria-hidden="true"></i>
+                                </a>
+
+                                <div class="collapse mt-3" th:id="'collapsePOI'+${service.id}">
+
+
+                                    <ul class="no-gutters">
+
+                                        <li class="list-unstyled"
+                                            th:each="theme: ${service.themes}">
+                                            #
+                                            <label class="form-check-label"
+                                                   th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">
+                                            </label>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div> <!-- row border -->
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="hashtag"
+                               th:text="#{organisation.hashtag}">Twitter hashtag</label>
+                        <div class="col-sm-9">
+                            <p class="form-control" style="height:100%" id="hashtag" th:text="${service.hashtag}">
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal update -->
+</th:block>

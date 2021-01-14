@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title='SoCaTel')">
+</th:block>
+
+
+<body class="index" style="overflow-x: hidden;">
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='index')"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+
+<main>
+<div class="row title" id="content" tabindex="-1">
+    <div class="container bg-white pt-4 mb-1">
+        <div class="col text-center">
+            <h1 class="font-weight-bold" th:text="#{main.title}">A co-creation platform</h1>
+            <h2 class="text-pink" th:text="#{main.subtitle}">for better long term care services</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container">
+        <img th:alt="#{index_image}" class="m-auto img-fluid d-block"
+             src="../static/images/intro-bg.png" th:src="@{/images/{img_name}(img_name=${image_name})}">
+    </div>
+</div>
+
+<!-- JOIN THE COMMUNITY Section -->
+<div class="row">
+    <div class="container">
+        <div class="col wow fadeInUp order-1 order-lg-2 text-center pt-3">
+            <h3><a class="btn gradient" style="border: 0;" href="/topic-find" th:text="#{main.explore_topics}">Explore now</a></h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container">
+        <div class="row my-3">
+            <div class="col" style="background-image: url('/images/landing_page/HOME_1.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: right; height: 250px">
+                <!--img src="../static/images/landing_page/HOME_1.jpg" class="float-right" th:src="@{/images/landing_page/HOME_1.jpg}" style="height: 200px"-->
+            </div>
+            <div class="col my-auto">
+                <p class="h3 text-pink" style="text-align: left" th:text="#{main.co_creation.step1.title}">Explore and create</p>
+                <p class="h5" th:text="#{main.co_creation.step1.text1}">Topics that are important for you.</p>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col my-auto">
+                <p class="h3 text-pink" style="text-align: right" th:text="#{main.co_creation.step2.title}">Share</p>
+                <p class="h5" style="text-align: right" th:text="#{main.co_creation.step2.text1}">Express your opinion.</p>
+            </div>
+            <div class="col" style="background-image: url('/images/landing_page/HOME_2.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: left; height: 400px">
+                <!--img src="../static/images/landing_page/HOME_1.jpg" class="float-right" th:src="@{/images/landing_page/HOME_1.jpg}" style="height: 200px"-->
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col" style="background-image: url('/images/landing_page/HOME_3.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: right; height: 300px">
+                <!--img src="../static/images/landing_page/HOME_1.jpg" class="float-right" th:src="@{/images/landing_page/HOME_1.jpg}" style="height: 200px"-->
+            </div>
+            <div class="col my-auto">
+                <p class="h3 text-pink" style="text-align: left" th:text="#{main.co_creation.step3.title}">Create together</p>
+                <p class="h5" th:text="#{main.co_creation.step3.text1}">Create a new service.</p>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col my-auto">
+                <p class="h3 text-pink" style="text-align: right" th:text="#{main.co_creation.step4.title}">Work with service providers</p>
+                <p class="h5" style="text-align: right" th:text="#{main.co_creation.step4.text1}">Create together.</p>
+            </div>
+            <div class="col" style="background-image: url('/images/landing_page/HOME_4.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: left; height: 250px">
+                <!--img src="../static/images/landing_page/HOME_1.jpg" class="float-right" th:src="@{/images/landing_page/HOME_1.jpg}" style="height: 200px"-->
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col" style="background-image: url('/images/landing_page/HOME_5.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: right; height: 300px">
+                <!--img src="../static/images/landing_page/HOME_1.jpg" class="float-right" th:src="@{/images/landing_page/HOME_1.jpg}" style="height: 200px"-->
+            </div>
+            <div class="col my-auto">
+                <p class="h3 text-pink" style="text-align: left" th:text="#{main.co_creation.step5.title}">Ready!</p>
+                <p class="h5" th:text="#{main.co_creation.step5.text}">The service is available for everyone!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container">
+        <div class="col wow fadeInUp order-1 order-lg-2 text-center pt-3">
+            <h3><a class="btn gradient" style="border: 0;" href="/registration" th:text="#{main.start_now}">Start now</a></h3>
+        </div>
+    </div>
+</div>
+
+<!--==========================
+ Services Section
+============================-->
+<section id="services" th:if="${!recent_groups.isEmpty()}">
+
+    <header class="section-header">
+        <h3 th:text="#{main.popular_topics}">The 4 most popular topics being discussed</h3>
+    </header>
+
+    <div class="row">
+
+        <div class="col-sm-8 offset-sm-2">
+            <div class="topic" th:each="group, iter : ${recent_groups}">
+                <div th:replace="topic-fragment :: home(group=${group}, iter=${iter})"></div>
+            </div>
+        </div>
+    </div>
+</section><!-- #services -->
+
+
+<section class="wow fadeIn" id="why-us">
+    <div class="container">
+
+        <header class="section-header my-3">
+            <h3 th:text="#{main.header_topics}">SoCaTel in numbers</h3>
+        </header>
+
+        <div class="row counters">
+
+            <div class="col-lg-3 col-6 text-center">
+                <span data-toggle="counter-up" th:text="${num_topics}">421</span>
+                <p th:text="#{main.topics}">Topics</p>
+            </div>
+
+            <div class="col-lg-3 col-6 text-center">
+                <span data-toggle="counter-up" th:text="${num_users}">221</span>
+                <p th:text="#{main.users}">Users</p>
+            </div>
+
+            <div class="col-lg-3 col-6 text-center">
+                <span data-toggle="counter-up" th:text="${num_messages}">8,364</span>
+                <p th:text="#{main.messages}">Messages</p>
+            </div>
+
+            <div class="col-lg-3 col-6 text-center">
+                <span data-toggle="counter-up" th:text="${num_ideas}">750</span>
+                <p th:text="#{main.ideas}">Ideas</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!--==========================
+  PARTNERS Section
+============================-->
+<div class="container py-3">
+    <div id="clients">
+
+        <div class="section-header my-3">
+            <h3 th:text="#{main.partners}">Project partners</h3>
+        </div>
+
+        <div class="row">
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.urv.cat/en/" target="_blank"><img th:alt="#{dashboard.urv}"
+                                                                      class="img-fluid w-100 h-100"
+                                                                      src="../static/images/clients/client-1.jpg" th:src="@{/images/clients/client-1.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.tuni.fi/en" target="_blank"><img th:alt="#{dashboard.tuni}"
+                                                                      class="img-fluid w-100 h-100"
+                                                                      src="../static/images/clients/client-2.jpg" th:src="@{/images/clients/client-2.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.ozwillo.com/" target="_blank"><img th:alt="#{dashboard.ozw}"
+                                                                        class="img-fluid w-100 h-100"
+                                                                        src="../static/images/clients/client-3.jpg" th:src="@{/images/clients/client-3.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://fontys.edu/" target="_blank"><img th:alt="#{dashboard.fontys}"
+                                                                   class="img-fluid w-100 h-100"
+                                                                   src="../static/images/clients/client-4.jpg" th:src="@{/images/clients/client-4.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.everis.com/global/en" target="_blank"><img th:alt="#{dashboard.everis}"
+                                                                                class="img-fluid w-100 h-100"
+                                                                                src="../static/images/clients/client-13.jpg" th:src="@{/images/clients/client-13.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="http://gff-szeged.hu/" target="_blank"><img th:alt="#{dashboard.gff}"
+                                                                     class="img-fluid w-100 h-100"
+                                                                     src="../static/images/clients/client-6.jpg" th:src="@{/images/clients/client-6.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.tcd.ie/" target="_blank"><img th:alt="#{dashboard.tcd}"
+                                                                   class="img-fluid w-100 h-100"
+                                                                   src="../static/images/clients/client-7.jpg" th:src="@{/images/clients/client-7.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.blauadvisors.com/" target="_blank"><img th:alt="#{dashboard.blau}"
+                                                                            class="img-fluid w-100 h-100"
+                                                                            src="../static/images/clients/client-8.jpg" th:src="@{/images/clients/client-8.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.cyric.eu/" target="_blank"><img th:alt="#{dashboard.cyric}"
+                                                                     class="img-fluid w-100 h-100"
+                                                                     src="../static/images/clients/client-9.jpg" th:src="@{/images/clients/client-9.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.vilanova.cat/" target="_blank"><img th:alt="#{dashboard.vila}"
+                                                                        class="img-fluid w-100 h-100"
+                                                                        src="../static/images/clients/client-10.jpg" th:src="@{/images/clients/client-10.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.tampere.fi/" target="_blank"><img th:alt="#{dashboard.tk}"
+                                                                       class="img-fluid w-100 h-100"
+                                                                       src="../static/images/clients/client-11.jpg" th:src="@{/images/clients/client-11.jpg}"></a>
+            </div>
+
+            <div class="col-6 col-sm-3 p-4">
+                <a href="https://www.hse.ie/eng/" target="_blank"><img th:alt="#{dashboard.hse}"
+                                                                       class="img-fluid w-100 h-100"
+                                                                       src="../static/images/clients/client-12.jpg" th:src="@{/images/clients/client-12.jpg}"></a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!--==========================
+  Contact Section
+============================-->
+<div class="container-fluid bg-light" id="contact">
+    <div class="container py-3">
+
+
+        <div class="section-header my-3">
+            <h3 th:text="#{main.contact}">Contact Us</h3>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-md-6 py-5" style="background-image: url('/images/picto-contact.png'); background-size: 300px; background-repeat: no-repeat; background-position: center; height: 300px;">
+                <!--img class="img-fluid w-25 mb-4" src="../static/images/picto-contact.png"
+                     th:src="@{/images/picto-contact.png}"-->
+            </div>
+
+            <div class="col-12 col-md-6 p-5 text-center">
+                <h4 th:text="#{main.contact.title}">Have any questions ? We’d love to hear from you.</h4>
+                <p>
+                    <span th:text="#{main.contact.text1}">If you are a registered user and need assistance, visit our</span>
+                    <a class="text-primary" href="faq.html" style="text-decoration: underline;" th:text="#{main.contact.text2}">
+                        help page
+                    </a>
+                    <span th:text="#{main.contact.text3}">or contact us by</span>
+                    <a class="text-primary" th:text="#{email}" href="mailto:support@socatel.eu" style="text-decoration: underline;">
+                        email
+                    </a>.
+                    <span th:text="#{main.contact.text4}">Our support team...</span>
+                </p>
+            </div>
+
+        </div>
+
+    </div> <!-- container -->
+</div>
+</main>
+
+<th:block th:replace="footer-fragment :: footer"></th:block>
+
+</body>
+</html>

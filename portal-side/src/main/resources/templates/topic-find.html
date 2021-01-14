@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=#{explore})">
+</th:block>
+
+<body class="bg-white">
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='explore')"></th:block>
+
+
+
+<!-- <div class="page-content">
+
+    <div class="content-wrapper">
+
+        <div class="content"> -->
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+    <div class="container" id="content" tabindex="-1">
+        <!-- <div class="card mt-4">
+            <div class="card-body"> -->
+
+
+        <a id="top-paginate"></a>
+        <div class="row justify-content-center title-row mb-4">
+            <div class="col-11 col-md-10 px-0 p-md-2">
+
+                <h1 class="mb-1" th:text="#{find_topic.title}">Explore what others are discussing !</h1>
+                <h2 class="mb-5 text-pink" th:text="#{find_topic.subtitle}">Find topics relevant to you
+                    and contribute your ideas with profesionals !</h2>
+
+                <form class="my-4" method="get" th:action="@{/topic-find}">
+
+                    <div class="input-group input-group-lg" role="search">
+                        <label class="input-group-prepend mb-0" for="query">
+                            <span class="input-group-text"><i class="fas fa-search text-muted"></i></span>
+                            <span class="sr-only" th:text="#{find_topic.search}"></span>
+                        </label>
+
+                        <input id="query" class="form-control" name="query"
+                            placeholder="Example: Quality food delivery" th:placeholder="#{find_topic.example}"
+                            th:value="${param?.query != null ? param.query : ''}" type="text">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-lg no-margin" th:text="#{find_topic.search}" type="submit">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <!-- <div class="input-group mb-3 col-md-8 offset-md-2">
+                    <div class="form-group-feedback form-group-feedback-left">
+                        <input th:value="${query}" name="query" class="form-control form-control-lg alpha-grey" placeholder="Example: Quality food delivery" th:placeholder="#{find_topic.example}" type="text">
+                        <div class="form-control-feedback form-control-feedback-lg">
+                            <i class="fas fa-search text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary btn-lg" th:text="#{find_topic.search}">Search</button>
+                    </div>
+                </div> -->
+
+
+                <!------- ALERT MESSAGE IF NO RESULTS ----------->
+                <div class="alert alert-info my-4" th:if="${groups.size() == 0}">
+                    <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> -->
+
+                    <strong th:text="#{find_topic.no_comments}">There are currently no ongoing discussions within your
+                        locality.</strong>
+
+                    <th:block sec:authorize="isAuthenticated()">
+                        <br><span th:text="#{find_topic.no_comments2}">Click on</span> <a class="btn btn-primary"
+                                                                                        href="topic-create"
+                                                                                        th:href="@{/topic-create}"
+                                                                                        th:text="#{create}">Create</a>
+                        <span th:text="#{find_topic.no_comments3}">to propose topics relevant to you, others will soon join you to share their personal experience.</span>
+                    </th:block>
+
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <br><span th:text="#{find_topic.no_comments4}">Please</span> <a class="btn btn-sm btn-primary"
+                                                                                        href="login" th:href="@{/login}"
+                                                                                        th:text="#{main.signin}">sign in</a>
+                        <span th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-sm btn-white-pink ml-1"
+                                                                                href="registration.html"
+                                                                                th:href="@{/registration}"
+                                                                                th:text="#{register}">register</a> <span
+                            th:text="#{find_topic.no_comments6}">and you will be able to create and propose topics relevant to you , others will then join you to share their personal experience.</span>
+                    </th:block>
+
+                </div>
+
+
+                <!------- FILTER RESULTS TO DISPLAY ONLY IF NB RESULTS > 0  ----------->
+                <div class="text-right">
+
+                    <button class="float-left btn btn-primary" data-target="#view-services" data-toggle="modal"
+                    th:if="${services != null && !services.isEmpty()}">
+                        <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
+                        <span th:text="#{find_topic.services_available}">Click here to see services already available in your area</span>
+                    </button>
+
+                    <div class="d-inline-block position-relative">
+                        <a aria-controls="collapsePOI" aria-expanded="false" class="btn btn-primary text-white"
+                        data-toggle="collapse" href="#collapsePOI" style="min-width:200px">
+                            <i class="fas fa-filter mr-2" aria-hidden="true"></i>
+                            <span th:text="#{find_topic.filter}">Choose your points of interest</span>
+                        </a>
+
+                        <div class="collapse position-absolute border-1 border-primary bg-white p-1 w-100" style="z-index: 999" id="collapsePOI">
+       
+                            <ul class="text-left filter-by-themes">
+
+                                <li class="list-unstyled" th:each="theme: ${themes}">
+                                    <input th:id="'theme-'+${theme.id}" class="form-check-input"
+                                        th:value="${theme.id}"
+                                        type="checkbox"/>
+                                    <label class="form-check-label"
+                                        th:for="'theme-'+${theme.id}"
+                                        th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">
+                                    </label>
+                                </li>
+
+                            </ul>
+
+                            <button id="filter-button" data-filter="topics" th:text="#{find_topic.filter.button}" class="btn btn-primary w-100">Filter</button>
+
+                        </div>
+                    </div>
+
+                    <!--a href="#" onClick="document.location.href=addOrUpdateUrlSortParam('sorting_p',0);"><i class="fas fa-sort mr-2"></i> <span th:text="#{find_topic.sort_popularity}">Sort by popularity</span></a> |-->
+                    <a href="#" class="btn btn-primary" onClick="document.location.href=addOrUpdateUrlSortParam('sorting_d',3);">
+                        <i class="fas fa-sort mr-2" aria-hidden="true"></i>
+                        <span th:text="#{find_topic.sort_date}">Sort by date</span>
+                    </a>
+                </div>
+
+
+                <!------- MODAL --------->
+                <div class="modal fade" id="view-services">
+                    <div class="modal-dialog modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+                        <div class="modal-content modal-lg">
+                            <div class="modal-header">
+                                <button class="close text-primary" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only" th:text="#{close}">Close</span>
+                                </button>
+
+                            </div>
+                            <div class="modal-body px-3 pb-3 pt-0">
+
+                                <h2 class="text-left text-white bg-primary w-100 p-2" th:text="#{find_topic.existing_services}">
+                                    Existing Services related to the topic
+                                </h2>
+                                <ul class="list-group-item row">
+                                    <li class="list-group-item border-left col-12" th:each="service : ${services}">
+                                        <a class="float-right first-focusable-element" target="_blank"
+                                        th:href="@{service.webLink==null?'#':${service.webLink}}">
+                                            <span class="sr-only" th:text="#{aria_label.service_website}"></span>
+                                            <i class="fas fa-link" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="font-weight-semibold mr-1">
+                                            <a class="text-info" target="_blank"
+                                                th:href="@{service.webLink==null?'#':${service.webLink}}"
+                                                th:text="${service.title}">Delivery on wheels
+                                            </a>
+                                        </div>
+                                        <div class="font-weight-semibold mr-1" th:text="${service.getDescription()}">
+                                            Delivery on wheels
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="text-center my-3">
+                                    <strong><span th:text="#{find_topic.services_text1}">Not finding what you're looking for?</span>
+                                        <br><span th:text="#{find_topic.services_text2}">Explore and join others in one of the many discussions groups</span>,
+                                        <br><span th:text="#{find_topic.services_text3}">or create a new group for a topic relevant to you</span>
+                                    </strong>
+                                    <br>
+                                    <button class="btn btn-primary mt-3" data-dismiss="modal" th:text="#{find_topic.services_button}" type="button">
+                                        CO-CREATE
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!------- MODAL ----------->
+
+
+                <!------- TEMPLATE ROW FOR A SUSCRIBED TOPIC : POPOVER + ICON-HEART ARE SPECIFIC ----------->
+                <!------- POPOVER TRIGGERS AND HIDE VIA JS > see Header > custom.js ----------->
+
+                <div class="paginate-find">
+                    <div class="row paginate-item" th:each="group, iStat : ${groups}">
+                        <div class="col-12">
+                            <div class="topic"
+                                data-content="Click on the heart to subscribe to this group"
+                                data-placement="top"
+                                data-toggle="popover"
+                                data-trigger="hover"
+                                th:attr="data-group-id=${group.id}, data-relation=${relations?.get(iStat.index)?.getRelation()?.toString()}"
+                                th:data-content="${relations?.get(iStat.index) == null} ? '' : ''"
+                                th:title="${relations?.get(iStat.index) == null} ? #{find_topic.subscribe.subtitle} : #{find_topic.subscribed}"
+                                title="How to suscribe to this topic?">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-8 text-left order-sm-2 text-sm-right small">
+                                        <span class="mr-1 text-muted" th:if="${timeRemaining?.size() > iStat.index}"
+                                            th:text="${timeRemaining?.get(iStat.index)}">5 days left</span>
+                                        <span class="mr-1"><i class="fas fa-clock" aria-hidden="true"></i></span>
+                                        <span class="mr-1">|</span>
+                                        <span class="mr-1">
+                                            <a tabindex="0" class="text-primary font-weight-bold subscribe pointer"
+                                            sec:authorize="isAuthenticated()"
+                                            th:attr="data-group-id=${group.id}, data-action='subscribe'"
+                                            th:classappend="${relations?.get(iStat.index) == null} ? '' : 'd-none'">
+                                                <span th:text="#{subscribe}">Subscribe</span>
+                                            </a>
+
+                                            <a tabindex="0" class="text-primary font-weight-bold unsubscribe pointer"
+                                            sec:authorize="isAuthenticated()"
+                                            th:attr="data-group-id=${group.id}, data-action='unsubscribe'"
+                                            th:classappend="${relations?.get(iStat.index) != null && relations?.get(iStat.index).relation.equals(T(com.socatel.utils.enums.GroupUserRelationEnum).SUBSCRIBED)}?'' : 'd-none'">
+                                                <span th:text="#{unsubscribe}">Unsubscribe</span>
+                                            </a>
+
+                                            <i class="text-pink heart-icon" th:attr="data-group-id=${group.id}" aria-hidden="true"
+                                            th:classappend="${relations?.get(iStat.index) != null} ? 'fas fa-heart' : 'far fa-heart'"></i>
+                                            <span class="suscribers" th:attr="data-group-id=${group.id}"
+                                            th:text="${subscribers.get(iStat.index)}">81</span>
+                                        </span>
+
+
+                                        <!--<a tabindex="0" class="text-primary font-weight-bold subscribe pointer"
+                                        sec:authorize="isAuthenticated()"
+                                        th:attr="data-group-id=${group.id}, data-action='subscribe'"
+                                        th:classappend="${relations?.get(iStat.index) == null} ? '' : 'd-none'">
+                                            <span th:text="#{subscribe}">Subscribe</span>
+
+                                        </a>
+
+                                        <a class="text-primary font-weight-bold unsubscribe pointer"
+                                        sec:authorize="isAuthenticated()"
+                                        th:attr="data-group-id=${group.id}, data-action='unsubscribe'"
+                                        th:classappend="${relations?.get(iStat.index) != null && relations?.get(iStat.index).relation.equals(T(com.socatel.utils.enums.GroupUserRelationEnum).SUBSCRIBED)}?'' : 'd-none'">
+                                            <span th:text="#{unsubscribe}">Unsubscribe</span>
+                                        </a>
+
+
+                                        <i class="text-pink heart-icon" th:attr="data-group-id=${group.id}" aria-hidden="true"
+                                        th:classappend="${relations?.get(iStat.index) != null} ? 'fas fa-heart' : 'far fa-heart'"></i>
+                                        <span class="suscribers" th:attr="data-group-id=${group.id}"
+                                            th:text="${subscribers.get(iStat.index)}">81</span>-->
+
+                                    </div>
+
+                                    <div class="col-12 col-sm-4 text-left order-sm-1 mb-2 mb-sm-0">
+                                        <a th:href="@{/topic-find(query=${theme.name.replaceAll(' ', '_').toLowerCase()})}" th:each="theme : ${group.themes}"><span class="text-primary" > #<span
+                                                th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">Wellness</span></span></a>
+                                        <br>
+                                        <hr class="my-1 w-25 float-left">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col topic-subject" data-toggle="collapse" th:data-target="'#collapseTopic' + ${group.id}" th:text="${group.name}"> -->
+                                    <div class="col topic-subject" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">
+                                        <a th:href="@{/topic.html/{id}(id=${group.id})}" th:text="${group.name}">Fighting
+                                            loneliness at home</a>
+                                    </div>
+                                </div>
+
+                                <div class="my-1 description replace-links" th:text="${group.description}" th:attrappend="lang=${group.language.code != lang_code}?${group.language.code}">
+                                    Loneliness is a complex and usually unpleasant emotional response to isolation. Older
+                                    persons who are not in regular contact with the outside world and the community need
+                                    company to keep in touch with the outside world. Many services exist to help older
+                                    persons to socialise, but it is not always easy to access them. This topic requires a
+                                    thorough discussion on the challenges and solutions to enable social contact for older
+                                    persons and to identify who can help them fight isolation. [...]
+                                </div>
+
+                                <div class="row details my-2">
+                                    <div class="col" th:text="#{topic.step} + ' ' + ${group.getStepNumber()}">STEP 1</div>
+                                    <div class="col" th:text="#{${group.locality.name.replaceAll(' ', '_').toLowerCase()}}">Dublin, Ireland</div>
+                                    <div class="col" th:text="${group.fancyTimestamp()}">July 5Th, 2018</div>
+                                    <div class="col"><span th:text="#{find_topic.proposed}">Proposed by</span> <span
+                                            th:text="${group.initiator.isAnonymized()} ? #{anonymous} : ${group.initiator.username}">James542</span>
+                                    </div>
+                                    <div class="col"><span th:text="${participants.get(iStat.index)}">24</span>
+                                        <span th:if="${participants.get(iStat.index)}>1"
+                                            th:text="#{find_topic.participants}">Participants</span>
+                                        <span th:if="${participants.get(iStat.index)}==1"
+                                            th:text="#{find_topic.participant}">Participant</span>
+                                    </div>
+                                </div>
+
+                                <!-- <i data-toggle="collapse" th:data-target="'#collapseTopic' + ${group.id}" class="fas fa-chevron-down pointer text-primary"></i>
+                                <div class="collapse table-inbox-description font-weight-normal" th:id="'collapseTopic' + ${group.id}"> -->
+
+                                <!-- </div> -->
+                                <br>
+                                <a class="mt-1 btn btn-primary" th:href="@{/topic.html/{id}(id=${group.id})}">
+                                    <span th:text="#{view}">View</span>
+                                    <span class="sr-only" th:text="${group.name}"></span>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div> <!-- container -->
+<!-- /main content -->
+</main>
+
+<!-- 	</div>
+</div>
+</div> -->
+
+<!-- /page content -->
+<!-- 
+	Deprecated 09/09/19 
+	<script>
+	
+
+	function subscribe(id, sub) {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var subpath = sub ? "/subscribe" : "/unsubscribe";
+		$.ajax({
+			type:"POST",
+			url: window.location.origin + "/topic/" + id + subpath,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function(data){
+				location.reload();
+			},
+			error: function(request, status, error) {
+				alert(status);
+			}
+		});
+	}
+</script> -->
+<script>
+    function addOrUpdateUrlSortParam(param, value) {
+        var href = window.location.href;
+        var name = "sorting";
+        var regex = new RegExp("[&\\?]" + name + "=");
+        if (regex.test(href)) {
+            regex = new RegExp("([&\\?])" + name + "=\\d+");
+            if (param == "sorting_p") {
+                if ("0" == new URL(href).searchParams.get(name)) value = 1;
+                else value = 0;
+            } else if (param == "sorting_d") {
+                if ("2" == new URL(href).searchParams.get(name)) value = 3;
+                else value = 2
+            }
+            return href.replace(regex, "$1" + name + "=" + value);
+        } else {
+            if (href.indexOf("#") > -1) {
+                href = href.replace(href.substring(href.indexOf("#"), href.length), "");
+            }
+            if (href.indexOf("?") > -1)
+                return href + "&" + name + "=" + value;
+            else
+                return href + "?" + name + "=" + value;
+        }
+    }
+</script>
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

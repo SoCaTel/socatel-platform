@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{organisation})">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <title>SoCaTel</title>
+
+        <!-- CSRF -->
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <!-- /CSRF -->
+
+        <!-- Special chars -->
+        <!-- <meta http-equiv="content-type" content="text/html;charset=utf-8" /> -->
+        <!-- /Special chars -->
+
+        <!-- Global stylesheets -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"> -->
+        <!-- <link th:href="@{https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700}" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i"
+              rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i}"
+              type="text/css">
+
+
+        <script src="https://kit.fontawesome.com/16b12da617.js"
+                th:src="@{https://kit.fontawesome.com/16b12da617.js}"></script>
+
+        <!-- <link href="../static/global_assets/css/icons/icomoon/styles.css" th:href="@{/global_assets/css/icons/icomoon/styles.css}" rel="stylesheet" type="text/css">
+        <link href="../static/global_assets/css/icons/fontawesome/styles.min.css" th:href="@{/global_assets/css/icons/fontawesome/styles.min.css}" rel="stylesheet" type="text/css">
+         -->
+
+        <!-- <link href="../static/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"> -->
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              rel="stylesheet"
+              th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+        <link href="../static/assets/css/bootstrap_limitless.min.css"
+              rel="stylesheet" th:href="@{/assets/css/bootstrap_limitless.min.css}" type="text/css">
+
+
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+        <!-- <link href="../static/assets/css/colors.min.css" th:href="@{/assets/css/colors.min.css}" rel="stylesheet" type="text/css"> -->
+
+        <!-- <link href="../static/assets/css/bootstrap-tagsinput.css" th:href="@{/assets/css/bootstrap-tagsinput.css}" rel="stylesheet" type="text/css"> -->
+
+        <!-- <link href="../static/front/css/style.css" rel="stylesheet" th:href="@{/front/css/style.css}"> -->
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+        <!-- /global stylesheets -->
+
+
+        <!-- Core JS files -->
+        <!-- <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+        <script crossorigin="anonymous"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>
+
+
+        <script crossorigin="anonymous"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+        <!--
+        <script src="../static/global_assets/js/main/jquery.min.js" th:src="@{/global_assets/js/main/jquery.min.js}" ></script>
+        <script src="../static/global_assets/js/main/bootstrap.bundle.min.js" th:src="@{/global_assets/js/main/bootstrap.bundle.min.js}" ></script>
+        -->
+        <!-- /core JS files -->
+
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/sticky.min.js"
+                th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js"
+                th:src="@{/global_assets/js/demo_pages/extra_fab.js}"></script>
+        <!-- /theme JS files -->
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/custom.js}"></script>
+        <script src="../static/assets/js/vote.js" th:src="@{/assets/js/vote.js}"></script>
+
+
+    </head>
+</th:block>
+
+
+<body>
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+
+<!-- Page content -->
+<div class="page-content" >
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='organisation')"></th:block>
+
+
+    <!-- Main content -->
+    <main class="w-100">
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{my_organisation} )"></th:block>
+
+
+                <div class="row">
+                    <div class="col-xl-6 col-12">
+                        <div class="card">
+                            <!-- <div th:if="${user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).ADMIN}" class="card-body"> -->
+                            <div class="card-body"
+                                th:if="${user.organisation == null || user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).ADMIN}">
+
+                                <form method="post" th:action="@{/organisation}" th:object="${newOrganisation}">
+                                    <fieldset class="mb-3">
+                                        <legend>
+                                            <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{my_organisation}">My organisation</h3>
+                                        </legend>
+
+                                        <!-- <div class="form-group row">
+                                            <label name="organisation_role" class="col-form-label col-lg-3">Your role</label>
+                                            <div class="col-lg-9">
+                                                <select name="organisation_role" class="form-control" value="">
+                                                                                    <option value="administrator">Administrator</option>
+                                                                                </select>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="alert alert-success" th:if="${updated}">
+                                            <button class="close" data-dismiss="alert" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                                <span class="sr-only" th:text="#{close}">Close</span>
+                                            </button>
+                                            <strong th:text="#{profile.information_saved}">profile.information_saved</strong>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-12" for="organisation-admin">
+                                                <span th:text="#{organisation}">Organisation</span>
+                                                <span class="alert alert-danger my-2 d-block" th:errors="*{name}"
+                                                th:if="${#fields.hasErrors('name')}"></span>
+                                                <span class="alert alert-danger my-2 d-block" th:if="${org_exists}"
+                                                th:text="${org_exists}"></span>
+                                            </label>
+                                            <div class="col-12">
+                                                <input autocomplete="organization" class="form-control" id="organisation-admin" placeholder="Fill your organization"
+                                                    required th:field="*{name}"
+                                                    th:placeholder="#{organisation.org.placeholder}"
+                                                    th:value="${organisation.name}" type="text">
+     
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-12" for="structure-admin">
+                                                <span th:text="#{organisation.structure}">Type of Structure</span>
+                                                <span class="alert alert-danger my-2 d-block" th:errors="*{structure}"
+                                                th:if="${#fields.hasErrors('structure')}"></span>
+                                            </label>
+                                            <div class="col-12">
+                                                <select class="form-control" id="structure-admin"
+                                                        th:field="*{structure}">
+                                                    <option style="display:none" th:text="#{organisation.structure.placeholder}"
+                                                            th:value="null">Select the
+                                                        organisation structure
+                                                    </option>
+                                                    <option th:each="structure : ${T(com.socatel.utils.enums.OrganisationStructureEnum).values()}"
+                                                            th:selected="${organisation.structure != null && structure.compareTo(organisation.structure) == 0}"
+                                                            th:text="#{${structure.toString().replaceAll(' ', '_').toLowerCase()}}"
+                                                            th:value="${structure}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-12" for="web-admin">
+                                                <span th:text="#{organisation.website}">Web site</span>
+                                                <span class="alert alert-danger my-2 d-block" th:errors="*{website}"
+                                                th:if="${#fields.hasErrors('website')}"></span>
+                                            </label>
+                                            <div class="col-12">
+                                                <input autocomplete="url" class="form-control" id="web-admin" placeholder="Fill your organization's web" required
+                                                    th:field="*{website}"
+                                                    th:placeholder="#{organisation.website.placeholder}"
+                                                    th:value="${organisation.website}" type="url">
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                    <div class="text-right">
+                                        <button class="btn btn-primary" th:text="#{save}" type="submit">Save</button>
+                                    </div>
+                                </form>
+                                <div class="clearfix"></div>
+
+                                <!-- Invite member section -->
+                                <div class="row py-2 my-3" th:if="${user.organisation != null}">
+                                    <div class="col-12">
+
+                                        <a aria-controls="collapseInvitations" aria-expanded="false"
+                                        class="btn btn-primary text-white" data-toggle="collapse"
+                                        href="#collapseInvitations">
+                                            <span th:text="#{organisation.invite}">Invite a team member of your organiztion</span>
+                                            <i class="icon-arrow-down15 pointer text-primary mr-2 float-right" aria-hidden="true"></i>
+                                        </a>
+
+                                        <div class="alert alert-info mt-3" th:if="${param.invited}">
+                                            <button class="close" data-dismiss="alert" type="button">
+                                                &times; <span class="sr-only" th:text="#{close}">Close</span>
+                                            </button>
+                                            <strong><span
+                                                    th:text="#{organisation.invited}">User has been invited</span></strong>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="collapse w-100 p-3" id="collapseInvitations">
+                                        <form method="post" th:action="@{/organisation-invite}">
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-12" for="invitation"
+                                                    th:text="#{organisation.email}">Email</label>
+                                                <div class="col-12">
+                                                    <input class="form-control" id="invitation" name="invitation"
+                                                        placeholder="Fill with the team member's email" th:placeholder="#{organisation.email.placeholder}"
+                                                        type="email">
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary float-right" th:text="#{organisation.send_invitation}"
+                                                    type="submit">Send invitation
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Invite member section -->
+
+
+                            </div>
+
+
+                            <div class="card-body" th:if="${user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).MEMBER}">
+
+                                <fieldset class="mb-3">
+                                    <legend>
+                                        <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{my_organisation}">My organisation</h3>
+                                    </legend>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3" for="organisation" th:text="#{organisation}">Organisation</label>
+                                        <div class="col-lg-9">
+                                            <p class="form-control" id="organisation" th:text="${organisation.name}"
+                                            type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3" for="structure"
+                                            th:text="#{organisation.structure}">Type of Structure</label>
+                                        <div class="col-lg-9">
+                                            <p class="form-control" id="structure" th:text="#{${organisation.structure.toString().replaceAll(' ', '_').toLowerCase()}}"
+                                            type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3" for="web" th:text="#{organisation.website}">Web
+                                            site</label>
+                                        <div class="col-lg-9">
+                                            <p class="form-control" id="web" th:text="${organisation.website}" type="url">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="clearfix"></div>
+
+                                <!-- Invite member section -->
+                                <div class="row py-2 my-3" th:if="${user.organisation != null}">
+                                    <div class="col-12">
+
+                                        <a aria-controls="collapseInvitations2" aria-expanded="false"
+                                        class="btn btn-primary text-white" data-toggle="collapse"
+                                        href="#collapseInvitations2">
+                                            <span th:text="#{organisation.invite}">Invite a team member of your organiztion</span>
+                                            <i class="icon-arrow-down15 pointer text-primary mr-2 float-right" aria-hidden="true"></i>
+                                        </a>
+
+                                        <div class="alert alert-info mt-3" th:if="${param.invited}">
+                                            <button class="close" data-dismiss="alert" type="button">
+                                                <span aria-hidden="true">&times;</span>
+                                                <span class="sr-only" th:text="#{close}">Close</span>
+                                            </button>
+                                            <strong><span
+                                                    th:text="#{organisation.invited}">User has been invited</span></strong>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="collapse w-100 p-3" id="collapseInvitations2">
+                                        <form method="post" th:action="@{/organisation-invite}">
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-md-2" for="invitation2"
+                                                    th:text="#{organisation.email}">Email</label>
+                                                <div class="col-md-10">
+                                                    <input class="form-control" id="invitation2" name="invitation"
+                                                        placeholder="Fill with the team member's email" th:placeholder="#{organisation.email.placeholder}"
+                                                        type="email">
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary float-right" th:text="#{organisation.send_invitation}"
+                                                    type="submit">Send invitation
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Invite member section -->
+                            </div>
+                        </div>
+                    </div> <!-- Col End -->
+
+                    <div th:if="${user.organisation != null}" class="col-xl-6 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{organisation.members}">My organisation's Members</h3>
+                                <div class="row">
+                                    <div class="col p-3 m-3 text-center" th:each="member : ${members}">
+                                        <a class="pointer" data-toggle="modal" href="#"
+                                           th:data-target="'#view-profile' + ${member.id}">
+                                            <img th:alt="${member.username} + ' ' + #{avatar}" class="rounded-circle"
+                                                 height="80" src="../static/images/demo/face8.jpg"
+                                                 th:src="@{/show-image/{id}(id=${member.picture.id})}" width="80">
+                                            <br><span class="font-weight-bold"
+                                                      th:text="${member.username}">John Malkovitch</span>
+                                            <br><span th:if="${member.isOrgCreator()}" class="badge text-primary border-1" th:text="#{organisation.creator}">Creator</span>
+                                        </a>
+                                        <th:block th:replace="user-fragment :: modal(user_info=${member})"></th:block>
+                                    </div>
+                                </div>
+
+                            </div> <!-- card-body -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--div class="modal fade" id="modal-social">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Fill the API informations</h4>
+                                <button class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only" th:text="#{close}">Close</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <th:block th:replace="resource_registration/twitter/form :: form"></th:block>
+                            </div>
+                            <<div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+
+
+                <!-- ROW --->
+                <div class="row" th:if="${user.organisation != null}">
+                    <div class="col-xl-6 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2" th:text="#{organisation.services}">My Services</h3>                                
+                                <ul class="list-inline">
+                                    <li class="list-inline-item my-2 border border-primary p-2"
+                                        th:each="service : ${services}">
+                                        <a th:href="'#modal-update-service'+${service.id}" th:data-toggle="modal">
+                                            <span th:text="${service.name}">Delivery on wheels</span>
+                                            <i class="icon-pencil ml-1" aria-hidden="true"
+                                            th:if="${user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).ADMIN}"></i>
+                                        </a>
+                                        <th:block th:replace="notifications-fragments :: modal-update-service(service=${service})"></th:block>
+                                    </li>
+                                </ul>
+
+
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#modal-service"
+                                th:if="${user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).ADMIN}">
+                                    <span th:text="#{organisation.register_service}">Register a new service</span>
+                                </button>
+
+
+                                <!-- Modal new service -->
+                                <div class="modal fade" id="modal-service">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" th:text="#{organisation.register_service}">Register
+                                                    a new service</h4>
+                                                <button class="close" data-dismiss="modal" type="button">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    <span class="sr-only" th:text="#{close}">Close</span>
+                                                </button>
+                                            </div>
+                                            <form class="form-horizontal" method="post" 
+                                                th:action="@{/register-service}" th:object="${newService}">
+                                                <div class="modal-body">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label" for="service"
+                                                            th:text="#{organisation.service_name}">Service</label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control first-focusable-element" id="service" required
+                                                                th:field="*{name}">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label" for="nativeDescription"><span
+                                                                th:text="#{organisation.service_native_description}">Description</span><br>
+                                                            <small th:text="#{organisation.service_length}">144 char. max
+                                                            </small>
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <textarea class="form-control" id="nativeDescription"
+                                                                    maxlength="144" required
+                                                                    rows="3" th:field="*{nativeDescription}"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label" for="description"><span
+                                                                th:text="#{organisation.service_description}">Description</span> <span th:text="#{service.optional}"></span><br>
+                                                            <small th:text="#{organisation.service_length}">144 char. max
+                                                            </small>
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <textarea class="form-control" id="description"
+                                                                    maxlength="144"
+                                                                    rows="3" th:field="*{description}"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label" for="website"
+                                                            th:text="#{organisation.website}">Website</label>
+                                                        <div class="col-sm-9">
+                                                            <input autocomplete="url" class="form-control" id="website" type="url" th:field="*{website}" required>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group row">
+                                                        <label for="locality" class="col-form-label col-lg-3" th:text="#{login.location}">Location</label>
+                                                        <div class="col-lg-9">
+                                                            <select id="locality" class="form-control" required th:field="*{locality}">
+                                                                <option style="display:none" th:text="#{organisation.location.placeholder}"
+                                                                        th:value="null">
+                                                                    Location
+                                                                </option>
+                                                                <option th:each="locality : ${localities}"
+                                                                        th:text="#{${locality.name.replaceAll(' ', '_').toLowerCase()}}"
+                                                                        th:value="${locality.id}"></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label for="language" class="col-form-label col-lg-3"
+                                                            th:text="#{organisation.language}">Language</label>
+                                                        <div class="col-lg-9">
+                                                            <select id="language" class="form-control" required th:field="*{language}">
+                                                                <option style="display:none" th:text="#{organisation.language.placeholder}"
+                                                                        th:value="null">
+                                                                    Language
+                                                                </option>
+                                                                <option th:each="language : ${languages}"
+                                                                        th:text="#{${language.name.replaceAll(' ', '_').toLowerCase()}}"
+                                                                        th:value="${language.id}"></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="mb-3 row">
+                                                        <strong class="col-form-label col-lg-3"><span
+                                                                th:text="#{organisation.themes}">Themes list</span>
+                                                            <!-- <i class="fa fa-question-circle mx-1"
+                                                            data-toggle="popover"
+                                                            data-trigger="hover"
+                                                            title=""
+                                                            data-placement="right"
+                                                            th:data-content="#{profile.interests.description}"></i> -->
+                                                        </strong>
+                                                        <div class="col-lg-9">
+
+                                                            <div class="border border-primary p-2">
+
+                                                                <a aria-controls="collapsePOI" aria-expanded="false"
+                                                                class="text-primary" data-toggle="collapse"
+                                                                href="#collapsePOI">
+                                                                    <!-- <span th:text="#{profile.interests.collapse}">Choose your points of interest</span> -->
+                                                                    <span th:text="#{organisation.themes_expand}">Choose among these thematics for this new service</span>
+                                                                </a>
+
+                                                                <div class="collapse mt-3" id="collapsePOI">
+
+
+                                                                    <ul class="text-left filter-by-themes">
+
+                                                                        <li class="list-unstyled"
+                                                                            th:each="theme: ${themes}">
+                                                                            <input class="form-check-input" th:field="*{themes}"
+                                                                                th:value="${theme.id}"
+                                                                                type="checkbox"/>
+                                                                            <label class="form-check-label"
+                                                                                th:for="${#ids.prev('themes')}"
+                                                                                th:text="#{${theme.name.replaceAll(' ', '_').toLowerCase()}}">
+                                                                            </label>
+                                                                        </li>
+
+                                                                    </ul>
+
+                                                                </div>
+
+                                                            </div> <!-- row border -->
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label" for="hashtag"
+                                                            th:text="#{organisation.hashtag}">Twitter hashtag</label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="hashtag" th:field="*{hashtag}">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="modal-footer"
+                                                    th:if="${user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).ADMIN}">
+                                                    <button class="btn btn-primary" th:text="#{organisation.register_service_2}"
+                                                            type="submit">Register this
+                                                        service
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Modal new service -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-12"  th:if="${user.orgRole == T(com.socatel.utils.enums.OrgRoleEnum).ADMIN}">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-uppercase h6 text-left m-0 mb-2"  th:text="#{organisation.social_media}">My organisation' Social Media</h3>
+                                <!-- Twitter -->
+                                <div th:if="${denied != null || twitter_error != null}" class="alert alert-danger">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span class="text-white" aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}">Close</span>
+                                    </button>
+                                    <span th:if="${denied}" th:text="#{organisation.twitter.denied}">You have denied the authorization</span>
+                                    <span th:if="${twitter_error}" th:text="#{organisation.twitter.error}">There has been an error while saving your twitter data</span>
+                                </div>
+                                <a class="btn btn-primary" href="/twitter_oauth/get_token" th:unless="${organisation.isTwitterConnected()}">
+                                    <span class="sr-only" th:text="#{connect_twitter}"></span>
+                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                </a>
+                                <a class="btn btn-success" href="#" data-target="#remove-twitter" data-toggle="modal" th:if="${organisation.isTwitterConnected()}">
+                                    <span class="sr-only" th:text="#{connect_twitter}"></span>
+                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                </a>
+                                <!-- Facebook -->
+                                <button class="btn btn-primary">
+                                    <span class="sr-only" th:text="#{connect_facebook}" th:classappend="${organisation.isFacebookConnected()?'btn-success':'btn-primary'}"></span>
+                                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div><!-- /main content -->
+        </div>
+        <!-- /main content -->
+    </main>
+</div>
+<!-- /page content -->
+
+<div class="modal fade" id="remove-twitter">
+    <div class="modal-dialog modal-ml modal-dialog-centered" role="dialog" tabindex="-1" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" th:text="#{organisation.remove_twitter}">Are you sure you want to remove your twitter information from SoCaTel?</h4>
+                <button class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only" th:text="#{close}">Close</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" th:text="#{yes}" href="/twitter_oauth/remove">Yes</a>
+                <button type="button" class="btn btn-secondary first-focusable-element" data-dismiss="modal" th:text="#{no}">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

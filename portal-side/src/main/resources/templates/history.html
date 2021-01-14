@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{history})">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <title>SoCaTel</title>
+
+        <!-- CSRF -->
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <!-- /CSRF -->
+
+        <!-- Special chars -->
+        <!-- <meta http-equiv="content-type" content="text/html;charset=utf-8" /> -->
+        <!-- /Special chars -->
+
+        <!-- Global stylesheets -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"> -->
+        <!-- <link th:href="@{https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700}" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i"
+              rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i}"
+              type="text/css">
+
+
+        <script src="https://kit.fontawesome.com/16b12da617.js"
+                th:src="@{https://kit.fontawesome.com/16b12da617.js}"></script>
+
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              rel="stylesheet"
+              th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+
+        <link href="../static/assets/css/layout.min.css" rel="stylesheet" th:href="@{/assets/css/layout.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/components.min.css" rel="stylesheet"
+              th:href="@{/assets/css/components.min.css}" type="text/css">
+
+        <link href="../static/assets/css/socatel.min.css" rel="stylesheet" th:href="@{/assets/css/socatel.min.css}"
+              type="text/css">
+        <link href="../static/assets/css/socatel-repsonsive.min.css" rel="stylesheet"
+              th:href="@{/assets/css/socatel-repsonsive.min.css}" type="text/css">
+
+        <link disabled href="../static/assets/css/dark-reader.css" id="dark-reader" rel="stylesheet"
+              th:href="@{/assets/css/dark-reader.css}">
+        <link disabled href="../static/assets/css/new-font-size.css" id="new-font-size" rel="stylesheet"
+              th:href="@{/assets/css/new-font-size.css}">
+        <!-- /global stylesheets -->
+
+
+        <!-- Core JS files -->
+        <!-- <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+        <script crossorigin="anonymous"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                src="https://code.jquery.com/jquery-3.4.1.min.js" th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>
+
+
+        <script crossorigin="anonymous"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/loaders/blockui.min.js"
+                th:src="@{/global_assets/js/plugins/loaders/blockui.min.js}"></script>
+
+        <!--
+        <script src="../static/global_assets/js/main/jquery.min.js" th:src="@{/global_assets/js/main/jquery.min.js}" ></script>
+        <script src="../static/global_assets/js/main/bootstrap.bundle.min.js" th:src="@{/global_assets/js/main/bootstrap.bundle.min.js}" ></script>
+        -->
+
+
+        <!-- Theme JS files -->
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3.min.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/visualization/d3/d3_tooltip.js"
+                th:src="@{/global_assets/js/plugins/visualization/d3/d3_tooltip.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"
+                th:src="@{/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js}"></script>
+        <script src="../static/global_assets/js/plugins/forms/styling/switchery.min.js"
+                th:src="@{/global_assets/js/plugins/forms/styling/switchery.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/moment/moment.min.js"
+                th:src="@{/global_assets/js/plugins/ui/moment/moment.min.js}"></script>
+        <script src="../static/global_assets/js/plugins/pickers/daterangepicker.js"
+                th:src="@{/global_assets/js/plugins/pickers/daterangepicker.js}"></script>
+        <script src="../static/global_assets/js/plugins/ui/sticky.min.js"
+                th:src="@{/global_assets/js/plugins/ui/sticky.min.js}"></script>
+        <script src="../static/global_assets/js/demo_pages/extra_fab.js"
+                th:src="@{/global_assets/js/demo_pages/extra_fab.js}"></script>
+        <!-- /theme JS files -->
+
+        <script src="../static/assets/js/paginate.js" th:src="@{/assets/js/paginate.js}"></script>
+
+        <script src="../static/assets/js/app.js" th:src="@{/assets/js/app.js}"></script>
+        <script src="../static/assets/js/custom.js" th:src="@{/assets/js/custom.js}"></script>
+        <script src="../static/assets/js/vote.js" th:src="@{/assets/js/vote.js}"></script>
+
+
+    </head>
+</th:block>
+<body>
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+
+
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='history')"></th:block>
+
+<main class="w-100">
+    <div class="content-wrapper">
+
+        <div class="container-fluid" id="content" tabindex="-1">
+
+            <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{history} )"></th:block>
+
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card">
+                        
+                        <div class="_card-header pointer">
+                            <h2 class="h6 m-0">
+                                <button class="btn-toogle text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseHistory">
+                                    <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    <span th:text="#{history}">My history</span> 
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div class="collapse show" id="collapseHistory">
+                            <ul class="list-group history-items">
+                                <li th:class="'list-group-item history-item-' + ${history.id}"
+                                    th:each="history, iStat : ${historyPage.content}">
+
+                                    <i class="far fa-comment font-weight-bold text-primary mx-1" aria-hidden="true"
+                                       th:if="${history.type} == ${T(com.socatel.utils.enums.HistoryTypeEnum).POSTED_GROUP}"></i>
+                                    <i class="far fa-eye font-weight-bold text-warning mx-1" aria-hidden="true"
+                                       th:if="${history.type} == ${T(com.socatel.utils.enums.HistoryTypeEnum).VIEWED_GROUP}"></i>
+                                    <i class="fas fa-heart font-weight-bold text-danger mx-1" aria-hidden="true"
+                                       th:if="${history.type} == ${T(com.socatel.utils.enums.HistoryTypeEnum).SUBSCRIBED_GROUP}"></i>
+                                    <i class="far fa-circle font-weight-bold text-success mx-1" aria-hidden="true"
+                                       th:if="${history.type != T(com.socatel.utils.enums.HistoryTypeEnum).POSTED_GROUP && history.type != T(com.socatel.utils.enums.HistoryTypeEnum).VIEWED_GROUP && history.type != T(com.socatel.utils.enums.HistoryTypeEnum).SUBSCRIBED_GROUP}"></i>
+
+                                    <span th:text="#{${history.text}} + ' ' + ${history.getCorrespondingName()}">You posted a new comment in topic 1234</span>
+                                    - <span class="text-muted small" th:text="${history.fancyTimestamp()}">12:47</span>
+
+                                    <button class="float-right btn btn-danger history-action" th:data-history-id="${history.id}"
+                                            th:title="#{remove_history}" data-action="delete">
+                                        <span class="sr-only" th:text="#{remove_history} + ' ' + ${history.id}"></span>
+                                        <i class="fa mx-1 fa-trash" aria-hidden="true"></i>
+                                    </button>
+
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-footer bg-white text-right">
+
+                            <a class="btn btn-outline-primary" th:href="@{/history(size=${historyPage.size + 5})}"
+                               th:if="${historyPage.hasNext()}"><strong th:text="#{see_more}">See
+                                more</strong></a>
+                            <a tabindex="0" class="btn btn-outline-danger history-action pointer" data-action="delete_all">
+                                <span th:text="#{delete_all}">Delete all</span>
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+</div>
+
+<script src="../static/assets/js/history.js" th:src="@{/assets/js/history.js}"></script>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

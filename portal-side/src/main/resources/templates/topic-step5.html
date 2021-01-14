@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:replace="header-fragment :: head(title=${group.name} + ' | ' + #{topic.step} + '5')">
+</th:block>
+
+<body class="chatboard" style="overflow-x: hidden;">
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+<main>
+<th:block th:replace="topic-fragment :: resume"></th:block>
+
+
+<div class="container-fluid px-0">
+
+    <div class="row p-2">
+
+        <div class="col-sm-3 d-none d-lg-block">
+            <th:block th:replace="topic-sidebar-fragment :: left(step=5, summary=${group.step4summary})"></th:block>
+        </div>
+
+        <div class="col-12 col-lg-9">
+
+
+            <div class="stepcontainer">
+
+                <th:block th:replace="topic-fragment :: tabs(var=5)"></th:block>
+
+
+                <!-- <div class="tab-content rounded-shadowed bg-white" id="myTabContent"> -->
+                <div class="tab-content bg-white p-3" id="myTabContent">
+
+                    <div aria-labelledby="step4" class="tab-pane bg-white fade show active mt-0 p-2" id="step4"
+                         role="tabpanel">
+
+                        <div class="alert alert-info" th:if="${group.status.ordinal() == 5}">
+                            <strong th:text="#{topic.step5.explanation}">Explanation of STEP1 - Co-ideation</strong>
+                            <strong>
+                                <a th:unless="${user != null && user.organisation != null && user.organisation.equals(organisation)}" th:text="#{topic.step5.introduction.users}" href="#"></a>
+                                <span th:if="${user != null && user.organisation != null && user.organisation.equals(organisation)}" th:text="#{topic.step5.introduction.organisations}"></span>
+                            </strong><br><br>
+                            <strong th:text="#{topic.step5.introduction2}">Please add your input in each box, and rate
+                                others’ contributions. Your input will help convince service providers to convert your
+                                ideas into long term care services.</strong>
+                        </div>
+
+                        <div class="alert alert-info" sec:authorize="!isAuthenticated()">
+                            <span th:text="#{find_topic.no_comments4}">Please</span> <a class="btn btn-primary"
+                                                                                        href="login" th:href="@{/login}"
+                                                                                        th:text="#{main.signin}">sign in</a>
+                            <span th:text="#{find_topic.no_comments5}">or</span> <a class="btn btn-white-pink ml-1"
+                                                                                    href="registration.html"
+                                                                                    th:href="@{/registration}"
+                                                                                    th:text="#{register}">register</a> <span
+                                th:text="#{find_topic.no_comments6}">and you will be able to create and propose topics relevant to you , others will then join you to share their personal experience.</span>
+                        </div>
+
+
+                        <div class="mx-0">
+                            <div class="card p-3">
+                                <h3 class="text-left mx-2 mb-4" th:text="#{topic.step5.title}">Co-created service information</h3>
+                                <th:block th:if="${user != null && user.organisation != null && user.organisation.equals(organisation)}">
+                                    <form method="post" class="form-horizontal" role="form" enctype="multipart/form-data"
+                                          th:action="@{/topic/{group_id}/create_service(group_id=${group.id})}" th:object="${newService}">
+                                        <div class="form-group row pl-2">
+                                            <label class="col-form-label col-lg-2" for="name" th:text="#{organisation.service_name}">Service name</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control h-100" name="name" th:value="${service==null?'':service.name}" id="name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row pl-2">
+                                            <label class="col-form-label col-lg-2" for="nativeDescription" th:text="#{organisation.service_native_description}">Service description</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control h-100" name="nativeDescription" th:value="${service==null?'':service.nativeDescription}" maxlength="144" id="nativeDescription" required>
+                                            </div>
+                                        </div>
+                                        <div th:if="${group.language.code != 'en'}" class="form-group row pl-2">
+                                            <span class="col-form-label col-lg-2">
+                                                <label for="description" th:text="#{organisation.service_description}">Service in English</label><br>
+                                                <small th:text="#{service.optional}">Optional field</small>
+                                            </span>
+                                            <div class="col-lg-10 m-auto">
+                                                <input class="form-control h-100" name="description" th:value="${service==null?'':service.description}" maxlength="144" id="description">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row pl-2">
+                                            <label class="col-form-label col-lg-2" for="website" th:text="#{organisation.website}">Website</label>
+                                            <div class="col-lg-10">
+                                                <input autocomplete="url" class="form-control" id="website" type="url" required th:value="${service==null?'':service.website}" name="website">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row pl-2">
+                                            <span class="col-form-label col-lg-2">
+                                                <label for="service-logo" th:text="#{logo}">Logo</label><br>
+                                                <small th:text="#{logo.recommended}">recommended 300x300</small>
+                                            </span>
+                                            <div class="col-lg-10">
+                                                <a th:if="${service!=null && service.logo != null}"
+                                                   class="view-file-trigger"
+                                                   data-toggle="modal"
+                                                   href=""
+                                                   tabindex="0"
+                                                   th:data-file-id="${service.logo.id}"
+                                                   th:data-file-path="@{/downloadFile/{id}(id=${service.logo.id})}"
+                                                   th:data-file-type="${service.logo.type}" th:data-toggle="modal">
+                                                    <img id="service-logo-img" th:src="@{/show-image/{id}(id=${service.logo.id})}" style="width: 300px; height: 300px;" th:alt="#{service.logo}">
+                                                </a>
+                                                <br>
+                                                <input th:unless="${service!=null && service.logo != null}" class="custom-file-input pointer" id="service-logo" style="position:absolute" type="file" accept="image/*" required name="service_logo">
+                                                <input th:if="${service!=null && service.logo != null}" class="custom-file-input pointer" id="service-logo" style="position:absolute" type="file" accept="image/*" name="service_logo">
+                                                <label class="custom-file-label w-100" for="service-logo" style="position:relative" th:text="${service==null || service.logo == null}?#{create_topic.choose_file}:${service.logo.name}"></label>
+                                            </div>
+                                        </div>
+                                        <div class="pl-2">
+                                            <th:block th:replace="topic-message-fragment :: choosefile (id=null)"></th:block>
+                                        </div>
+                                        <button class="btn btn-primary float-right" th:text="${service==null}?#{organisation.register_service_2}:#{update_service}" type="submit">
+                                            Register this service
+                                        </button>
+                                    </form>
+                                </th:block>
+                                <th:block th:unless="${user != null && user.organisation != null && user.organisation.equals(organisation)}">
+                                    <div class="form-group row pl-2">
+                                        <label class="col-form-label col-lg-2" for="name" th:text="#{organisation.service_name}">Service name</label>
+                                        <div class="col-lg-10">
+                                            <span class="form-control h-100" th:text="${service==null?'':service.name}" id="name" ></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row pl-2">
+                                        <label class="col-form-label col-lg-2" for="description" th:text="#{organisation.service_native_description}">Service description</label>
+                                        <div class="col-lg-10">
+                                            <span class="form-control h-100" th:text="${service==null?'':service.getDescription(lang_code)}" id="description"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row pl-2">
+                                        <label class="col-form-label col-lg-2" for="website" th:text="#{organisation.website}">Website</label>
+                                        <div class="col-lg-10">
+                                            <a target="_blank" th:if="${service!=null}" th:href="@{${service.website}}">
+                                                <u class="text-primary form-control" id="website" th:text="${service==null?'':service.website}"></u>
+                                            </a>
+                                            <span class="form-control h-100" th:if="${service==null}" th:text="${service==null?'':service.getDescription(lang_code)}" id="description"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row pl-2">
+                                        <span class="col-form-label col-lg-2">
+                                            <label for="service-logo-img" th:text="#{logo}">Logo</label><br>
+                                        </span>
+                                        <div class="col-lg-10">
+                                            <a th:if="${service!=null && service.logo != null}"
+                                               class="view-file-trigger"
+                                               data-toggle="modal"
+                                               href=""
+                                               tabindex="0"
+                                               th:data-file-id="${service.logo.id}"
+                                               th:data-file-path="@{/downloadFile/{id}(id=${service.logo.id})}"
+                                               th:data-file-type="${service.logo.type}" th:data-toggle="modal">
+                                                <img id="service-logo-img" th:src="@{/show-image/{id}(id=${service.logo.id})}" style="width: 300px; height: 300px;" th:alt="#{service.logo}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </th:block>
+                                <th:block th:if="${service != null && service.documents != null && !service.documents.isEmpty()}">
+                                    <h4 class="mx-2" th:text="#{topic.attached_files}">Attached files</h4>
+                                    <ul class="mx-2 list-group">
+                                        <li class="list-group-item p-2" th:each="doc : ${service.documents}">
+
+                                            <div class="container">
+
+                                                <button class="view-file-trigger btn btn-secondary"
+                                                   data-toggle="modal"
+                                                   data-target=".modal-view-file"
+                                                   th:data-file-id="${doc.id}"
+                                                   th:data-file-path="@{/downloadFile/{id}(id=${doc.id})}"
+                                                   th:data-file-type="${doc.type}"
+                                                   th:if="${doc.type == 'image/jpeg' || doc.type == 'image/png' || doc.type == 'image/gif'}"
+                                                   th:title="#{modal_view_file_preview} + ' ' + ${doc.name}">
+                                                    <i class="far mr-1" th:classappend="${doc.getCssClass()}" aria-hidden="true"></i>
+                                                    <span th:text="${doc.name}">See attached file</span>
+                                                    <i class="far fa-eye ml-1" aria-hidden="true"></i>
+                                                    <span class="sr-only" th:text="#{modal_view_file_preview} + ' ' + ${doc.name}">View file</span>
+                                                </button>
+
+                                                <a class="btn btn-secondary" th:href="@{/downloadFile/{id}(id=${doc.id})}"
+                                                   th:if="${doc.type != 'image/jpeg' && doc.type != 'image/png' && doc.type != 'image/gif'}"
+                                                   th:title="#{aria_label.download} + ' ' + ${doc.name}">
+                                                    <i class="far mr-1" th:classappend="${doc.getCssClass()}" aria-hidden="true"></i>
+                                                    <span th:text="${doc.name}">Download attached file</span>
+                                                    <i class="fas fa-download ml-1" aria-hidden="true"></i>
+                                                    <span class="sr-only" th:text="#{aria_label.download} + ' ' + ${doc.name}">Download the file</span>
+                                                </a>
+
+                                                <button data-target="#delete-file"
+                                                   data-toggle="modal" th:id="'deldoc-' + ${doc.id}" class="btn btn-danger mx-1" th:if="${user != null && ((user.organisation != null && user.organisation.equals(organisation)) || user.isModerator())}" th:title="#{delete_file} + ' ' + ${doc.name}">
+                                                    <i class="fa fa-trash"></i>
+                                                    <span class="sr-only" th:text="#{delete_file} + ' ' + ${doc.name}">Delete the file</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </th:block>
+                            </div>
+                            <div class="card p-3">
+                                <span class="font-weight-bold" style="font-size: large" th:text="#{topic.step5.posts}">POSTS</span>
+                                <div class="alert alert-info" th:if="${posts == null || posts.isEmpty()}">
+                                    <button class="close" data-dismiss="alert" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only" th:text="#{close}"></span>
+                                    </button>
+                                    <strong th:text="#{topic.no_comments}">No comment the moment !</strong> <br> <span
+                                        th:text="#{topic.no_comments2}">Use the form below and be the first to comment this topic !</span>
+                                </div>
+                                <th:block th:replace="topic-fragment :: step4posts(num=0, posts=${posts}, group_ordinal=5)"></th:block>
+                                <th:block th:replace="topic-fragment :: post-form(group_ordinal=5, tag=false)"></th:block>
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div> <!-- container-fluid -->
+</main>
+
+<th:block th:replace="topic-message-fragment :: topic-modals"></th:block>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="header-fragment :: head(title=#{topics})"></th:block>
+
+<body>
+
+<th:block th:replace="nav-fragment :: authenticated-nav(category='dashboard')"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu(showusermenu='true')"></th:block>
+<main>
+
+<!-- Page content -->
+<div class="page-content">
+
+    <th:block th:replace="sidebar-fragment :: sidebar(category='topics')"></th:block>
+
+
+    <!-- Main content -->
+    <main>
+        <div class="content-wrapper">
+
+            <div class="container-fluid" id="content" tabindex="-1">
+
+                <th:block th:replace="nav-fragment :: breadcrumb( current_page = #{topics} )"></th:block>
+
+
+                <div class="row topics-posted">
+                    <div class="col-md-12 col-xl-12">
+                        <div class="card">
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseMyTopics">
+                                        <span th:text="#{topics.created}">Topics I have created</span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <div class="collapse show" id="collapseMyTopics">
+                                <ul class="list-group">
+                                    <li class="list-group-item"
+                                        th:each="createdTopicRelation, iStat : ${topicsCreated.content}">
+
+                                        <i class="fas fa-tag" aria-hidden="true"></i>
+                                        <a class="text-default"
+                                        href="topic.html" th:href="@{/topic.html/{id}(id=${createdTopicRelation.group.id})}"
+                                        th:text="${createdTopicRelation.group.name}">Making cleaning services
+                                            affordable</a>
+                                        - <span class="text-muted small"
+                                                th:text="${createdTopicRelation.group.fancyTimestamp()}">10/10/2018</span>
+                                        <a class="btn btn-primary float-right" href="topic.html" th:href="@{/topic.html/{id}(id=${createdTopicRelation.group.id})}">
+                                            <span th:text="#{view}">View</span> <span class="sr-only" th:text="${createdTopicRelation.group.name}"></span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer bg-white text-right" th:if="${topicsCreated.hasNext()}">
+                                <a class="btn btn-outline-primary" href="topics-posted.html" th:href="@{/topics-posted(create_size=${topicsCreated.size + 5}, contribute_size=${topicsContributed.size}, subscribe_size=${topicsSubscribed.size})}">
+                                    <span th:text="#{see_more}">See more</span> <span class="sr-only" th:text="#{topics.created}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xl-12">
+                        <div class="card">
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseTopics2">
+                                        <span th:text="#{topics.contributed}">Topics I contributed to</span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <div class="collapse show" id="collapseTopics2">
+
+
+                                <ul class="list-group">
+                                    <li class="list-group-item" th:each="contributedTopicRelation, iStat : ${topicsContributed.content}"
+                                        th:id="'subrow-' + ${contributedTopicRelation.group.id}">
+
+                                        <i class="fas fa-tag" aria-hidden="true"></i>
+                                        <a class="text-default" href="topic.html"
+                                        th:href="@{/topic.html/{id}(id=${contributedTopicRelation.group.id})}"
+                                        th:text="${contributedTopicRelation.group.name}">The quality of food delivery
+                                            services</a>
+                                        - <span class="text-muted small"
+                                                th:text="${contributedTopicRelation.group.fancyTimestamp()}">5/7/2018</span>
+
+                                        <a class="btn btn-primary float-right" href="topic.html" th:href="@{/topic.html/{id}(id=${contributedTopicRelation.group.id})}">
+                                            <span th:text="#{view}">View</span> <span class="sr-only" th:text="${contributedTopicRelation.group.name}"></span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer bg-white text-right" th:if="${topicsContributed.hasNext()}">
+                                <a class="btn btn-outline-primary" href="topics-posted.html" th:href="@{/topics-posted(create_size=${topicsCreated.size}, contribute_size=${topicsContributed.size + 5}, subscribe_size=${topicsSubscribed.size})}">
+                                    <span th:text="#{see_more}">See more</span> <span class="sr-only" th:text="#{topics.created}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xl-12">
+                        <div class="card">
+                            <div class="_card-header">
+                                <h3 class="h4 card-title">
+                                    <button class="btn-toogle btn-toggle-dashboard text-left collapsed text-uppercase" aria-expanded="true" data-toggle="collapse" data-target="#collapseTopics">
+                                        <span th:text="#{topics.subscribed}">Topics I am subscribed to</span>
+                                        <i aria-hidden="true" class="fas fa-angle-down float-right"></i>
+                                    </button>
+                                </h3>
+                            </div>
+
+                            <div class="collapse show" id="collapseTopics">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item" th:each="subbedTopicRelation, iStat : ${topicsSubscribed.content}"
+                                        th:id="'subrow-' + ${subbedTopicRelation.group.id}">
+
+
+                                        <i class="fas fa-tag" aria-hidden="true"></i>
+                                        <a class="text-default" href="/topic.html"
+                                        th:href="@{/topic.html/{id}(id=${subbedTopicRelation.group.id})}"
+                                        th:text="${subbedTopicRelation.group.name}">The quality of food delivery
+                                            services</a>
+                                        - <span class="text-muted small"
+                                                th:text="${subbedTopicRelation.group.fancyTimestamp()}">5/7/2018</span>
+
+                                        <span class="d-inline-block float-right">
+                                            <a class="btn btn-primary float-right mx-1" th:href="@{/topic.html/{id}(id=${subbedTopicRelation.group.id})}">
+                                                <span th:text="#{view}">View</span> <span class="sr-only" th:text="${subbedTopicRelation.group.name}"></span>
+                                            </a>
+                                            <button class="btn btn-danger text-white float-right"
+                                                    th:onclick="'javascript:unsubscribe(' + ${subbedTopicRelation.group.id} + ');'" th:text="#{unsubscribe}"
+                                                    type="submit">Unsubscribe
+                                            </button><!--@{/topic/{id}/unsubscribe(id=${subbedTopicRelation.group.id})}-->
+                                        </span>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="card-footer bg-white text-right" th:if="${topicsSubscribed.hasNext()}">
+                                <a class="btn btn-outline-primary" href="topics-posted.html" th:href="@{/topics-posted(create_size=${topicsCreated.size}, contribute_size=${topicsContributed.size}, subscribe_size=${topicsSubscribed.size + 5})}">
+                                    <span th:text="#{see_more}">See more</span> <span class="sr-only" th:text="#{topics.created}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /content area -->
+            <!-- /content area -->
+            <!-- /content area -->
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+    </main>
+</div>
+<!-- /page content -->
+</main>
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+
+<script>
+    function unsubscribe(id) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $.ajax({
+            type: "POST",
+            url: window.location.origin + "/topic/" + id + "/unsubscribe",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                location.reload();
+            },
+            error: function (request, status, error) {
+                alert(status);
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:lang="${lang_code}" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header-fragment :: head(title=#{${page}})">
+</th:block>
+
+<body>
+
+
+<th:block th:replace="nav-fragment :: authenticated-nav"></th:block>
+
+<th:block th:replace="switch-style-fragment :: menu"></th:block>
+
+<div class="container generic">
+    <a id="top"></a>
+    <div class="row rounded p-4 my-3">
+        <div class="col" th:switch="${lang_code}">
+            <div th:case="ca">
+                <th:block th:replace="content-fragment :: gdpr(page=${page}, lang='ca')"></th:block>
+            </div>
+            <div th:case="fr">
+                <th:block th:replace="content-fragment :: gdpr(page=${page}, lang='fr')"></th:block>
+            </div>
+            <div th:case="hu">
+                <th:block th:replace="content-fragment :: gdpr(page=${page}, lang='hu')"></th:block>
+            </div>
+            <div th:case="es">
+                <th:block th:replace="content-fragment :: gdpr(page=${page}, lang='es')"></th:block>
+            </div>
+            <div th:case="fi">
+                <th:block th:replace="content-fragment :: gdpr(page=${page}, lang='fi')"></th:block>
+            </div>
+            <div th:case="*">
+                <th:block th:replace="content-fragment :: gdpr(page=${page}, lang='en')"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="footer-fragment :: back-to-top"></th:block>
+</body>
+</html>
